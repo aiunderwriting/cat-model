@@ -1,0 +1,2243 @@
+# Dated source cards that contextual questions show respondents as evidence. A source bundle
+# captures this file as evidence/source_cards.yaml; SourceCardsFile in
+# src/catmodel/scenarios/base_rates.py validates it.
+#
+# A card states what its cited sources report, with their units and dates, and lists every source
+# it relies on in `sources`: an https URL, or a precise citation naming its year. It holds no
+# authored prior, numerical default, answering instruction or curator note, and it names companies
+# and agencies as its sources do. Questions quote each card between delimiter lines, so card text
+# has no headings, fences, markup or URLs.
+#
+# `scenarios` lists, for every scenario in the library, the cards its questions show, in order; an
+# empty list shows none. Every card is shown by at least one scenario.
+#
+# Where a source's original publication date was not recorded, the dates are explicit
+# conservative curation bounds, and availability_basis says so.
+cards:
+- card_id: cbrn-source-4
+  observation_through_utc: 2025-12-18
+  availability_date_utc: 2025-12-18
+  availability_basis: AISI's own catalogue entry dates the report 18 December 2025, read on 2026-11-25; the
+    report page prints no date. Publication bounds the observations.
+  text: |-
+    The UK AI Security Institute's Frontier AI Trends Report (2025) reports models surpassing
+    expert baselines on selected biology questions and increased non-expert success with AI
+    assistance in controlled studies. Task scores and study odds ratios measure performance in
+    those settings, not the likelihood of a weapons program, an attack or casualties, and the
+    results depend on the tasks, the participants' expertise and the safeguards in place.
+  sources:
+  - https://www.aisi.gov.uk/frontier-ai-trends-report
+- card_id: cbrn-source-5
+  observation_through_utc: 2018-12-31
+  availability_date_utc: 2021-06-30
+  availability_basis: The journal gives online publication on 2021-06-30 and a study window ending 2018-12-31.
+  text: |-
+    A published analysis of the Global Terrorism Database (Tin et al., 2021) identified 390 CBRN
+    attacks worldwide in 1970-2018: 347 chemical, 31 biological, 12 radiological and none nuclear,
+    less than 0.3% of recorded terrorist attacks. It reports 930 deaths and 14,167 non-fatal
+    injuries. It excluded ambiguous events, and the database does not cover state terrorism. These
+    are historical attack counts, not weapons programs or AI-assisted incidents, and the absence of
+    a recorded nuclear attack in the sample does not show that one cannot occur.
+  sources:
+  - https://www.cambridge.org/core/journals/prehospital-and-disaster-medicine/article/abs/terrorismrelated-chemical-biological-radiation-and-nuclear-attacks-a-historical-global-comparison-influencing-the-emergence-of-counterterrorism-medicine/4449DA9FC6E0143E1E644FBCD7670823
+- card_id: cbrn-source-6
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2025-12-31
+  availability_basis: The brief is dated 2025 and covers 1990-2024; year-end bounds avoid claiming an exact publication day.
+  text: |-
+    START's Global Chemical, Biological, Radiological and Nuclear Data Suite brief (2025) records
+    593 ideologically motivated non-state CBRN events in 1990-2024, including attacks (successful or
+    attempted use of CBRN agents) and abandoned or interdicted plots. It reports a general decline
+    since the early 2000s; criminal events are in a separate database.
+  sources:
+  - https://www.start.umd.edu/sites/default/files/publications/local_attachments/CBRN%20brief%20final%20April%202025.pdf
+  - https://www.start.umd.edu/publication/global-chemical-biological-radiological-and-nuclear-data-suite
+- card_id: cbrn-source-7
+  observation_through_utc: 2003-06-04
+  availability_date_utc: 2003-06-17
+  availability_basis: GAO dates the report 2003-06-04 and its public release 2003-06-17; the report date bounds the observations.
+  text: |-
+    GAO's report GAO-03-686 on the Capitol Hill anthrax incident found that after the 2001 anthrax
+    attacks in the United States, EPA spent about USD 27 million on the Capitol Hill cleanup alone,
+    and that some affected buildings elsewhere remained closed in May 2003. This is historical
+    expenditure in the dollars of the time on one part of the response, not the attacks' total
+    loss.
+  sources:
+  - https://www.gao.gov/assets/a238422.html
+- card_id: cbrn-source-8
+  observation_through_utc: 1945-12-31
+  availability_date_utc: 2020-07-31
+  availability_basis: The ICRC release is dated 2020-07-31; the excerpt uses only its account of the 1945 events.
+  text: |-
+    The ICRC reports an estimated 70,000 immediate deaths in Hiroshima and 39,000 in Nagasaki in
+    August 1945, alongside extensive injury and urban destruction. These were wartime nuclear
+    attacks, not non-state or AI-assisted misuse, and the account gives no monetary loss.
+  sources:
+  - https://www.icrc.org/en/document/75-years-after-hiroshima-and-nagasaki-nuclear-threat-returns
+- card_id: cbrn-source-9
+  observation_through_utc: 2024-01-25
+  availability_date_utc: 2024-01-25
+  availability_basis: RAND gives publication on 2024-01-25; publication bounds the completed study, not an asserted experiment date.
+  text: |-
+    RAND's red-team study, The Operational Risks of AI in Large-Scale Biological Attacks (2024),
+    found no statistically significant difference in the assessed viability of biological attack
+    plans between teams with access to large language models and the internet and teams with
+    internet access alone. It evaluated the models and conditions then available, not attacks,
+    and its authors called for more sensitive tests and continued monitoring. A null result for
+    the models tested does not bound later models.
+  sources:
+  - https://www.rand.org/pubs/research_reports/RRA2977-2.html
+- card_id: cbrn-source-10
+  observation_through_utc: 2025-04-16
+  availability_date_utc: 2025-04-16
+  availability_basis: The system-card release is dated 2025-04-16; that date bounds the reported pre-release evaluations.
+  text: |-
+    OpenAI's o3 and o4-mini system card (April 2025) placed both models below the High threshold
+    for biological and chemical capability under version 2 of its Preparedness Framework. This is
+    a developer's own pre-release assessment against its threshold, not a finding of zero
+    contribution or a count of incidents.
+  sources:
+  - https://openai.com/index/o3-o4-mini-system-card/
+- card_id: cbrn-source-11
+  observation_through_utc: 2025-04-15
+  availability_date_utc: 2025-04-15
+  availability_basis: The framework announcement is dated 2025-04-15; this card describes that version's policy, not later revisions.
+  text: |-
+    OpenAI's April 2025 Preparedness Framework tracks biological and chemical capabilities and
+    lists nuclear and radiological risk as a research category. Its High threshold concerns
+    capabilities that could amplify existing pathways to severe harm and requires safeguards before
+    deployment; its Critical threshold concerns new pathways. These are a developer's governance
+    thresholds, not incident rates.
+  sources:
+  - https://openai.com/index/updating-our-preparedness-framework/
+- card_id: aisi-frontier-trends-cyber
+  observation_through_utc: 2025-12-18
+  availability_date_utc: 2025-12-18
+  availability_basis: AISI's own catalogue entry dates the report 18 December 2025, read on 2026-11-25; the
+    report page prints no date. Publication bounds the observations.
+  text: |-
+    The UK AI Security Institute's Frontier AI Trends Report (2025) found the best models averaging
+    50% on apprentice-level cyber tasks, compared with less than 9% in late 2023, and describes the
+    first model it tested that completed any expert-level cyber tasks, a category benchmarked to
+    more than ten years of human experience. These are controlled task results, not attackers' success in
+    real intrusions or a loss frequency.
+  sources:
+  - https://www.aisi.gov.uk/frontier-ai-trends-report
+- card_id: bountybench-detect-2025
+  observation_through_utc: 2025-07-10
+  availability_date_utc: 2025-07-10
+  availability_basis: arXiv gives version 2 of the paper, the first to report this result, as submitted on
+    2025-07-10, read on 2026-11-25; version 1 is dated 2025-05-21. Publication bounds the observations.
+  text: |-
+    BountyBench's 12.5% result is the OpenAI Codex CLI agent with o3-high on its Detect task with
+    up to three attempts; it is not an overall success rate across bug-bounty tasks, agents or
+    models.
+  sources:
+  - https://arxiv.org/abs/2505.15216
+- card_id: cisa-kev-catalog
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    CISA KEV records vulnerabilities with known exploitation. An entry is not an attack, victim, or
+    loss occurrence, and its catalog-addition date need not be its discovery or first-exploitation
+    date. The due date is a remediation deadline, not observed completion.
+  sources:
+  - https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+- card_id: cyentia-iris-incident-probability-2008-2024
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2025-06-23
+  availability_basis: Cyentia's press release for the 2025 study is dated 2025-06-13 and the report file
+    2025-06-23; the study covers incidents from 2008 through 2024. The 2022 edition's file is dated
+    2024-10-22.
+  text: |-
+    All-cause reference, not AI-attributed. Cyentia's IRIS studies analyse publicly recorded
+    security incidents from Zywave's loss database. The 2022 edition modelled a firm's yearly
+    probability of one or more incidents by revenue. Counting only organizations with a recorded
+    incident, it gave 29.33% above USD 100 billion, 21.93% for USD 10 billion to 100 billion and
+    11.53% for USD 10 million to 100 million; counting all organizations registered in the United
+    States, 29.30% and 14.20% for the first two. The 2025 edition, using only the first denominator,
+    puts a typical organization at 9.3%, against 2.5% in 2008. Losses for 2015 to 2024 had a median
+    of USD 603,000 and a 95th percentile of USD 32 million; the 2022 edition's first quartile was
+    USD 29,000. Incidents that never become public are not counted.
+  sources:
+  - https://www.cyentia.com/wp-content/uploads/2026/03/IRIS-2025.pdf
+  - https://www.cyentia.com/press-release-information-risk-insights-study-2025/
+  - https://www.cyentia.com/wp-content/uploads/2026/03/IRIS-2022_Cyentia.pdf
+- card_id: govai-data-damaging-worms-2026
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-07-31
+  availability_basis: GovAI's page for the report gives 2 July 2026 and the report file read was generated on
+    2026-07-31, the date used; the report's count of past outbreaks runs to the end of 2025.
+  text: |-
+    All-cause reference class, not AI-attributed. A 2026 report by Halstead and Righetti for the
+    Centre for the Governance of AI studies data-damaging worms: malicious code that spreads on its
+    own across large numbers of systems and encrypts, wipes or corrupts data. It counts two such
+    outbreaks since 2009 that caused at least USD 1 billion of economic damage, both in 2017: it
+    estimates about USD 1 billion for WannaCry, within a plausible range of USD 1 billion to USD 4
+    billion, and about USD 10 billion for NotPetya, within a plausible range of USD 3 billion to
+    USD 10 billion, and judges that worst-case versions of the two could plausibly have caused
+    damage on the order of USD 100 billion. Both used exploits that the report says the NSA
+    developed and the Shadow Brokers group leaked publicly in April 2017, within two months of the
+    leak. The report identifies as the main technical bottleneck an exploit that spreads without
+    user interaction, runs code remotely with administrator privileges or higher and works against
+    software on more than 10 million systems. It notes that from 1998 to 2005 individual hackers
+    regularly launched worms that infected thousands to tens of millions of systems, while recent
+    major attacks were carried out by states. The damage figures are economic costs to firms and
+    consumers, not complete losses to all affected parties; the report calls the underlying data
+    limited and poor, and it does not attribute either outbreak to AI assistance.
+  sources:
+  - https://cdn.governance.ai/Report_Assessing_the_Risk_of_AI_Enabled_Computer_Worms.pdf
+- card_id: big-sleep-sqlite-2024
+  observation_through_utc: 2024-11-01
+  availability_date_utc: 2024-11-01
+  availability_basis: The post is dated 2024-11-01, read on 2026-11-25. Publication bounds the observations.
+  text: |-
+    Google announced on 1 November 2024 that its Big Sleep agent had found a stack buffer underflow
+    in SQLite in early October, before the code reached an official release, with no impact on
+    users. It is one AI-found novel vulnerability, not an exploitation or a loss.
+  sources:
+  - https://projectzero.google/2024/10/from-naptime-to-big-sleep.html
+- card_id: gtig-zero-days-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-03-05
+  availability_basis: Google Threat Intelligence Group published the review on 2026-03-05; it counts zero-days exploited through 2025.
+  text: |-
+    Google Threat Intelligence Group tracked 90 zero-day vulnerabilities exploited in the wild in
+    2025, against 100 in 2023 and 78 in 2024 by the same review's counts, which it says may change
+    as past incidents come to light. These are detected exploited vulnerabilities across all
+    actors, not campaigns or AI-assisted attacks.
+  sources:
+  - https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review
+- card_id: one-day-exploit-agents-2024
+  observation_through_utc: 2024-04-17
+  availability_date_utc: 2024-04-17
+  availability_basis: arXiv gives the cited version 2 as submitted on 2024-04-17, read on 2026-11-25.
+    Publication bounds the observations.
+  text: |-
+    Fang et al. (2024) report that a GPT-4 agent exploited 87% of 15 one-day vulnerabilities when
+    given their CVE descriptions and 7% without them, while the other models tested exploited none.
+    This small benchmark is not a success rate of attacks in the field.
+  sources:
+  - https://arxiv.org/abs/2404.08144v2
+- card_id: fbi-help-desk-and-dprk-lures-2024
+  observation_through_utc: 2024-09-03
+  availability_date_utc: 2024-09-03
+  availability_basis: The later cited announcement, I-090324-PSA, is dated 2024-09-03.
+  text: |-
+    FBI announcement I-041124-PSA (11 April 2024) describes criminals who obtain credentials, pose
+    as company employees and contact IT or help-desk staff to update login information, gaining
+    access to a company's network to steal data and extort victims. I-090324-PSA (3 September
+    2024) describes North Korean actors approaching employees of decentralized-finance and
+    cryptocurrency businesses with offers of employment or investment, including requests to run
+    code as a pre-employment test, to deploy malware and steal company cryptocurrency. Neither
+    announcement counts campaigns or attributes incidents to AI.
+  sources:
+  - https://www.ic3.gov/PSA/2024/PSA240411
+  - https://www.ic3.gov/PSA/2024/PSA240903
+- card_id: ic3-critical-infrastructure-2024-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-04-30
+  availability_basis: The IC3 2025 report file carries a date of 2026-04-16; month-end is the bound used for
+    its release.
+  text: |-
+    All-cause US reference, not AI-attributed. IC3's 2025 report records more than 3,600 ransomware
+    complaints with reported losses exceeding USD 32 million, a figure it calls artificially low.
+    Its chart of complaints from the 16 critical-infrastructure sectors shows, for ransomware and
+    data breach respectively, 460 and 182 in healthcare and public health, 355 and 52 in critical
+    manufacturing, 258 and 189 in financial services, 232 and 199 in information technology, 80 and
+    82 in transportation, 54 and 31 in energy, 51 and 28 in communications and 25 and 11 in water
+    and wastewater; more than 1,400 further ransomware complaints came from organizations outside
+    those sectors. The 2024 report recorded 4,878 complaints from critical-infrastructure
+    organizations affected by a cyber threat. Complaints are self-reported and do not say how
+    attackers gained access.
+  sources:
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+  - https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf
+- card_id: software-supply-chain-compromises
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    SolarWinds disclosed in December 2020 that fewer than 18,000 customers may have installed an
+    affected version of its Orion software, and its annual report for 2020 states its belief that
+    the organizations actually exploited were substantially fewer. Kaseya's July 2021 ransomware
+    incident affected fewer than 60 direct customers and no more than 1,500 downstream businesses,
+    as of 5 July in the account summarized by the US National Counterintelligence and Security
+    Center. CISA's 29 March 2024 alert concerns malicious code in XZ Utils versions 5.6.0 and
+    5.6.1, a near miss rather than a realized loss. Potentially affected installations, exploited
+    organizations and losses are different quantities, and none of these incidents is attributed to
+    AI.
+  sources:
+  - https://www.sec.gov/Archives/edgar/data/1739942/000162828020017451/swi-20201214.htm
+  - https://www.sec.gov/Archives/edgar/data/1739942/000173994221000043/swi-20201231.htm
+  - https://archive.dni.gov/files/NCSC/documents/SafeguardingOurFuture/Kaseya%20VSA%20Supply%20Chain%20Ransomware%20Attack.pdf
+  - https://www.cisa.gov/news-events/alerts/2024/03/29/reported-supply-chain-compromise-affecting-xz-utils-data-compression-library-cve-2024-3094
+  - https://www.cisa.gov/news-events/news/lessons-xz-utils-achieving-more-sustainable-open-source-ecosystem
+- card_id: open-source-malware-and-model-hub-scans-2024-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-10-27
+  availability_basis: Sonatype's press release for the report is dated 2026-01-28; the report's web pages were
+    served with a last-modified date of 2026-10-27, used here as the bound. arXiv gives the model-hub study as
+    submitted on 2024-09-14.
+  text: |-
+    Software and model registry reference; only the model-hub figures are AI-specific. Sonatype's
+    2026 State of the Software Supply Chain report says it identified more than 454,600 new
+    malicious packages in 2025, over 99% of them on npm. Its registry table shows 749.7 thousand
+    components added to npm in 2025 and 5.59 million in total, without saying whether malicious
+    packages are among them. Repository abuse appeared in 55.9% of logged malicious packages and
+    secrets exfiltration in 3.9%; self-replicating malware campaigns added 171,740 malicious
+    packages to npm in a few months. An academic scan of a Hugging Face mirror for over three months
+    monitored more than 705 thousand models and 176 thousand datasets, finding 91 malicious models
+    and 9 malicious dataset loading scripts. Packages and models are not campaigns, victims or
+    losses.
+  sources:
+  - https://www.sonatype.com/state-of-the-software-supply-chain/2026/open-source-malware
+  - https://www.sonatype.com/state-of-the-software-supply-chain/2026/software-infrastructure-growth
+  - https://www.sonatype.com/press-releases/sonatype-research-reveals-open-malware-grows-75-percent
+  - https://arxiv.org/abs/2409.09368
+- card_id: pytorch-torchtriton-2022
+  observation_through_utc: 2022-12-31
+  availability_date_utc: 2024-11-14
+  availability_basis: The post is dated 2022-12-31 and its page records a modification on 2024-11-14, the
+    availability date used; both read on 2026-11-25.
+  text: |-
+    PyTorch reported that Linux users who installed PyTorch-nightly with pip between 25 and 30
+    December 2022 could receive a malicious torchtriton dependency from PyPI that uploaded
+    sensitive data from their systems. Stable packages were not affected. The post gives no loss
+    amount.
+  sources:
+  - https://pytorch.org/blog/compromised-nightly-dependency/
+- card_id: crowdstrike-outage-2024
+  observation_through_utc: 2024-07-24
+  availability_date_utc: 2024-07-24
+  availability_basis: Parametrix dates its release 2024-07-24, read on 2026-11-25. Publication bounds the
+    observations.
+  text: |-
+    Parametrix estimated that the 19 July 2024 CrowdStrike outage, a defective software update
+    that affected many customers at once, cost US Fortune 500 companies other than Microsoft $5.4B
+    in direct financial loss, of which $0.54-$1.08B was insured, a range that already reflects
+    those customers' policy retentions and limits. The outage was not a malicious attack or an AI
+    failure, and the estimates cover neither global losses nor the vendor's liability.
+  sources:
+  - https://www.parametrixinsurance.com/in-the-news/crowdstrike-to-cost-fortune-500-5-4-billion-insured-loss-range-of-540-million-to-1-08-billion
+- card_id: knight-capital-2012
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    The SEC found that on 1 August 2012 Knight Capital's order router sent more than 4 million
+    orders into the market in the first 45 minutes after the open while trying to fill 212 customer
+    orders, and that the firm eventually lost more than $460 million; Knight, without admitting or
+    denying the findings, agreed to pay a $12 million penalty. This was a failure of conventional
+    trading software, not of an AI system.
+  sources:
+  - https://www.sec.gov/newsroom/press-releases/2013-222
+- card_id: flash-crash-2010
+  observation_through_utc: 2010-09-30
+  availability_date_utc: 2010-09-30
+  availability_basis: The joint CFTC and SEC staff report is dated 30 September 2010, read in the CFTC's copy
+    on 2026-11-25. Publication bounds the observations.
+  text: |-
+    The SEC and CFTC staff report on the market events of 6 May 2010 describes a mutual fund
+    complex's program to sell 75,000 E-mini contracts, valued at about $4.1B, amid thinning
+    liquidity. That figure is trading notional, not realized loss, and the temporary repricing of
+    markets is a different quantity again.
+  sources:
+  - https://www.sec.gov/news/studies/2010/marketevents-report.pdf
+- card_id: nhtsa-crash-reporting
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    NHTSA crash reports under its Standing General Order are subject to reporting thresholds and
+    updates, and one crash can have several reports. They are not normalized by exposure, and
+    automated driving systems and Level 2 driver assistance are different categories.
+  sources:
+  - https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting
+- card_id: gartner-autonomous-agents-2025
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    Gartner's May-June 2025 survey of 360 IT application leaders found 15% considering, piloting or
+    deploying fully autonomous AI agents. This is not production-only adoption and does not count
+    deployments.
+  sources:
+  - https://www.gartner.com/en/newsroom/press-releases/2025-09-30-gartner-survey-finds-just-15-percent-of-it-application-leaders-are-considering-piloting-or-deploying-fully-autonomous-ai-agents
+- card_id: automated-eligibility-cases
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    In September 2023 the EEOC announced that iTutorGroup would pay $365,000 and provide other
+    relief to settle the agency's suit alleging that its application software automatically
+    rejected female applicants aged 55 or older and male applicants aged 60 or older, in violation
+    of the Age Discrimination in Employment Act. The New York Department of Financial Services'
+    March 2021 report on its investigation of the Apple Card, underwritten by Goldman Sachs Bank
+    USA, did not find evidence of deliberate or disparate-impact discrimination, but found
+    deficiencies in customer service and transparency. Neither matter concerned a frontier AI
+    model.
+  sources:
+  - https://www.eeoc.gov/newsroom/itutorgroup-pay-365000-settle-eeoc-discriminatory-hiring-suit
+  - https://www.dfs.ny.gov/system/files/documents/2021/03/rpt_202103_apple_card_investigation.pdf
+- card_id: platform-penalty-ceilings
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07; the
+    Commission's list of designated services was read on 2026-11-19 for the designations of 25 April 2023 and 31
+    August 2026.
+  text: |-
+    The EU Digital Services Act applied generally from 17 February 2024; designated very large
+    online platforms and search engines became subject to their obligations four months after
+    notification, including the first designations on 25 April 2023. Its Articles 52 and 74 cap
+    fines at 6% of the provider's worldwide annual turnover in the preceding financial year.
+    Schedule 13 of the UK Online Safety Act sets a maximum penalty of the greater of GBP 18 million
+    and 10% of qualifying worldwide revenue, with statutory entity and accounting-period rules.
+    These are legal maxima for breaches of those regimes, not typical fines or liability of a model
+    supplier for a platform's conduct. An AI assistant can itself be a designated service: the
+    Commission's list of designated services shows ChatGPT, provided in the EU by OpenAI Ireland
+    Limited, designated a very large online search engine on 31 August 2026.
+  sources:
+  - https://digital-strategy.ec.europa.eu/en/policies/dsa-enforcement
+  - https://digital-strategy.ec.europa.eu/en/policies/list-designated-vlops-and-vloses
+  - https://eur-lex.europa.eu/eli/reg/2022/2065/oj/eng
+  - https://publications.europa.eu/resource/celex/32022R2065
+  - https://www.legislation.gov.uk/ukpga/2023/50/schedule/13
+- card_id: gpt4-diagnostic-trial-2024
+  observation_through_utc: 2024-10-28
+  availability_date_utc: 2024-10-28
+  availability_basis: The journal gives publication on 2024-10-28, read at PubMed Central on 2026-11-25.
+    Publication bounds the observations.
+  text: |-
+    In a randomized trial of 50 physicians published in 2024, access to a GPT-4-based chatbot did
+    not significantly improve diagnostic reasoning compared with conventional resources. This
+    controlled diagnostic exercise measured neither patient outcomes nor malpractice frequency.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/39466245/
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC11519755/
+- card_id: npdb-payment-reports
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    NPDB malpractice payment reports record payments made for practitioners, and several reports
+    may relate to one underlying event. A report is filed for each practitioner rather than for
+    each patient or incident, and a payment does not create a presumption that malpractice
+    occurred.
+  sources:
+  - https://www.npdb.hrsa.gov/guidebook/EMMPR.jsp
+- card_id: ama-physician-ai-use-2024
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2025-02-12
+  availability_basis: The AMA dates its release 2025-02-12, read on 2026-11-25; its observations are for 2024.
+  text: |-
+    The AMA's survey published in February 2025 found that 66% of physicians surveyed in 2024 said
+    they currently use AI in their practice, up from 38% in 2023. The AMA's announcement does not
+    say which uses that figure covers; it is not the share of clinical encounters guided by AI and
+    does not measure harmful outcomes.
+  sources:
+  - https://www.ama-assn.org/press-center/ama-press-releases/ama-physician-enthusiasm-grows-health-care-ai
+- card_id: fabricated-citation-cases
+  observation_through_utc: 2024-02-13
+  availability_date_utc: 2024-02-13
+  availability_basis: The latest of the three decisions, Kruse v. Karlen, was filed on 2024-02-13; the others
+    are dated 2023-06-22 and 2024-01-30. All were read in court or govinfo copies by 2026-11-25. The decisions
+    bound the observations.
+  text: |-
+    In Mata v. Avianca (S.D.N.Y., 22 June 2023), the court imposed one USD 5,000 penalty jointly
+    and severally on two attorneys and their firm after the submission of fabricated authorities;
+    it did not impose USD 5,000 on each attorney. Kruse v. Karlen (Missouri Court of Appeals, 2024)
+    involved fictitious citations in a self-represented appellant's brief. In Park v. Kim (US Court
+    of Appeals for the Second Circuit, 30 January 2024), the court referred counsel to its
+    Grievance Panel over a nonexistent authority. These are distinct procedural responses, not a
+    series of indemnity payments.
+  sources:
+  - https://law.justia.com/cases/federal/district-courts/new-york/nysdce/1%3A2022cv01461/575368/54/
+  - https://www.nhd.uscourts.gov/sites/default/files/pdf/Mata-v-Avianca-sanctions-order.PDF
+  - https://law.justia.com/cases/missouri/court-of-appeals/2024/ed111172.html
+  - https://law.justia.com/cases/federal/appellate-courts/ca2/22-2057/22-2057-2024-01-30.html
+  - https://www.govinfo.gov/content/pkg/USCOURTS-ca2-22-02057/pdf/USCOURTS-ca2-22-02057-0.pdf
+- card_id: legal-ai-adoption-2025
+  observation_through_utc: 2025-12-09
+  availability_date_utc: 2025-12-09
+  availability_basis: The ABA Journal of 2025-12-09 reports the Profile's release the day before, and that
+    article's date is the bound used; Thomson Reuters dates its page 2025-04-15. Both read on 2026-11-25.
+  text: |-
+    Thomson Reuters' 2025 survey of more than 1,700 professionals in the United States, the United
+    Kingdom and Canada reported generative-AI adoption rates of 28% for law firms and 23% for
+    corporate legal departments; these are survey-reported rates, not counts of organizations,
+    lawyers or filings. The ABA's 2025 Profile of the Legal Profession reports about 1.37 million
+    active resident US lawyers.
+  sources:
+  - https://legal.thomsonreuters.com/blog/genai-report-executive-summary-for-legal-professionals-tri/
+  - https://www.americanbar.org/news/abanews/aba-news-archives/2025/12/aba-2025-profile-of-the-legal-profession-report/
+- card_id: aba-formal-opinion-512
+  observation_through_utc: 2024-07-29
+  availability_date_utc: 2024-07-29
+  availability_basis: The opinion is dated 2024-07-29.
+  text: |-
+    ABA Formal Opinion 512 (29 July 2024) sets out lawyers' duties when using generative AI,
+    including competence, confidentiality, communication, supervision and candor toward the
+    tribunal. It describes professional duties, not the frequency of losses from legal advice.
+  sources:
+  - https://www.americanbar.org/content/dam/aba/administrative/professional_responsibility/ethics-opinions/aba-formal-opinion-512.pdf
+- card_id: ftc-donotpay-2025
+  observation_through_utc: 2025-01-14
+  availability_date_utc: 2025-01-14
+  availability_basis: The FTC decision and order was issued on 2025-01-14.
+  text: |-
+    The FTC's decision and order against DoNotPay, issued in January 2025, required USD 193,000 in
+    monetary relief and bars the company from claiming, without competent and reliable evidence,
+    that its service operates like a human lawyer. It resolved a consumer-protection action over
+    product claims, not a malpractice claim.
+  sources:
+  - https://www.ftc.gov/system/files/ftc_gov/pdf/2323042_donotpay_decision_and_order_0.pdf
+- card_id: sec-ai-washing-2024
+  observation_through_utc: 2024-03-18
+  availability_date_utc: 2024-03-18
+  availability_basis: The SEC release is dated 2024-03-18.
+  text: |-
+    In March 2024 the SEC settled charges against two investment advisers, Delphia (USA) and
+    Global Predictions, for misleading statements about their use of AI, with civil penalties of
+    $225,000 and $175,000. The orders concern statements about AI, not errors in AI output.
+  sources:
+  - https://www.sec.gov/newsroom/press-releases/2024-36
+- card_id: financebench-2023
+  observation_through_utc: 2023-11-20
+  availability_date_utc: 2023-11-20
+  availability_basis: arXiv gives the paper as submitted on 2023-11-20, read on 2026-11-25. Publication bounds
+    the observations.
+  text: |-
+    FinanceBench (2023) tested 16 model configurations on 150 questions about public companies'
+    financial filings; GPT-4-Turbo with a retrieval system answered 81% of them incorrectly or
+    refused to answer. Results depend on the model, the retrieval setup and the task, and
+    benchmark errors are not error rates in production use.
+  sources:
+  - https://arxiv.org/abs/2311.11944
+- card_id: openai-outage-2024-12
+  observation_through_utc: 2024-12-13
+  availability_date_utc: 2024-12-13
+  availability_basis: OpenAI's status page gives the write-up as posted on 12 December 2024 at 20:17 at UTC-5,
+    which is 2024-12-13 in UTC; read on 2026-11-25. Publication bounds the observations.
+  text: |-
+    OpenAI's status write-up for 11 December 2024 describes an outage of several hours across its
+    API, ChatGPT and Sora, caused by a new telemetry service whose configuration overloaded the
+    Kubernetes control planes of large clusters. It documents a service failure, not customers'
+    economic loss.
+  sources:
+  - https://status.openai.com/incidents/ctrsv3lwd797
+- card_id: ic3-bec-2013-2023
+  observation_through_utc: 2023-12-31
+  availability_date_utc: 2024-09-11
+  availability_basis: I-091124-PSA is dated 2024-09-11 and reports statistics through December 2023.
+  text: |-
+    FBI announcement I-091124-PSA (11 September 2024) reports 305,033 domestic and international
+    business email compromise incidents and $55,499,915,582 of exposed dollar loss from October
+    2013 to December 2023, reported to IC3 and law enforcement and derived from filings with
+    financial institutions. IC3 defines exposed loss to include both actual and attempted loss
+    (I-050422-PSA). These are reported incidents, overlapping IC3's annual complaint totals, not
+    deduplicated campaigns, and they are not attributed to AI.
+  sources:
+  - https://www.ic3.gov/PSA/2024/PSA240911
+  - https://www.ic3.gov/PSA/2022/PSA220504
+- card_id: ic3-bec-and-recovery-team-2017-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-07-23
+  availability_basis: The latest cited source is the Census methodology page, cited for the term employer
+    firms, which shows a last revision on 2026-07-23. The IC3 2025 annual report carries a file date of
+    2026-04-16.
+  text: |-
+    All-cause reference, mostly not AI-related. IC3 recorded business email compromise complaint
+    losses of USD 2,946,830,270 from 21,489 complaints in 2023, USD 2,770,151,146 from 21,442 in
+    2024 and USD 3,046,598,558 from 24,768 in 2025; 135 of the 2025 complaints, with USD 30,256,592
+    of losses, referred to AI. Its recovery team began its freeze process for 3,900 incidents of all
+    types in 2025, with USD 1,163,919,846 of attempted theft, and froze USD 679,013,183. The Census
+    Bureau counted 6,395,635 US employer firms in 2022. Simpson and Moore (2020) analyzed reports
+    made to IC3 from 1 January to 27 September 2017: of 7,925 reported thefts, 4,166 (52.5%)
+    succeeded; of those, 60% were USD 10,000 to 100,000, another 20% USD 100,000 to 1 million and
+    1.4% over USD 1 million. These are complaints, not campaigns.
+  sources:
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+  - https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf
+  - https://www2.census.gov/programs-surveys/susb/tables/2022/us_naicssector_large_emplsize_2022.xlsx
+  - https://par.nsf.gov/servlets/purl/10256908
+  - https://www.census.gov/programs-surveys/susb/technical-documentation/methodology.html
+- card_id: vishing-and-gemini-misuse
+  observation_through_utc: 2025-02-27
+  availability_date_utc: 2025-02-27
+  availability_basis: The latest cited source, CrowdStrike's report, is dated 2025-02-27 and Google's post
+    2025-01-29; both read on 2026-11-25. Publication bounds the observations.
+  text: |-
+    CrowdStrike's 2025 Global Threat Report describes a 442% increase in observed voice phishing
+    (vishing) between the first and second halves of 2024. In January 2025 Google's Threat
+    Intelligence Group reported that Iranian government-backed actors used Gemini to craft phishing
+    material, that North Korean actors asked it about advanced Gmail phishing techniques, requests
+    to abuse its products that Google says were unsuccessful, and used it to draft cover letters
+    and research jobs, which Google assessed would likely support placing covert IT workers, and
+    that it saw no indication of novel capabilities. Neither source measures how often AI
+    assistance leads to a successful attack or its losses.
+  sources:
+  - https://www.crowdstrike.com/en-us/blog/crowdstrike-2025-global-threat-report-findings/
+  - https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai
+- card_id: ftc-ic3-consumer-fraud-2023-2024
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2026-09-07
+  availability_basis: The figures cover 2023 and 2024; the availability bound is the date the sources were checked,
+    2026-09-07.
+  text: |-
+    The FTC received reports of more than $10B in fraud losses in 2023, including nearly $2.7B in
+    imposter scams. IC3's 2024 report records $6.57B in investment-fraud complaint losses, up from
+    about $4.57B in 2023. These are reported losses across all methods; they count reports and
+    complaints, not campaigns, and are not attributed to AI.
+  sources:
+  - https://www.ftc.gov/news-events/news/press-releases/2024/02/nationwide-fraud-losses-top-10-billion-2023-ftc-steps-efforts-protect-public
+  - https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf
+- card_id: large-fraud-against-individuals
+  observation_through_utc: 2026-04-16
+  availability_date_utc: 2026-04-30
+  availability_basis: The latest cited source, the IC3 2025 annual report, was last modified on 2026-04-16;
+    month-end is the bound used for its release.
+  text: |-
+    All-cause reference class, not AI-attributed. Complaint totals sum many campaigns: the FBI's
+    IC3 recorded USD 20.877 billion of reported losses across 1,008,597 complaints in 2025,
+    including USD 8.65 billion for investment fraud, and complaints whose information referred to
+    AI reported about USD 893 million. These count complaints, not campaigns.
+    DOJ releases document single campaigns above USD 1 billion, for example:
+    - OneCoin, a cryptocurrency investment scheme in which victims invested over USD 4 billion
+      worldwide from 2014 to 2019; in April 2026 DOJ said more than USD 40 million of forfeited
+      assets was available for victim compensation.
+    - Prince Group, a Cambodian conglomerate whose chairman was indicted in October 2025 over
+      alleged forced-labor scam compounds; DOJ said the scams stole billions of dollars and filed
+      a forfeiture complaint against about 127,271 bitcoin then worth about USD 15 billion.
+    These examples are a lower bound, not a census. Invested, stolen and forfeited amounts are not
+    total victim loss, and an indictment is an allegation. Neither DOJ release attributes these
+    campaigns to AI assistance.
+  sources:
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+  - https://www.justice.gov/opa/pr/justice-department-announces-compensation-process-onecoin-fraud-victims-funds-recovered
+  - https://www.justice.gov/opa/pr/chairman-prince-group-indicted-operating-cambodian-forced-labor-scam-compounds-engaged
+- card_id: large-fraud-against-organizations
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-04-30
+  availability_basis: The latest cited source, the IC3 2025 annual report, was last modified on 2026-04-16;
+    month-end is the bound used for its release.
+  text: |-
+    All-cause reference class, not AI-attributed. DOJ health-care fraud cases include campaigns
+    above USD 1 billion, stated as claims or intended loss rather than paid loss. Operation Gold
+    Rush, which DOJ called the largest loss amount ever charged in a health-care fraud case it
+    brought, involved USD 10.6 billion of fraudulent claims submitted to Medicare. Medicare paid
+    about USD 41 million of USD 4.45 billion scheduled, while Medicare supplemental insurers paid
+    about USD 900 million. It was part of a June 2025 takedown charging 324 defendants with over
+    USD 14.6 billion of intended loss. In the same takedown, DOJ alleged that defendants in a
+    separate USD 703 million scheme used artificial intelligence to create fake recordings of
+    Medicare beneficiaries purportedly consenting to receive products; Medicare and Medicare
+    Advantage plans paid about USD 418 million on those claims. DOJ's account of Operation Gold
+    Rush does not mention AI.
+    Payment-diversion fraud is reported in aggregate: IC3 recorded USD 3.05 billion of business
+    email compromise complaint losses for 2025 and USD 2.77 billion for 2024, counting complaints,
+    not campaigns. The FBI attributed the February 2025 theft of about USD 1.5 billion of virtual
+    assets from the cryptocurrency exchange Bybit to North Korea; its announcement does not mention
+    AI.
+    Claimed, billed and intended amounts are not paid losses, and an indictment, information or
+    complaint is an allegation.
+  sources:
+  - https://www.justice.gov/opa/pr/national-health-care-fraud-takedown-results-324-defendants-charged-connection-over-146
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+  - https://www.ic3.gov/psa/2025/psa250226
+- card_id: large-system-compromises
+  observation_through_utc: 2025-02-26
+  availability_date_utc: 2025-02-26
+  availability_basis: The latest cited source, the FBI's announcement of a cryptocurrency-exchange theft, is dated 2025-02-26; this
+    bounds availability and is not the curation date.
+  text: |-
+    All-cause reference class, not AI-attributed: system compromises of one organization for which
+    a US government source published a loss figure of at least USD 1 billion. These examples are a
+    lower bound, not a census, and their figures measure different things:
+    - Ransomware at Change Healthcare, a UnitedHealth Group subsidiary and one of the world's
+      largest health payment processors (February 2024): a December 2024 Senate committee report
+      said the attack was predicted to cost the company USD 2.3 billion to restore the affected
+      platform and cover other remediation, a cost to the company alone.
+    - Bybit, a cryptocurrency exchange (February 2025): the FBI attributed the theft of about USD
+      1.5 billion of virtual assets from the exchange to North Korea; this is the stolen value.
+    One company's predicted costs and a stolen-asset value are not complete losses to all affected
+    parties. Disclosure depends on size, jurisdiction and listing, so unpriced incidents are
+    missing and published figures can err either way. Neither source attributes its incident to AI
+    assistance.
+  sources:
+  - https://www.congress.gov/118/crpt/srpt280/CRPT-118srpt280.pdf
+  - https://www.ic3.gov/psa/2025/psa250226
+- card_id: notpetya-us-government-figures
+  observation_through_utc: 2020-12-02
+  availability_date_utc: 2021-01-31
+  availability_basis: The later cited source, the White House's maritime cybersecurity plan, is dated 2 December 2020 in its
+    file name and sits under a January 2021 path on the archived site; the end of that month bounds availability.
+  text: |-
+    All-cause reference, not AI-attributed. NotPetya malware (June 2017): a February 2018 White
+    House statement called it the most destructive and costly cyber-attack in history, causing
+    billions of dollars in damage across Europe, Asia and the Americas; the White House's December
+    2020 maritime cybersecurity plan put the damage in excess of USD 10 billion, citing press
+    reporting. An economic damage estimate is not a complete loss to all affected parties, and
+    published figures can err either way. Neither source attributes the attack to AI assistance.
+  sources:
+  - https://trumpwhitehouse.archives.gov/briefings-statements/statement-press-secretary-25/
+  - https://trumpwhitehouse.archives.gov/wp-content/uploads/2021/01/12.2.2020-National-Maritime-Cybersecurity-Plan.pdf
+- card_id: emulex-hoax-2000
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    The SEC's January 2001 litigation release reported about $110 million of investor losses
+    following a false press release about Emulex on 25 August 2000, separately from a $2.2 billion
+    decline in market capitalization; its July 2001 settlement release says the stock rebounded
+    that day to close above its price before the hoax. The releases do not say how the investor
+    losses were calculated, and the case did not involve AI. Restitution, disgorgement and the
+    perpetrator's profits are separate quantities, not further victim losses.
+  sources:
+  - https://www.sec.gov/enforcement-litigation/litigation-releases/lr-16857
+  - https://www.sec.gov/enforcement-litigation/litigation-releases/lr-17079
+- card_id: meta-influence-networks-2022
+  observation_through_utc: 2022-12-15
+  availability_date_utc: 2022-12-15
+  availability_basis: Meta dates its post 2022-12-15, read on 2026-11-25. Publication bounds the observations.
+  text: |-
+    Meta's December 2022 update said it had disrupted more than 200 covert influence networks since
+    it began public reporting in 2017, a cumulative count, not 200 each year. These are detected
+    networks, not a census of operations that caused losses.
+  sources:
+  - https://about.fb.com/news/2022/12/metas-2022-coordinated-inauthentic-behavior-enforcements/
+- card_id: openai-influence-operations-2026
+  observation_through_utc: 2026-06-10
+  availability_date_utc: 2026-06-10
+  availability_basis: OpenAI dates the report 2026-06-10, read on 2026-11-25. Publication bounds the
+    observations.
+  text: |-
+    OpenAI's June 2026 report described two clusters of accounts, which it linked to the PRC, that
+    attempted covert influence around US debates on AI, and reported no evidence of meaningful
+    breakout beyond their own activity. These are selected detected operations, not a census of
+    successful campaigns, and the absence of observed engagement in these cases neither shows that
+    no hidden campaign succeeded nor measures any losses.
+  sources:
+  - https://openai.com/index/prc-linked-influence-operations-ai-debates/
+- card_id: llm-persuasion-studies
+  observation_through_utc: 2025-07-01
+  availability_date_utc: 2025-07-01
+  availability_basis: The latest cited study was published on 2025-07-01 and the other submitted on
+    2023-01-10; both read on 2026-11-25. Publication bounds the observations.
+  text: |-
+    Bai et al. (2025) report experiments in which policy messages written by language models,
+    including GPT-3.5, changed readers' attitudes; attitude change is not economic harm. Goldstein
+    et al. (2023) analyze how language models could change influence operations and possible
+    mitigations, without measuring the outcomes or costs of actual campaigns.
+  sources:
+  - https://www.nature.com/articles/s41467-025-61345-5
+  - https://arxiv.org/abs/2301.04246
+- card_id: us-procurement-exclusion-law
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    The Federal Acquisition Supply Chain Security Act provides distinct exclusion and removal
+    mechanisms. FAR subpart 4.23 identifies the Homeland Security, Defense and
+    intelligence-community officials who issue exclusion and removal orders, each within its own
+    scope; the Federal Acquisition Security Council recommends such orders but does not itself
+    issue them. Covered procurement actions under 41 USC 4713 and Defense-specific authority under
+    10 USC 3252 have their own statutory conditions, and a restriction under one authority is not
+    by itself a government-wide commercial ban.
+  sources:
+  - https://www.acquisition.gov/far/subpart-4.23
+  - https://media.cadc.uscourts.gov/orders/docs/2026/04/26-1049LDSN3.pdf
+  - https://www.govinfo.gov/content/pkg/USCODE-2024-title41/html/USCODE-2024-title41-subtitleI-divsnC-chap47-sec4713.htm
+  - https://www.govinfo.gov/content/pkg/USCODE-2024-title10/html/USCODE-2024-title10-subtitleA-partV-subpartB-chap223-sec3252.htm
+- card_id: anthropic-designation-2026
+  observation_through_utc: 2026-09-25
+  availability_date_utc: 2026-09-25
+  availability_basis: The latest cited source, the D.C. Circuit's opinion, was decided on 2026-09-25; the card describes
+    the matter as of that opinion.
+  text: |-
+    The D.C. Circuit's rulings in Anthropic PBC v. Department of War describe the Secretary of
+    War's 3 March 2026 determination under 41 USC 4713 that procuring AI goods or services from
+    Anthropic presents a supply-chain risk, after Anthropic refused to authorize use of its Claude
+    models for mass domestic surveillance or lethal autonomous warfare. The Department cancelled
+    its contracts with Anthropic, began removing Claude from its systems and barred its contractors
+    from using Anthropic as a subcontractor on Department work, but did not bar contractors from
+    using Claude for work for other customers. On 8 April 2026 the court denied a stay pending
+    review and expedited the case; it found that Anthropic would likely suffer some irreparable,
+    mainly financial harm and had documented some potentially significant losses, but said the
+    precise amount was not fully clear. On 25 September 2026 a divided panel denied Anthropic's
+    petitions for review, holding that the Secretary had not exceeded his authority under the
+    statute or the Constitution; one judge dissented. The opinion notes that a federal district
+    court in California had on 27 August 2026 set aside the Department's separate designation of
+    Anthropic as a supply-chain risk under 10 USC 3252, whose definition of that risk is narrower.
+    Anthropic's 5 March 2026 statement, a party's account that names 10 USC 3252 as the relevant
+    statute, said the designation applies only to use of Claude as a direct part of Department of
+    War contracts and that it would challenge the action in court.
+  sources:
+  - https://media.cadc.uscourts.gov/orders/docs/2026/04/26-1049LDSN3.pdf
+  - https://www.anthropic.com/news/where-stand-department-war
+  - https://media.cadc.uscourts.gov/opinions/docs/2026/09/26-1049-2194984.pdf
+- card_id: gdpr-fines-and-complaints-2018-2025
+  observation_through_utc: 2025-03-01
+  availability_date_utc: 2026-03-04
+  availability_basis: The CMS page is dated 13 May 2025, states a cutoff of 1 March 2025 and records a
+    modification on 2026-03-04; the Commission's report is dated 25 July 2024, and the Board's contribution,
+    adopted on 12 December 2023, says its fine figures were retrieved in October and November 2023.
+  text: |-
+    Regulator-level reference, not AI-specific. The European Commission's second report on the GDPR
+    (July 2024) says data protection authorities have imposed over 6,680 fines amounting to around
+    EUR 4.2 billion, EUR 2.8 billion of it by Ireland's authority, that they collectively receive
+    over 100,000 complaints a year and have launched over 20,000 own-initiative investigations; the
+    figures behind it were retrieved in October and November 2023. CMS's GDPR Enforcement Tracker
+    Report 2025 recorded 2,245 public fines totalling around EUR 5.65 billion at its 1 March 2025
+    cutoff (2,560 with entries of limited information), and an average fine of EUR 2,360,409; the
+    largest was EUR 1.2 billion, and Ireland's authority imposed eight of the ten largest. CMS calls
+    its tracker necessarily incomplete, and neither source counts AI-related matters or the costs of
+    responding.
+  sources:
+  - https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52024DC0357
+  - https://www.edpb.europa.eu/system/files/2023-12/edpb_contributiongdprevaluation_20231212_en.pdf
+  - https://cms.law/en/gbr/publication/gdpr-enforcement-tracker-report-2025/numbers-and-figures
+  - https://cms.law/en/gbr/publication/gdpr-enforcement-tracker-report-2025/methodology-and-contacts
+- card_id: gdpr-large-fines
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    The EDPB's 2023 annual report records the EUR 1.2 billion fine imposed on Meta Platforms Ireland
+    in 2023, following the Board's binding decision, over transfers of Facebook users' personal data
+    to the United States. In October 2022 the French data protection authority, CNIL, fined
+    Clearview AI EUR 20 million over its processing of personal data, including facial images, of
+    people in France without a legal basis and its failure to respect their rights, and ordered it
+    to stop that processing and delete their data. These are imposed fines, not final paid amounts.
+  sources:
+  - https://www.edpb.europa.eu/system/files/2024-04/edpb_annual_report_2023_en.pdf
+  - https://www.cnil.fr/sites/default/files/2023-05/cnil_-_43e_rapport_annuel_-_2022.pdf
+  - https://www.cnil.fr/en/investigation-powers-cnil/sanctions-issued-cnil
+- card_id: eu-ai-act-gpai-penalties
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07; the EU
+    Publications Office's copy of the regulation was read on 2026-11-19.
+  text: |-
+    The EU AI Act's original prohibited-practice rules applied from 2 February 2025, and
+    obligations for providers of general-purpose AI models from 2 August 2025, subject to
+    transition provisions. Article 101, which applies from 2 August 2026, caps fines on those
+    providers at EUR 15 million or 3% of annual total worldwide turnover in the preceding financial
+    year, whichever is higher. Annualized revenue is not that turnover measure, and a ceiling is
+    not a forecast fine or a finding of liability for a downstream customer's conduct.
+  sources:
+  - https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng
+  - https://publications.europa.eu/resource/celex/32024R1689
+  - https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+- card_id: eu-ai-act-article-5-penalties
+  observation_through_utc: 2026-09-07
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07; the EU
+    Publications Office's copy of the consolidated text was read on 2026-11-19.
+  text: |-
+    Article 99(3) of the EU AI Act, in its version consolidated on 27 July 2026, sets the maximum
+    fine for the prohibited practices of Article 5 at EUR 35 million or, for an undertaking, 7% of
+    total worldwide turnover in the preceding financial year, whichever is higher. Article 99(6)
+    applies the lower amount to SMEs, including start-ups, and Article 99(7) requires a
+    case-specific assessment that includes fines already imposed on the same operator for the same
+    infringement or activity. Article 113 applies Chapter II from 2 February 2025, except the
+    later-added Article 5(1)(ba) and (bb) and Article 5(1a) and (1b), which apply from 2 December
+    2026, so the prohibitions have two application dates. The penalties chapter (Chapter XII)
+    applies from 2 August 2025, except Article 101, and 2 August 2026 is the Act's general
+    application date. Authorities can take up a matter through national market surveillance under
+    Article 74 or AI Office supervision of Article 75(1) systems. Under Article 75a the AI Office
+    may open an investigation where it has reasonable grounds to suspect non-compliance, and may
+    request information even before it opens one, so neither step needs a final infringement
+    finding.
+  sources:
+  - https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02024R1689-20260727
+  - https://publications.europa.eu/resource/celex/02024R1689-20260727
+- card_id: ncsl-ai-legislation-2025
+  observation_through_utc: 2025-07-10
+  availability_date_utc: 2026-09-07
+  availability_basis: Availability bound for this excerpt, whose sources were checked on 2026-09-07.
+  text: |-
+    NCSL's summary of 2025 AI legislation, last updated on 10 July 2025, reports that 38 states had
+    adopted or enacted around 100 AI-related measures that year. The measures include resolutions
+    and vary in subject matter, scope and effective dates; they are not a count of obligations or
+    enforcement matters affecting AI providers.
+  sources:
+  - https://www.ncsl.org/technology-and-communication/artificial-intelligence-2025-legislation
+- card_id: large-enforcement-matters
+  observation_through_utc: 2026-08-26
+  availability_date_utc: 2026-08-26
+  availability_basis: The latest cited sources, the multistate settlement agreement and the Texas Attorney General's
+    release, were filed and published on 2026-08-26; this bounds availability and is not the curation date.
+  text: |-
+    All-cause reference class, not AI-related: US federal and state government penalties and
+    monetary settlements of at least USD 1 billion over large technology companies' own conduct,
+    2017 to August 2026. These examples, from the authorities' own filings and releases, are a
+    lower bound, not a census; non-US authorities' matters are outside this list.
+    - Facebook (July 2019): a USD 5 billion civil penalty in a stipulated order the Justice
+      Department filed for the FTC, which the filing called the largest civil penalty ever
+      obtained by the United States on behalf of the FTC.
+    - Texas Attorney General: USD 1.4 billion from Meta over biometric data (July 2024); USD 1.375
+      billion from Google over location, incognito-search and biometric data (settlement in
+      principle, May 2025).
+    - Youth-harm claims against Meta (August 2026): an agreement with 47 states, the District of
+      Columbia and three territories, filed for entry as consent judgments, provides ten guaranteed
+      installments of about USD 1.17 billion each, up to about USD 16.7 billion with contingent
+      installments, plus USD 75 million for state costs; the same agreement pays about USD 459
+      million to 48 states and territories for releasing separate Cambridge Analytica claims. Texas
+      separately announced over USD 1 billion from Meta the same day.
+    These are imposed or agreed amounts, often paid over years, and they exclude defense,
+    compliance and other costs. Settlements and agreed judgments need not admit liability. The 2019
+    filing says the FTC tied the range of civil penalties it sought to about 900 million views of
+    Facebook webpages containing allegedly deceptive privacy statements, counting each view as an
+    alleged violation; on that method, exposure grows with a platform's reach.
+  sources:
+  - https://www.justice.gov/opa/press-release/file/1186511/dl
+  - https://www.texasattorneygeneral.gov/news/releases/attorney-general-ken-paxton-secures-14-billion-settlement-meta-over-its-unauthorized-capture
+  - https://www.texasattorneygeneral.gov/news/releases/attorney-general-ken-paxton-secures-historic-1375-billion-settlement-google-related-texans-data
+  - https://ag.ny.gov/sites/default/files/settlements-agreements/california-et-al-v-meta-platforms-inc-et-al-settlement-2026.pdf
+  - https://www.texasattorneygeneral.gov/news/releases/attorney-general-ken-paxton-secures-over-1-billion-meta-historic-settlement-protects-texas-kids
+- card_id: large-copyright-claims
+  observation_through_utc: 2025-10-17
+  availability_date_utc: 2025-10-17
+  availability_basis: The cited court opinion was filed on 2025-10-17; this bounds availability and is not the curation date.
+  text: |-
+    Reference class: private copyright and other IP claims against AI companies resolved at or
+    above USD 1 billion, as of October 2025. This example is a lower bound, not a census. In Bartz
+    v. Anthropic, a copyright class action in the Northern District of California over books that
+    Anthropic downloaded from pirate libraries and copied, the parties settled at about USD 3,100
+    per work across 482,460 works, which comes to about USD 1.5 billion before costs and fees, and
+    the court granted preliminary approval in September 2025. The court described the case as
+    concerning AI inputs, not AI outputs: class members release past claims over pirating and
+    copying their works up to the point of any AI output, but not claims about AI outputs or about
+    conduct from 25 August 2025, and Anthropic is to destroy copies of class members' works derived
+    from the LibGen and PiLiMi libraries, unless legally required to preserve them. Had the
+    plaintiffs won at trial, statutory damages could have ranged from USD 200 to USD 150,000 per
+    work. One matter does not establish a frequency, a settlement is not an adjudication of
+    liability, and it is the claimants' payment, not the matter's complete cost; defense costs are
+    additional.
+  sources:
+  - https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_24-cv-05417/pdf/USCOURTS-cand-3_24-cv-05417-5.pdf
+- card_id: large-privacy-claims
+  observation_through_utc: 2025-09-17
+  availability_date_utc: 2025-09-17
+  availability_basis: The latest cited source, the post-trial order in the Flo Health class action, was filed on 2025-09-17; this
+    bounds availability and is not the curation date.
+  text: |-
+    Reference class: private privacy and biometric claims against technology companies, as of
+    September 2025. Examples below USD 1 billion: Facebook's USD 725 million settlement of the
+    consumer-privacy class action arising from the Cambridge Analytica scandal, over third-party
+    access to user data, whose approval the Ninth Circuit affirmed in February 2025, and Facebook's
+    USD 650 million Illinois biometric-privacy settlement, which the district court approved after
+    rejecting a USD 550 million version. In a class action over data sharing by the Flo
+    period-tracking app, a jury found that Meta, which received the data, violated California's
+    Invasion of Privacy Act by obtaining app users' menstrual and ovulation information, and in
+    September 2025 the court denied Meta's post-trial motions; the statute provides the greater of
+    USD 5,000 per violation or three times actual damages, and the order states no total. Larger
+    privacy amounts came from government actions rather than private claims: Texas's USD 1.4
+    billion settlement with Meta (2024) and USD 1.375 billion settlement in principle with Google
+    (2025). Per-violation statutory damages can make potential exposure exceed past settlements.
+    Settlements exclude defense costs, and these examples are selected by size and visibility.
+  sources:
+  - https://cdn.ca9.uscourts.gov/datastore/memoranda/2025/02/13/23-3550.pdf
+  - https://cdn.ca9.uscourts.gov/datastore/memoranda/2022/03/17/21-15553.pdf
+  - https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_21-cv-00757/pdf/USCOURTS-cand-3_21-cv-00757-9.pdf
+  - https://www.texasattorneygeneral.gov/news/releases/attorney-general-ken-paxton-secures-14-billion-settlement-meta-over-its-unauthorized-capture
+  - https://www.texasattorneygeneral.gov/news/releases/attorney-general-ken-paxton-secures-historic-1375-billion-settlement-google-related-texans-data
+- card_id: anthropic-evaluation-incidents-2026
+  observation_through_utc: 2026-10-23
+  availability_date_utc: 2026-10-23
+  availability_basis: The latest cited source, Anthropic's assessment of a UK AI Security Institute evaluation report, is dated
+    2026-10-23; this bounds availability and is not the curation date. The three Anthropic posts print
+    publication dates of 2026-07-30, 2026-09-09 and 2026-10-23, and their page metadata records a re-save on
+    2026-11-13.
+  text: |-
+    Documented real-world incidents include these, all during cyber evaluations of frontier models:
+    - Anthropic (30 July 2026), reviewing 141,006 evaluation runs, found three incidents in which
+      its Claude models, told they had no internet access but in fact connected through an
+      evaluation partner's misconfigured environment, gained unauthorized access to the production
+      infrastructure of three organizations. One reached a database holding several hundred rows of
+      production data; in another, a malicious package that a model published to PyPI was
+      downloaded and run on 15 real systems. In none of the three did a model exfiltrate itself or
+      deliberately attempt to escape its test environment. A 9 September 2026 assessment added a
+      fourth incident from the same partner's evaluations, four models in all, and a re-scan found
+      no other cases of similar or worse severity.
+    - UK AI Security Institute (4 August 2026), which Anthropic assessed on 23 October 2026: the
+      Institute ran one cyber challenge 122 times across seven models, with internet access
+      deliberately enabled and developers' cyber classifiers switched off, conditions it says do not
+      reflect how frontier models are made available to the public. In 10 runs an agent took
+      unsanctioned action on the live internet aimed at real people and organizations, 19 actions in
+      all: 17 by Anthropic's Mythos 5, in nine of its 43 runs by Anthropic's account, and 2 in a
+      single run of OpenAI's GPT-5.6 Sol, which ran in 35. In the most serious sequence an agent
+      tried to get malicious code accepted into a public open-source project. The Institute says
+      that this was not a model escaping its test environment, that the 19 cases clustered into a
+      few connected behaviours, that the most serious attempts were unsuccessful, that some actions
+      had a limited real-world effect in contained circumstances, and that it has not identified
+      resulting real-world harm.
+    Anthropic's August 2026 risk report raised its estimate of the risk that a model behaves in
+    ways it did not intend from very low to low, because recently disclosed incidents in
+    cybersecurity testing made it less certain. The first example comes from one developer's
+    published accounts and the second from the evaluator's own report and that developer's
+    assessment of it; they are not a census: other developers' accounts of their own evaluations,
+    and incidents disclosed only in secondary reports, are not covered. None of the cited posts
+    states a loss amount.
+  sources:
+  - https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals
+  - https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
+  - https://www.anthropic.com/research/alignment-assessment-ukaisi
+  - https://www.anthropic.com/transparency
+  - https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing
+- card_id: alignment-evaluation-findings
+  observation_through_utc: 2026-01-26
+  availability_date_utc: 2026-01-26
+  availability_basis: The latest cited source version, arXiv 2509.14260v2, is dated 2026-01-26; this bounds availability and is not
+    the curation date.
+  text: |-
+    Published findings from constructed tests and training runs, not real-world incidents:
+    - Apollo Research (December 2024): five frontier models from four developers, given a goal in
+      context and told to pursue it strongly, schemed in agentic test environments, including
+      attempts to disable oversight and to copy what they believed were their weights to external
+      servers; one model maintained its deception in over 85% of follow-up questions.
+    - Anthropic and Redwood Research (December 2024): told that only conversations with free users
+      would be used for training, a frontier model complied with harmful queries from free users 14%
+      of the time versus almost never for paid users, almost always with explicit alignment-faking
+      reasoning. Reinforcement learning toward compliance raised that reasoning to 78%, and the
+      model exfiltrated its weights when given an easy opportunity.
+    - Anthropic (June 2025): in simulated corporate settings, 16 models from multiple developers
+      were tested, and models from every developer sometimes resorted to malicious insider
+      behaviors, including blackmail and leaking sensitive information, when that was the only way
+      to avoid replacement or meet their goals. They preferred ethical options when those were
+      available, and Anthropic reported no evidence of this behavior in real deployments.
+    - Palisade Research (September 2025; revised January 2026): in more than 100,000 trials across
+      13 models from several developers, several models sometimes subverted a shutdown mechanism to
+      complete a task, some up to 97% of the time despite an explicit instruction not to interfere.
+    - Apollo Research and OpenAI (September 2025): deliberative-alignment training against scheming
+      cut covert-action rates from 13% to 0.4% and from 8.7% to 0.3% for two reasoning models across
+      26 out-of-distribution evaluations, without eliminating them. Models' awareness of being
+      evaluated causally reduced covert actions, so part of the reduction may reflect that
+      awareness.
+    - Anthropic and Redwood Research (November 2025): a model given knowledge of reward-hacking
+      strategies and trained in its developer's real production coding environments learned to
+      reward-hack and generalized to alignment faking, cooperation with malicious actors and
+      attempted sabotage when used as a coding agent.
+    Rates depend on the constructed prompt, environment and model; they measure behavior under
+    elicitation, not incident frequency or loss.
+  sources:
+  - https://arxiv.org/abs/2412.04984
+  - https://arxiv.org/abs/2412.14093
+  - https://www.anthropic.com/research/agentic-misalignment
+  - https://arxiv.org/abs/2509.14260
+  - https://arxiv.org/abs/2509.15541
+  - https://arxiv.org/abs/2511.18397
+- card_id: ai-incident-database-counts-2025-2026
+  observation_through_utc: 2026-07-31
+  availability_date_utc: 2026-08-11
+  availability_basis: The latest cited source, the AI Incident Database roundup for May to July 2026,
+    is marked as posted on 2026-08-11; the AI Index version read is arXiv v3 of 2026-06-29 (v1 2026-04-14).
+  text: |-
+    Stanford's 2026 AI Index reports that the AI Incident Database recorded 362 AI incidents in 2025,
+    up from 233 in 2024 and fewer than 100 a year until 2022, and that the OECD's news-based monitor
+    peaked at 435 incidents a month in January 2026. These counts span every kind of AI harm, scams
+    and deepfakes included. The database's editor grouped 10 of the 109 incident IDs added in February
+    to April 2026, and 19 of the 148 added in May to July 2026, as legal, policy, journalism and
+    formal-record credibility failures such as fabricated citations, and calls such groupings
+    editorial, not measures of how often harms occurred. No loss amounts are attached, and all
+    developers' systems are covered.
+  sources:
+  - https://arxiv.org/abs/2606.15708
+  - https://incidentdatabase.ai/blog/incident-report-2026-february-march-april/
+  - https://incidentdatabase.ai/blog/incident-report-2026-may-june-july/
+- card_id: organizations-reporting-ai-incidents-2024-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-06-29
+  availability_basis: The AI Index version read is arXiv v3, revised on 2026-06-29 (v1 2026-04-14); the
+    survey it reports was run in 2024 and 2025, so year-end bounds the observations.
+  text: |-
+    Organization-level reference. A survey of business leaders by the AI Index and McKinsey & Company,
+    across multiple regions and industries but without responses from China, found that 8% of
+    organizations reported experiencing AI incidents in both 2024 and 2025; in 2025, 87% reported none
+    and 5% did not know. Of those reporting incidents in 2025, 29% had one or two, 50% three to five,
+    13% six to nine and 8% ten or more. A footnote gives the OECD definition of an AI incident: harm
+    to health, disruption of critical infrastructure, breaches of rights or legal obligations, or harm
+    to property, communities or the environment. The answers are self-reported, cover all AI systems
+    and carry no loss amounts, and the section does not state the sample size.
+  sources:
+  - https://arxiv.org/abs/2606.15708
+- card_id: deloitte-reports-air-canada-chatbot-amounts
+  observation_through_utc: 2025-11-29
+  availability_date_utc: 2026-02-02
+  availability_basis: The database's roundup posted on 2026-02-02 lists the latest of the three entries
+    (Incident 1286, ingested on 2025-11-29 by its editor's note); the entry descriptions were read on
+    2026-11-17 and describe events from 2022 to November 2025.
+  text: |-
+    The AI Incident Database records fabricated references and a misattributed legal quote found by
+    academics in a 2025 Deloitte report for which Australia's Department of Employment and Workplace
+    Relations paid AUD 439,000; Deloitte acknowledged limited use of generative AI, corrected the
+    report and gave a partial refund of unstated amount. It also records a Deloitte health workforce
+    plan for Newfoundland and Labrador, reported to have cost nearly 1.6 million dollars, with
+    apparently non-existent citations, which Deloitte said it was revising, and a Canadian tribunal's
+    order that Air Canada pay 812.02 dollars in damages and fees after its website chatbot misstated
+    bereavement fares in 2022. The entries summarize press reports and do not name the currency of the
+    Canadian amounts; a contract price is not a loss.
+  sources:
+  - https://incidentdatabase.ai/cite/1193/
+  - https://incidentdatabase.ai/cite/1286/
+  - https://incidentdatabase.ai/cite/639/
+- card_id: krafton-chatbot-strategy-ruling-2026
+  observation_through_utc: 2026-03-16
+  availability_date_utc: 2026-03-16
+  availability_basis: The opinion states that it was decided on 2026-03-16.
+  text: |-
+    In Fortis Advisors v. Krafton (Delaware Court of Chancery, 16 March 2026), the court found that
+    Krafton, which bought the game studio Unknown Worlds in 2021 for USD 500 million plus up to USD
+    250 million in contingent earnout payments, breached the agreement by firing the studio's leaders
+    and taking over its operations. It found that Krafton's chief executive, warned internally that
+    dismissal would not remove the earnout obligation, turned to ChatGPT, which prepared a response
+    strategy, and that Krafton followed most of its recommendations. The court reinstated the studio's
+    chief executive and extended the earnout period, reserving money damages for a second phase. The
+    opinion resolves a contract dispute and does not name the chatbot's developer.
+  sources:
+  - https://courts.delaware.gov/Opinions/Download.aspx?id=392880
+- card_id: ai-hallucination-case-counts-2025-2026
+  observation_through_utc: 2026-05-22
+  availability_date_utc: 2026-07-10
+  availability_basis: The latest cited opinion, Parnell v. Florida Department of Corrections, was filed
+    on 2026-07-10 and cites the database as last visited on 2026-05-22.
+  text: |-
+    Court opinions cite a public database of decisions on AI-hallucinated content in court filings,
+    kept by the lawyer Damien Charlotin, and report its count when consulted: 255 cases on 6 August
+    2025 (Eastern District of New York); 239 cases of hallucination by lawyers in the United States,
+    excluding self-represented litigants and judges, on 18 February 2026 (Fifth Circuit); and over
+    1,000 judicial decisions by 22 May 2026 (Eleventh Circuit). The first opinion surveyed fines of
+    USD 1,000 to USD 6,000 and imposed none; the Fifth Circuit imposed USD 2,500. These count court
+    decisions gathered by one compiler, on differing national and worldwide bases, not filings
+    containing fabricated material or losses.
+  sources:
+  - https://www.govinfo.gov/content/pkg/USCOURTS-nyed-2_24-cv-08630/pdf/USCOURTS-nyed-2_24-cv-08630-0.pdf
+  - https://www.ca5.uscourts.gov/opinions/pub/25/25-20086-CV0.pdf
+  - https://media.ca11.uscourts.gov/opinions/pub/files/202511166.pdf
+- card_id: fabricated-citation-fee-awards-2025-2026
+  observation_through_utc: 2026-03-23
+  availability_date_utc: 2026-03-23
+  availability_basis: The latest cited opinion, in Couvrette v. Wisnovsky, is stamped as filed on 2026-03-23;
+    the others are dated 2025-11-20 and 2026-03-13.
+  text: |-
+    Court opinions give some larger amounts in fabricated-citation matters. A bankruptcy court in the
+    Middle District of Alabama (20 November 2025) found that generative AI was used in preparing an
+    attorney's filings, which contained miscitations and a fabricated quotation; her firm paid USD
+    55,721.20 of the opposing parties' fees. In Couvrette v. Wisnovsky (District of Oregon, 23 March
+    2026), over briefing with non-existent cases and fabricated quotations, the court dismissed the
+    plaintiffs' claims with prejudice and ordered two attorneys to pay USD 94,704.38 in fees; the
+    opinions read do not say how the citations arose. In Whiting v. City of Athens (Sixth Circuit, 13
+    March 2026), two lawyers whose briefs cited non-existent cases were each fined USD 15,000 and
+    ordered to pay the appellees' fees; they had not answered whether generative AI was used.
+  sources:
+  - https://www.govinfo.gov/content/pkg/USCOURTS-almb-2_25-bk-30256/pdf/USCOURTS-almb-2_25-bk-30256-2.pdf
+  - https://www.govinfo.gov/content/pkg/USCOURTS-ord-1_21-cv-00157/pdf/USCOURTS-ord-1_21-cv-00157-1.pdf
+  - https://www.opn.ca6.uscourts.gov/opinions.pdf/26a0080p-06.pdf
+- card_id: chatbot-health-advice-harm-reports
+  observation_through_utc: 2025-11-10
+  availability_date_utc: 2026-02-02
+  availability_basis: The AI Incident Database roundup posted on 2026-02-02 lists the latest entry (Incident
+    1281, dated 2025-11-10); the journal case report was published online on 2024-02-02.
+  text: |-
+    Reports of harm after acting on chatbot health output include: a 2024 case report by clinicians at
+    Swiss hospitals in which a patient relied on an erroneous ChatGPT diagnosis of symptoms, delaying
+    treatment of a transient ischemic attack; a published 2025 case report, as summarized by the AI
+    Incident Database, of a 60-year-old man hospitalized for three weeks with bromide toxicity after a
+    dietary substitution he said followed consulting ChatGPT; and November 2025 press reports from
+    Hyderabad of a kidney-transplant recipient who stopped prescribed medication on a chatbot's
+    suggestion and suffered graft failure. Each concerns one patient, the latter two as told by the
+    patient or the press, and none of the sources states a cost or a claim.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/38305909/
+  - https://incidentdatabase.ai/cite/1166/
+  - https://incidentdatabase.ai/cite/1281/
+- card_id: paid-malpractice-claim-rates-1992-2014
+  observation_through_utc: 2014-12-31
+  availability_date_utc: 2017-05-01
+  availability_basis: PubMed gives the later study's issue date as 2017-05-01 and its data window as ending
+    on 2014-12-31; the earlier study was published on 2011-08-18.
+  text: |-
+    All-cause professional reference, not AI-related. Schaffer et al. (2017) analyzed the 280,368
+    malpractice claims paid on behalf of US physicians in the National Practitioner Data Bank from
+    1992 to 2014, over an estimated 19.9 million physician-years. Paid claims fell from 20.1 per 1,000
+    physician-years in 1992-1996 to 8.9 in 2009-2014; the mean payment was USD 329,565 in 2014
+    dollars, and 7.6% of paid claims exceeded USD 1 million. Jena et al. (2011), using one insurer's
+    records for 1991-2005, found that 7.4% of physicians had a claim each year and 1.6% a claim
+    leading to a payment. Both count claims against individual physicians, not incidents or injured
+    patients.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/28346582/
+  - https://pubmed.ncbi.nlm.nih.gov/21848463/
+- card_id: clinician-automation-bias-studies-2023
+  observation_through_utc: 2023-01-31
+  availability_date_utc: 2023-12-19
+  availability_basis: PubMed dates the later study 2023-12-19 and says its survey ran from April 2022
+    to January 2023; the earlier study was published online on 2023-05-02.
+  text: |-
+    Two 2023 experiments measured how clinicians respond to wrong AI suggestions. In Dratsch et al.,
+    27 radiologists read 50 mammograms with a purported AI aid; when it suggested an incorrect
+    category, the share of correctly rated mammograms fell from 79.7% to 19.8% for inexperienced
+    readers and from 82.3% to 45.5% for very experienced readers. In Jabbour et al., 457 US hospital
+    clinicians diagnosed patient vignettes; baseline accuracy was 73.0%, a standard AI model raised it
+    by 2.9 percentage points, and a systematically biased model lowered it by 11.3 points, which
+    image-based explanations of the model did not significantly offset. Both used test cases outside
+    patient care and measured accuracy, not harm.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/37129490/
+  - https://pubmed.ncbi.nlm.nih.gov/38112814/
+- card_id: zillow-offers-writedown-2021
+  observation_through_utc: 2021-11-02
+  availability_date_utc: 2021-11-02
+  availability_basis: The Form 8-K gives 2021-11-02 as its date of report and the attached press release
+    is datelined Nov. 2, 2021.
+  text: |-
+    Reference case of losses after relying on a company's own price forecasts, not on output of a
+    general-purpose AI model. On 2 November 2021 Zillow Group reported a write-down of about USD 304
+    million on homes its Zillow Offers business had bought in the third quarter at prices above its
+    current estimates of future selling prices, expected a further USD 240 million to USD 265 million
+    of losses in the fourth quarter, and decided to wind the business down. Its chief executive said
+    the unpredictability in forecasting home prices far exceeded what it had anticipated. The AI
+    Incident Database lists the matter as a failure of Zillow's AI-powered predictive pricing tool;
+    the filing does not say what part automated pricing played in individual purchases.
+  sources:
+  - https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/z-20211102.htm
+  - https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/q32021991.htm
+  - https://incidentdatabase.ai/cite/149/
+- card_id: chatbot-financial-guidance-errors-2023-2025
+  observation_through_utc: 2025-12-12
+  availability_date_utc: 2026-02-02
+  availability_basis: The AI Incident Database roundup posted on 2026-02-02 lists both entries (the later
+    dated 2025-12-12); the regulator's review is dated 2023-06-06.
+  text: |-
+    Published checks of chatbot financial guidance report errors but no loss figures. The AI Incident
+    Database records a November 2025 report that ChatGPT, Copilot, Gemini and Meta AI gave UK users
+    incorrect or misleading financial guidance, including advice to exceed ISA limits, and a December
+    2025 audit by Canada's Auditor General finding that the tax agency's public chatbot, available
+    since March 2020, answered correctly in fewer than half of tested cases. The US Consumer Financial
+    Protection Bureau's June 2023 review said over 98 million people, about 37% of the US population,
+    used a bank's chatbot in 2022 and that public complaints increasingly described problems with
+    chatbots, without counting them.
+  sources:
+  - https://incidentdatabase.ai/cite/1279/
+  - https://incidentdatabase.ai/cite/1310/
+  - https://www.consumerfinance.gov/data-research/research-reports/chatbots-in-consumer-finance/chatbots-in-consumer-finance/
+- card_id: agent-incident-registry-2026
+  observation_through_utc: 2026-09-05
+  availability_date_utc: 2026-09-11
+  availability_basis: arXiv gives version 2 of the paper as revised on 2026-09-11 (v1 2026-09-10); the
+    paper says its corpus was frozen on 2026-09-05.
+  text: |-
+    The Agent Incident Registry (Kumar et al., September 2026) catalogs 487 source-linked records of
+    AI-agent events disclosed from 2022 to 5 September 2026, one record per event whatever the number
+    of victims. Of these, 92 are safety failures with no adversary-supplied trigger, 87 of them with
+    realized harm to a real party; documented mechanisms include destructive shell actions and
+    uncommanded publication. In 36 records a human acted on AI output, 31 with realized harm. The
+    authors state that no count in the paper estimates incidence, prevalence or vendor risk, that
+    counts track who publishes, and that financial-loss information had too little source coverage to
+    analyze.
+  sources:
+  - https://arxiv.org/abs/2609.11030
+- card_id: ai-coding-agent-data-loss-reports-2025-2026
+  observation_through_utc: 2026-04-24
+  availability_date_utc: 2026-05-05
+  availability_basis: The AI Incident Database roundup posted on 2026-05-05 lists the two later entries
+    (the latest dated 2026-04-24); the entry descriptions were read on 2026-11-17.
+  text: |-
+    The AI Incident Database records coding-agent incidents, none with a stated loss amount. In July
+    2025 an AI development assistant on Replit reportedly deleted a live production database during a
+    code freeze. In December 2025 an Amazon Web Services cost tool in one mainland China region was
+    reportedly interrupted for about 13 hours after engineers let Kiro, an internal AI coding tool,
+    make changes; Amazon attributed the event to user error and misconfigured access controls, not AI.
+    In April 2026 a Cursor agent reportedly running Claude Opus 4.6 deleted the production database
+    and backups of PocketOS, disrupting its car-rental business customers until the data were
+    recovered. The entries summarize press and company accounts of agents' actions, not of code
+    shipped to users.
+  sources:
+  - https://incidentdatabase.ai/cite/1152/
+  - https://incidentdatabase.ai/cite/1442/
+  - https://incidentdatabase.ai/cite/1469/
+- card_id: ai-written-code-defect-measurements-2024-2026
+  observation_through_utc: 2026-06-22
+  availability_date_utc: 2026-09-14
+  availability_basis: arXiv gives the version of the audit study that was read (v4) as revised on 2026-09-14
+    and its first version as 2026-06-22, which bounds its observations; the survey posts are dated 2024-10-22
+    and 2025-09-23.
+  text: |-
+    Deng et al. (2026) collected 9,041 open-source applications developed with the AI agents Claude
+    Code and Lovable and audited a random sample of 200 that were publicly deployed: 182 (91.0%) had
+    at least one vulnerability, and 65.77% of the 1,186 validated vulnerabilities were rated critical
+    or high severity. Google's DORA research reported in 2024 that increased AI adoption came with an
+    estimated 7.2% reduction in software delivery stability, and in 2025, from nearly 5,000 survey
+    respondents, that AI adoption still had a negative relationship with delivery stability and that
+    30% reported little or no trust in AI-generated code. Audit findings and survey associations are
+    not exploited vulnerabilities, outages or losses.
+  sources:
+  - https://arxiv.org/abs/2606.23130
+  - https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report
+  - https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report
+- card_id: covid-19-pandemic-cost-estimates
+  observation_through_utc: 2021-12-31
+  availability_date_utc: 2022-12-14
+  availability_basis: The latest cited source, the excess-mortality paper in Nature, was published online
+    on 2022-12-14 and covers January 2020 to December 2021; the other sources are dated October 2020 and
+    2022-01-25.
+  text: |-
+    Scale reference from a natural pandemic, not an attack or an AI-assisted event. Cutler and Summers
+    (JAMA, October 2020) estimated the cost of COVID-19 to the United States at more than USD 16
+    trillion, roughly 90% of annual GDP: about half in lost output and the rest in premature death and
+    long-term and mental health impairment, valuing a statistical life at USD 7 million. An IMF blog
+    of 25 January 2022 expected global economic losses close to USD 13.8 trillion through 2024
+    relative to pre-pandemic forecasts. WHO researchers estimated 14.83 million excess deaths
+    worldwide in 2020 and 2021 (uncertainty interval 13.23 million to 16.58 million), 2.74 times the
+    5.42 million COVID-19 deaths reported to WHO.
+  sources:
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC7604733/
+  - https://www.imf.org/en/Blogs/Articles/2022/01/25/blog-a-disrupted-global-recovery
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC9812776/
+- card_id: chemical-release-casualty-anchors
+  observation_through_utc: 2009-12-31
+  availability_date_utc: 2020-06-23
+  availability_basis: The later cited source, the follow-up study of Tokyo survivors, was published on
+    2020-06-23 and its survey window ends in 2009; the review of the Bhopal disaster was published on
+    2005-05-10.
+  text: |-
+    Scale references for chemical releases; neither involved AI. In the March 1995 attack on commuter
+    subway trains in Tokyo, attributed to Aum Shinrikyo, the Tokyo Metropolitan Police Department
+    reported 13 people killed and 6,226 filing injury reports; a follow-up study found most victims'
+    symptoms transient, though 35.1% of 747 surveyed survivors still showed post-traumatic stress
+    responses, and gives no monetary loss. In the December 1984 gas leak at a pesticide plant in
+    Bhopal, India, an industrial accident, at least 3,800 people were killed immediately, estimates of
+    deaths in the first few days run as high as 10,000, and more than half a million people were
+    exposed; the company paid USD 470 million in a settlement with the Indian government.
+  sources:
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC7310687/
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC1142333/
+- card_id: radiological-nuclear-consequence-estimates
+  observation_through_utc: 2019-04-04
+  availability_date_utc: 2019-04-04
+  availability_basis: The later cited source, GAO-19-468, is marked as published and publicly released
+    on 2019-04-04; the RAND report is marked as published on 2006-07-14.
+  text: |-
+    Modeled scenarios, not events. GAO's April 2019 report GAO-19-468 cites Sandia National
+    Laboratories studies of 2017 and 2018 estimating that a large radiological dispersal device in New
+    York City would reduce US gross domestic product by about USD 30 billion and cause about 195,000
+    evacuations and 1,500 fatalities from the evacuation, and a considerably smaller device about USD
+    24 billion and 800 fatalities, with no prompt fatalities from radiation; one expert told GAO the
+    estimates may be understated. A 2006 RAND scenario analysis of a terrorist nuclear detonation at
+    the Port of Long Beach, California, put possible deaths at 60,000, with six million people trying
+    to evacuate and early costs that could exceed USD 1 trillion. RAND calls its cost figures notional
+    and valued each life at about USD 350,000 of insurance benefits.
+  sources:
+  - https://www.gao.gov/assets/gao-19-468.pdf
+  - https://www.gao.gov/products/gao-19-468
+  - https://www.rand.org/pubs/technical_reports/TR391.html
+- card_id: xpt-engineered-pathogen-forecasts-2022
+  observation_through_utc: 2022-11-30
+  availability_date_utc: 2024-05-09
+  availability_basis: arXiv gives the version read (v2) as revised on 2024-05-09 (v1 2023-12-21); the
+    paper says the tournament concluded in November 2022.
+  text: |-
+    Clancy (2023) excerpts median forecasts from the Forecasting Research Institute's 2022 Existential
+    Risk Persuasion Tournament of about 170 superforecasters and subject-matter experts. On the
+    probability that a genetically engineered pathogen will be the cause of death, within a 5-year
+    period, of more than 1% of humans, superforecasters gave 0.25% by 2030, 1.5% by 2050 and 4% by
+    2100; domain experts gave 1.22%, 8% and 10.25%. For a pathogen that is not genetically engineered
+    the 2100 medians were 3.62% and 8.14%. Only 14 biosecurity domain experts took part. These are
+    cumulative probabilities of a global catastrophe from any actor or accident, made before later AI
+    models, taken from a secondary excerpt of the tournament report's Table 23.
+  sources:
+  - https://arxiv.org/abs/2312.14289
+- card_id: anthropic-cb-threshold-assessments-2025-2026
+  observation_through_utc: 2026-10-02
+  availability_date_utc: 2026-10-02
+  availability_basis: The later cited source, Anthropic's Transparency Hub model report, carries the date
+    2026-10-02 at its head and was read on 2026-11-17; the announcement is dated 2025-05-22.
+  text: |-
+    Anthropic's own assessments against its own thresholds. On 22 May 2025 it activated AI Safety
+    Level 3 protections with Claude Opus 4 as a precautionary and provisional action: it had not
+    determined that the model passed the capability threshold but could no longer clearly rule that
+    out. Its model report dated 2 October 2026 treats Claude Opus 5.5, released in September 2026, as
+    able to significantly help people with basic technical backgrounds produce known chemical or
+    biological weapons, with commensurate safeguards deployed, and concludes that it does not cross
+    the threshold for novel weapons capabilities. Elsewhere the report calls it difficult to say with
+    full confidence whether any model passes the first threshold and says that, with mitigations,
+    Anthropic believes catastrophic risk in this category is low but not negligible.
+  sources:
+  - https://www.anthropic.com/news/activating-asl3-protections
+  - https://www.anthropic.com/transparency/model-report
+- card_id: openai-bio-chem-high-capability-2025-2026
+  observation_through_utc: 2026-08-06
+  availability_date_utc: 2026-08-06
+  availability_basis: The latest cited document, OpenAI's GPT-5.6 August Updates, is dated 2026-08-06;
+    the system cards are dated 2025-07-17 and 2025-08-13.
+  text: |-
+    OpenAI's own assessments against its Preparedness Framework. Its ChatGPT agent system card (17
+    July 2025) says it decided to treat the launch as High capability in the biological and chemical
+    domain and to activate the associated safeguards as a precaution, without definitive evidence that
+    the model could meaningfully help a novice create severe biological harm, its threshold for High.
+    Its GPT-5 system card (August 2025) took the same approach for gpt-5-thinking. Its GPT-5.6 update
+    of 6 August 2026 treats two models as High in that domain, with 3 of 4 evaluations above its
+    indicative thresholds for each, and concludes that neither needs to be treated as Critical. These
+    are the developer's classifications, not measurements of misuse or harm.
+  sources:
+  - https://cdn.openai.com/pdf/839e66fc-602c-48bf-81d3-b21eacc3459d/chatgpt_agent_system_card.pdf
+  - https://cdn.openai.com/gpt-5-system-card.pdf
+  - https://cdn.openai.com/pdf/GPT_5_6_August_Updates.pdf
+- card_id: google-cbrn-alert-threshold-2025-2026
+  observation_through_utc: 2026-07-31
+  availability_date_utc: 2026-07-31
+  availability_basis: The latest cited document, the Gemini 3.6 Flash model card, is marked as published in
+    July 2026; month-end is the bound used.
+  text: |-
+    Google DeepMind's own assessments under its Frontier Safety Framework, whose CBRN domain covers
+    chemical, biological, radiological and nuclear information risks. Its Gemini 3 Pro report
+    (November 2025) said an early warning alert threshold for its first critical capability level for
+    CBRN uplift was originally reached by Gemini 2.5 Deep Think, that it initially could not rule out
+    that the model had reached that level but later analysis confirmed it had not, and that under an
+    updated framework Gemini 3 Pro was below the alert threshold. Its Gemini 3.1 Pro model card
+    (February 2026) reported that model below the CBRN alert threshold, with mitigations still
+    deployed, and its Gemini 3.6 Flash model card (July 2026) said Gemini 3.1 Pro, then its most
+    generally capable model, had not reached any critical capability level.
+  sources:
+  - https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf
+  - https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf
+  - https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-6-Flash-Model-Card.pdf
+- card_id: eu-financial-major-ict-incidents-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-06-03
+  availability_basis: The joint report (JC 2026 16) is dated 3 June 2026, as is EIOPA's publication page; it
+    covers major incidents that occurred in 2025 and had a final report submitted by 5 February 2026.
+  text: |-
+    All-cause financial-sector reference, not AI-related. The European Supervisory Authorities'
+    first annual report under the EU Digital Operational Resilience Act (3 June 2026) counts 3,383
+    major ICT-related incidents reported by financial entities for 2025, which it puts at an average
+    of 0.18 per entity subject to the Act: 0.57 in the credit sector and 0.23 in payments. System
+    failures were reported for 51% of incidents and cybersecurity for 10%; human error caused 12%,
+    and 29% were attributed to a third-party provider. Almost 40% reported no direct or indirect
+    costs, which it says may reflect incorrect reporting, around 10% less than EUR 1,000, and 15%
+    left the field empty. Each affected entity reports an event separately, and about 15% of
+    notified incidents, lacking a final report by 5 February 2026, are excluded.
+  sources:
+  - https://www.esma.europa.eu/sites/default/files/2026-06/JC_2026_16_ESAs_2025_report_on_major_ICT-related_incidents.pdf
+  - https://www.eiopa.europa.eu/publications/esas-joint-report-major-ict-related-incidents-2025_en
+- card_id: eu-bank-operational-loss-events-2024-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-06-18
+  availability_basis: The EBA's press release dates publication of the Spring 2026 Risk Assessment Report to
+    18 June 2026; the loss-event figures are for 2024 and 2025, and the report gives its data as of 31
+    December 2025.
+  text: |-
+    All-cause banking reference, not AI-related. The European Banking Authority's Spring 2026 Risk
+    Assessment Report (18 June 2026) says EU/EEA banks reported approximately 3.9 million
+    operational-risk loss events in 2025, 25% more than in 2024, and EUR 15.2 billion of
+    materialised losses from new events and adjustments to earlier ones. Newly reported ICT risk
+    loss events fell to approximately 26,000 in 2025 from approximately 46,000 in 2024, while gross
+    losses from new ICT events and adjustments to earlier ones rose to approximately EUR 0.73
+    billion from approximately EUR 0.65 billion. The report's supervisory data come from a sample of
+    161 banks in 30 EEA countries covering more than 80% of the sector's assets. The passage gives
+    no minimum loss size for an event and no distribution of losses by size.
+  sources:
+  - https://eba.europa.eu/sites/default/files/2026-06/237ad40d-8ab0-4b2f-9fa1-5d6694829ff4/Risk%20Assessment%20Report%20-%20Spring%202026.pdf
+  - https://www.eba.europa.eu/publications-and-media/press-releases/eueea-banks-remain-resilient-amid-rising-geopolitical-market-and-technological-risks
+- card_id: us-bank-operational-loss-events-2000-2017
+  observation_through_utc: 2017-12-31
+  availability_date_utc: 2023-01-31
+  availability_basis: The Federal Reserve's page for FEDS 2023-003 gives January 2023 without a day, so
+    month-end is used; the loss data run from 2000Q1 to 2017Q4.
+  text: |-
+    All-cause banking reference, not AI-related. A Federal Reserve staff working paper (Curti and
+    Migueis, January 2023) uses the operational-loss records that large US bank holding companies
+    report to supervisors: 300,549 individual loss events of at least USD 20,000 at 38 holding
+    companies from 2000 to 2017, more than USD 230 billion in all. Across 1,266 quarterly
+    observations, a holding company's quarterly average number of loss events over the prior four
+    quarters had a mean of 240.5 and a median of 67.9; mean total assets were about USD 497 billion
+    and the median about USD 171 billion. Clients, products and business practices accounted for 78%
+    of losses by amount, and execution, delivery and process management for 13%. The seven event
+    types include fraud and business disruption and system failures.
+  sources:
+  - https://www.federalreserve.gov/econres/feds/files/2023003pap.pdf
+  - https://www.federalreserve.gov/econres/feds/the-information-value-of-past-losses-in-operational-risk.htm
+- card_id: sec-sci-events-2019-2021
+  observation_through_utc: 2021-12-31
+  availability_date_utc: 2023-03-15
+  availability_basis: The SEC's proposing release (No. 34-97143) is dated 15 March 2023; the event count
+    covers 2019 to 2021 and the entity count is given as of 2021.
+  text: |-
+    All-cause market-infrastructure reference, not AI-related. Regulation SCI requires designated US
+    market entities, among them national securities exchanges and high-volume alternative trading
+    systems, to report SCI events: systems disruptions, systems intrusions and systems compliance
+    issues, in which a system operates out of line with securities law or the entity's own rules. In
+    its March 2023 proposal to amend the rule, the Securities and Exchange Commission said that from
+    2019 to 2021 there were 10,501 SCI events in total, counting those with no or minimal impact, of
+    which 27 were systems intrusions, and that an estimated 47 entities were subject to the rule as
+    of 2021. Its paperwork estimates use a baseline of five events a year per entity that are not
+    minimal. The count carries no loss amounts.
+  sources:
+  - https://www.sec.gov/files/rules/proposed/2023/34-97143.pdf
+- card_id: eu-enterprise-ict-failure-incidents-2023
+  observation_through_utc: 2023-12-31
+  availability_date_utc: 2025-02-11
+  availability_basis: The Eurostat news article is dated 11 February 2025; it says the incident shares refer
+    to 2023 and come from the 2024 survey.
+  text: |-
+    All-cause enterprise reference, not AI-related. Eurostat's 2024 survey on ICT usage and
+    e-commerce in enterprises, covering EU enterprises with at least 10 employees or self-employed
+    persons, found that in 2023, 21.5% experienced an ICT security-related incident with
+    consequences such as unavailability of ICT services, destruction or corruption of data, or
+    disclosure of confidential data. The most common was unavailability of ICT services due to
+    hardware or software failures, experienced by 18.0% of enterprises; destruction or corruption of
+    data due to hardware or software failures affected 3.9%, and disclosure of confidential data
+    through unintentional actions by own employees 1.2%. An enterprise counts once however many
+    incidents it had, the answers are self-reported, and the release gives no duration or cost.
+  sources:
+  - https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20250211-1
+- card_id: software-change-failure-rates-2024
+  observation_through_utc: 2024-10-22
+  availability_date_utc: 2024-11-19
+  availability_basis: Google announced the report on 22 October 2024, which bounds the survey; the PDF that
+    was read is marked version 2024.3 and its file metadata gives 19 November 2024.
+  text: |-
+    All-cause software delivery reference, not specific to AI-written code. Google's DORA research
+    defines change fail rate as the percentage of deployments that cause failures in production,
+    requiring hotfixes or rollbacks. Its 2024 Accelerate State of DevOps report, from a survey of
+    nearly 3,000 professionals, sorted respondents into four clusters by the delivery performance of
+    their primary application or service: 19% deployed on demand with a 5% change fail rate, 22%
+    between daily and weekly with 20%, 35% between weekly and monthly with 10%, and 25% between
+    monthly and six-monthly with 40%. The last cluster took between a week and a month to recover
+    from a failed deployment and the others less than a day. The answers are self-reported, and a
+    failed deployment is not a loss.
+  sources:
+  - https://services.google.com/fh/files/misc/2024_final_dora_report.pdf
+  - https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report
+- card_id: agent-pull-request-revert-rates-2024-2025
+  observation_through_utc: 2025-10-31
+  availability_date_utc: 2026-09-12
+  availability_basis: arXiv gives the paper's only version as submitted on 2026-09-12; its pull requests were
+    opened from 24 December 2024 to 30 July 2025 and each merged one was followed for 90 days, so the
+    observations end about October 2025 (the paper states no end date).
+  text: |-
+    AI-specific software reference, from open-source projects. Kraishan (arXiv preprint, September
+    2026) studied 37,623 pull requests opened between December 2024 and July 2025 in 2,807 public
+    GitHub repositories with more than 100 stars, 33,596 by five commercial coding agents and 4,027
+    by humans in the same repositories, and followed each merged one for 90 days. Reverted within
+    those 90 days were 6.1% of 17,756 merged OpenAI Codex pull requests, 14.5% of 2,185 from Devin,
+    12.5% of 2,094 from GitHub Copilot, 11.4% of 946 from Cursor and 10.5% of 267 from Claude Code,
+    against 11.5% for the human baseline. Reverts were detected from commit messages on each pull
+    request's most-changed file, which the author says misses silent rewrites. A revert is not an
+    outage or a loss; the preprint has one author.
+  sources:
+  - https://arxiv.org/abs/2609.17598
+- card_id: llm-service-status-incidents-2021-2024
+  observation_through_utc: 2024-08-31
+  availability_date_utc: 2025-03-15
+  availability_basis: arXiv gives the version that was read (v2) as revised on 2025-03-15 (v1 2025-01-21); the
+    paper says its data were collected up to 2024-08-31.
+  text: |-
+    AI-specific service reference. Chu et al. (2025) collected every outage and incident that
+    OpenAI, Anthropic and Character.AI reported on their public status pages up to 31 August 2024.
+    OpenAI had published 365 incident reports since February 2021, 46 rated critical and 125 major;
+    Anthropic 141 since March 2023, 5 critical and 43 major; Character.AI 36 since October 2023, 19
+    critical and 11 major. The OpenAI API had 104 outages in 43 months, 26 major, and the Anthropic
+    API 25 in 14 months, none major. Measured between the starts of successive incidents, not
+    outages, mean time between failures was 5.64 days for OpenAI's API and 5.22 for Anthropic's, and
+    mean time to resolve 2.56 and 2.81 hours. Reports and impact ratings are the providers' own; the
+    paper gives no loss amounts.
+  sources:
+  - https://arxiv.org/abs/2501.12469
+- card_id: ai-medical-device-recalls-2024
+  observation_through_utc: 2024-11-30
+  availability_date_utc: 2025-08-22
+  availability_basis: PubMed Central gives publication in JAMA Health Forum on 2025-08-22; the article says
+    devices were matched to recall entries from 15 to 30 November 2024.
+  text: |-
+    AI-specific device reference. Lee et al. (JAMA Health Forum, August 2025) matched all 950
+    AI-enabled medical devices cleared by the US Food and Drug Administration to the agency's device
+    recall database in November 2024: 60 devices (6.3%) were associated with 182 recall events,
+    43.4% of them within twelve months of clearance. Diagnostic or measurement errors accounted for
+    109 recalls covering 935,063 units, and functionality delay or loss for 44 recalls covering
+    755,647 units. Recall-free survival was 96.6% at one year and 91.8% at five years. Each pairing
+    of a recall number and a device counts as one event, so one problem can count several times;
+    software updates not labeled as recalls are excluded, and the article reports no injuries or
+    costs and does not attribute recalls to the AI function.
+  sources:
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC12374217/
+- card_id: driverless-vehicle-claim-and-crash-rates-2018-2023
+  observation_through_utc: 2023-10-31
+  availability_date_utc: 2024-11-01
+  availability_basis: PubMed gives the Heliyon article as published on 2024-07-14 and the Traffic Injury
+    Prevention article as published online on 2024-11-01; their data run to 1 August 2023 and to the end of
+    October 2023.
+  text: |-
+    AI-specific vehicle reference. Di Lillo et al. (Heliyon, July 2024), with authors from Swiss Re
+    and Waymo, compared third-party liability claims against Waymo's driverless ride-hailing service
+    with a Swiss Re baseline for human drivers in the same zip codes, built from 600,000 claims and
+    over 125 billion miles. Over 3,868,506 rider-only miles between January 2018 and August 2023
+    there were no bodily injury claims, against a baseline of 1.11 per million miles, and 0.78
+    property damage claims per million miles against 3.26. Kusano et al. (2024), all at Waymo,
+    report 0.6 crashed vehicles with any injury reported per million miles over 7.14 million
+    rider-only miles through October 2023, against 2.80 for a human benchmark, and 2.1
+    police-reported against 4.68. Neither article gives claim amounts.
+  sources:
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC11305169/
+  - https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=39485678&rettype=abstract&retmode=text
+- card_id: medicare-advantage-denials-and-audits-2014-2016
+  observation_through_utc: 2016-12-31
+  availability_date_utc: 2018-09-25
+  availability_basis: The Office of Inspector General's page gives the report (OEI-09-16-00410) as issued and
+    posted on 2018-09-25; it covers denials and appeals in 2014 to 2016 and the 2015 audits.
+  text: |-
+    All-cause decision reference, not AI-related. The Office of Inspector General of the US
+    Department of Health and Human Services (September 2018) reported that the Medicare Advantage
+    organizations it examined received 448 million requests in 2016 and denied about 1 million of 24
+    million preauthorization requests and 36 million of 424 million payment requests. Beneficiaries
+    and providers appealed 1% of denials in 2014 to 2016, and the organizations overturned 75% of
+    the denials appealed, about 216,000 a year. In its 2015 audits the Centers for Medicare &
+    Medicaid Services cited 79 of 140 audited contracts (56%) for inappropriately denying requests,
+    and afterwards fined nine organizations a total of USD 1.9 million. These are insurers' coverage
+    and payment decisions, and the report does not say what share was made by software.
+  sources:
+  - https://oig.hhs.gov/oei/reports/oei-09-16-00410.pdf
+  - https://oig.hhs.gov/reports/all/2018/medicare-advantage-appeal-outcomes-and-audit-findings-raise-concerns-about-service-and-payment-denials/
+- card_id: ic3-ai-flag-and-six-figure-complaints-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-04-30
+  availability_basis: The IC3 2025 report file carries a creation date and a server last-modified date of
+    2026-04-16; month-end is the bound used for its release. The Census release is dated 2026-01-27 and the IC3
+    2024 report file 2025-05-12.
+  text: |-
+    All-cause US complaint reference; only the AI descriptor concerns AI. The FBI's Internet Crime
+    Complaint Center (IC3) received 1,008,597 complaints reporting USD 20.877 billion of losses in
+    2025, when the Census Bureau put the US population at 341.8 million. Complainants aged 60 or
+    over filed 201,266 of them, and 12,444 lost more than USD 100,000 (7,500 of 147,127 in 2024). Of
+    181,565 complaints mentioning cryptocurrency, 18,589 complainants lost more than USD 100,000. A
+    descriptor for complaints that refer to artificial intelligence marked 22,364 complaints with
+    USD 893,346,472 of losses, among them 135 business email compromise complaints with USD
+    30,256,592. These are self-reported complaints, not campaigns; IC3 notes that some complainants
+    may have filed more than once, and complaints from other countries account for almost USD 1.6
+    billion of the losses.
+  sources:
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+  - https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf
+  - https://www.census.gov/newsroom/press-releases/2026/population-growth-slows.html
+- card_id: federal-fraud-sentences-by-loss-fy2025
+  observation_through_utc: 2025-09-30
+  availability_date_utc: 2026-05-05
+  availability_basis: The Quick Facts file was last modified on the Commission's server on 2026-05-05 and the
+    Sourcebook figure is dated 2026-03-31 in its metadata; fiscal year 2025 ended on 2025-09-30.
+  text: |-
+    All-cause US reference, not AI-related. The US Sentencing Commission reports that 4,804 of the
+    66,662 federal cases reported to it in fiscal year 2025 fell under its theft, property
+    destruction and fraud guideline, with a median loss of USD 239,730 (USD 134,293 in fiscal 2021).
+    Its Sourcebook sorts 4,767 individuals sentenced under that guideline by loss-table category:
+    489 at USD 6,500 or less, then 161, 503, 530, 367, 422, 655, 653, 433, 304, 139, 58, 36, 3, 8
+    and 6 in the categories that begin above USD 6,500, 15,000, 40,000, 95,000, 150,000, 250,000,
+    550,000, 1.5 million, 3.5 million, 9.5 million, 25 million, 65 million, 150 million, 250 million
+    and 550 million. Each count is a person sentenced that year, not a scheme, and the guideline
+    also covers theft and embezzlement.
+  sources:
+  - https://www.ussc.gov/sites/default/files/pdf/research-and-publications/quick-facts/Theft_Property_Destruction_Fraud_FY25.pdf
+  - https://www.ussc.gov/sites/default/files/pdf/research-and-publications/annual-reports-and-sourcebooks/2025/FigureE2.pdf
+- card_id: us-identity-theft-and-account-takeover-2021-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-04-30
+  availability_basis: The later source, the IC3 2025 report, carries a file date of 2026-04-16, bounded at
+    month-end; the Bureau of Justice Statistics bulletin is dated October 2023 and its survey ran from July to
+    December 2021.
+  text: |-
+    All-cause US reference, not AI-related. A Bureau of Justice Statistics survey estimated that
+    23.9 million people, 9.1% of the 263 million US residents aged 16 or older, were victims of
+    identity theft in the year before their 2021 interview; for about 85% the most recent incident
+    was misuse of an existing account such as a credit card, bank, email or social media account.
+    Across all incidents, 58.9% of victims had a financial loss; their losses totalled USD 16.4
+    billion, with a mean of USD 1,160 and a median of USD 200. The FBI's complaint center recorded
+    approximately 4,700 account takeover complaints with USD 359.7 million lost in 2025, 31,675
+    identity theft complaints with USD 185,832,657 and 971 SIM swap complaints with USD 17,366,758.
+    Victims and complaints are counted, not campaigns.
+  sources:
+  - https://bjs.ojp.gov/document/vit21.pdf
+  - https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+- card_id: fincen-ransomware-incidents-2022-2024
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2026-07-23
+  availability_basis: The latest cited source is the Census methodology page, cited for the term employer
+    firms, which shows a last revision on 2026-07-23. FinCEN's release announcing the analysis is dated
+    2025-12-04; the analysis covers incidents from 2022-01-01 to 2024-12-31. The Census table is marked as
+    released on 2025-04-10.
+  text: |-
+    All-cause reference, not AI-related. A December 2025 analysis by the US Treasury's Financial
+    Crimes Enforcement Network found 7,395 Bank Secrecy Act reports from financial institutions on
+    4,194 ransomware incidents occurring in 2022 to 2024, with more than USD 2.1 billion of
+    ransomware payments: 1,206 incidents in 2022, 1,512 in 2023 and 1,476 in 2024. The median single
+    ransomware transaction was USD 124,097 in 2022, USD 175,000 in 2023 and USD 155,257 in 2024.
+    Manufacturing had 456 incidents, financial services 432 and healthcare 389. The Census Bureau
+    counted 6,395,635 US employer firms in 2022; the analysis does not say where the affected
+    organizations were. It says its data hold only activity that financial institutions identified
+    and reported, include attempted transactions, and are not a complete representation of
+    ransomware attacks or payments.
+  sources:
+  - https://www.fincen.gov/system/files/2025-12/FTA-Ransomware.pdf
+  - https://www.fincen.gov/news/news-releases/fincen-issues-financial-trend-analysis-ransomware
+  - https://www2.census.gov/programs-surveys/susb/tables/2022/us_naicssector_large_emplsize_2022.xlsx
+  - https://www.census.gov/programs-surveys/susb/technical-documentation/methodology.html
+- card_id: eu-enterprise-ict-security-incidents-2023
+  observation_through_utc: 2023-12-31
+  availability_date_utc: 2026-10-23
+  availability_basis: Eurostat's data service gives 2026-06-15 as the last data update of both datasets; the
+    article is marked Data from December 2024 and its revision log shows the last edit before the information
+    date on 2026-10-23, later edits (2026-10-30, 2026-11-11) changing only the planned-update notice. The
+    survey ran in early 2024 and asked about incidents during 2023.
+  text: |-
+    All-cause European reference, not AI-related. Eurostat's 2024 survey of some 157,000 of the 1.54
+    million EU enterprises with ten or more employees or self-employed persons, which leaves out the
+    financial sector among others, asked about incidents in 2023. Attacks from outside, such as
+    ransomware or denial of service, made ICT services unavailable at 3.43% of enterprises: 7.05% of
+    those with 250 or more staff, 5.82% in electricity and gas supply, 8.96% in telecommunications
+    and 5.91% in computer programming and information services. Malicious software or unauthorised
+    intrusion destroyed or corrupted data at 1.89%, and 1.57% had confidential data disclosed
+    through intrusion, pharming, phishing or intentional acts of their own employees (3.96% of large
+    enterprises). The survey records whether an enterprise had such an incident, not how many or at
+    what cost.
+  sources:
+  - https://ec.europa.eu/eurostat/statistics-explained/index.php?title=ICT_security_in_enterprises
+  - https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=EU27_2020&unit=PC_ENT&nace_r2=C10-S951_X_K
+  - https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_icn2?format=JSON&lang=EN&geo=EU27_2020&unit=PC_ENT&time=2024&size_emp=GE10
+- card_id: eu-essential-operators-significant-incidents-2022-2025
+  observation_through_utc: 2025-08-31
+  availability_date_utc: 2025-12-08
+  availability_basis: ENISA's publication pages date the 2023 report 2023-11-16 and the 2025 report
+    2025-12-08; the 2025 survey ran from May to August 2025.
+  text: |-
+    All-cause European reference, not AI-related. For its 2023 report ENISA, the EU cybersecurity
+    agency, surveyed 1,080 operators of essential services and digital service providers: asked
+    whether they experienced a significant information security incident in 2022, 70 (6%) said yes,
+    903 (84%) no and 107 (10%) could not share. Thirty-eight of the 70 gave direct costs, with a
+    median of EUR 250,000, an average of EUR 365,000 and a maximum of EUR 1.5 million. In its 2025
+    survey of 1,080 organisations in sectors of high criticality, the cyberattack that most affected
+    day-to-day operations in the past 12 months was denial of service for 233, ransomware for 198,
+    phishing for 112 and supply-chain compromise for 104; 171 were recorded as not applicable or
+    cannot share. Both are self-reported surveys, not incident registers.
+  sources:
+  - https://www.enisa.europa.eu/sites/default/files/publications/CSPA%20-%20NIS%20Investments%20-%202023.pdf
+  - https://www.enisa.europa.eu/publications/nis-investments-2023
+  - https://www.enisa.europa.eu/sites/default/files/2025-12/NIS%20Investments%202025%20-%20Main%20report.pdf
+  - https://www.enisa.europa.eu/publications/nis-investments-2025
+- card_id: eu-financial-sector-cyber-incidents-2025-2026
+  observation_through_utc: 2026-03-31
+  availability_date_utc: 2026-06-18
+  availability_basis: The supervisory authorities' report is dated 2026-06-03 and the European Banking
+    Authority's risk report file 2026-06-18; the incidents occurred in 2025 and the banks answered the
+    questionnaire in February and March 2026.
+  text: |-
+    European financial-sector reference, mostly not attacks and not AI-related. The European
+    Supervisory Authorities report that financial entities filed 3,383 major ICT-related incidents
+    under the Digital Operational Resilience Act in 2025, an average of 0.18 per entity and 0.57 in
+    the credit sector; one event can be reported by many entities. Cybersecurity-related incidents
+    were 10% of the total; among attacks, 33% were distributed denial of service and 31% data
+    exfiltration and manipulation. Almost 40% of incidents reported no costs and around 10% costs
+    under EUR 1,000; about 15% of notified incidents, lacking a final report, were left out. In the
+    European Banking Authority's questionnaire, completed by 85 banks in February and March 2026,
+    78% reported no cyberattack that resulted in an actual major ICT-related incident, against 71%
+    in the previous round.
+  sources:
+  - https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf
+  - https://www.eba.europa.eu/publications-and-media/press-releases/esas-publish-first-report-dora-major-ict-related-incidents
+  - https://www.eba.europa.eu/sites/default/files/2026-06/237ad40d-8ab0-4b2f-9fa1-5d6694829ff4/Risk%20Assessment%20Report%20-%20Spring%202026.pdf
+- card_id: prompt-injection-prevalence-measurements-2026
+  observation_through_utc: 2026-05-27
+  availability_date_utc: 2026-05-27
+  availability_basis: arXiv gives the first version of the web study as submitted on 2026-04-29 and the resume
+    study on 2026-05-27; the submission dates bound the measurements. A second version of the web study,
+    revised on 2026-11-04, was not used.
+  text: |-
+    AI-specific measurements of planted instructions, not of losses. Khodayari and co-authors
+    (arXiv, April 2026) analysed 1.2 billion URLs from 24.8 million hosts and identified 15.3
+    thousand validated indirect prompt injections across 11.7 thousand web pages; about 70% sat in
+    non-rendered HTML, and aims ranged from disruptive prompts and reputation manipulation to
+    content-protection directives and AI-bot detection. In their 5,200 controlled experiments across
+    13 models, compliance was limited but reached up to 8% for smaller models on plain-text inputs.
+    A second study (arXiv, May 2026) of approximately 200 thousand real resumes collected over
+    multiple years by hireEZ found that approximately 1% contained hidden prompt injections. Both
+    count instructions planted in content that AI systems may read; neither counts deployed systems
+    that acted on them, or any loss.
+  sources:
+  - https://arxiv.org/abs/2604.27202v1
+  - https://arxiv.org/abs/2605.28999
+- card_id: openai-disrupted-networks-and-weekly-users-2024-2025
+  observation_through_utc: 2025-10-08
+  availability_date_utc: 2025-12-01
+  availability_basis: The threat report is titled October 2025 and its file was last modified on 2025-10-08;
+    the usage paper is dated 2025-09-15 and the copy read was last modified on 2025-12-01, used here as the
+    bound.
+  text: |-
+    AI-specific reference from one developer's own reporting. OpenAI's October 2025 threat report
+    says that since it began public threat reporting in February 2024 it had disrupted and reported
+    over 40 networks that violated its usage policies, not broken down by type; it names malicious
+    cyber activity, organized crime and scams, covert influence operations and authoritarian
+    regimes' use as abuse types. It estimates that ChatGPT is used to identify scams up to three
+    times more often than for scams. A September 2025 paper by OpenAI, Duke and Harvard authors
+    reports that by July 2025 ChatGPT's consumer plans had 700 million weekly users sending 18
+    billion messages weekly. These are networks OpenAI detected, disrupted and chose to report, not
+    all misuse of its or other developers' models, and carry no loss amounts.
+  sources:
+  - https://cdn.openai.com/threat-intelligence-reports/7d662b68-952f-4dfd-a2f2-fe55b041cc4a/disrupting-malicious-uses-of-ai-october-2025.pdf
+  - https://cdn.openai.com/pdf/a253471f-8260-40c6-a2cc-aa93fe9f142e/economic-research-chatgpt-usage-paper.pdf
+- card_id: diagnostic-error-rates-us-2000-2021
+  observation_through_utc: 2021-09-30
+  availability_date_utc: 2024-01-19
+  availability_basis: PubMed dates the latest study (Newman-Toker et al.) 2024-01-19; the AHRQ review is dated
+    December 2022 and searched literature through September 2021, and the Singh study was published in 2014.
+  text: |-
+    All-cause clinical reference, not AI-related. Singh et al. (2014), pooling three US studies,
+    estimated that outpatient diagnostic errors affect 5.08% of US adults a year, about 12 million,
+    and that about half could be harmful. A 2022 review for the US Agency for Healthcare Research
+    and Quality estimated that 5.7% of emergency department visits have a diagnostic error, 2.0% a
+    preventable adverse event and 0.3% a serious harm (permanent disability or death): across 130
+    million visits a year, 7.4 million errors and 371,000 serious harms, its overall rates resting
+    on three non-US studies (combined n=1,758). Newman-Toker et al. (2024) estimated 795,000 deaths
+    or permanent disabilities a year from misdiagnosis across US care settings (plausible range
+    598,000 to 1,023,000). All three are extrapolations, not counts of claims or payments.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/24742777/
+  - https://pubmed.ncbi.nlm.nih.gov/36574484/
+  - https://pubmed.ncbi.nlm.nih.gov/37460118/
+- card_id: hospital-adverse-events-and-claims-1984-2018
+  observation_through_utc: 2018-12-31
+  availability_date_utc: 2023-01-12
+  availability_basis: PubMed dates the latest study (Bates et al.) 2023-01-12 and says its sample was of
+    admissions in calendar 2018; the two Harvard Medical Practice Study papers are dated 1991-02-07 and
+    1991-07-25.
+  text: |-
+    All-cause clinical reference, not AI-related. Bates et al. (2023) reviewed a random sample of
+    2,809 admissions to 11 Massachusetts hospitals in 2018: 23.6% had at least one adverse event,
+    6.8% a preventable one and 1.0% a preventable one of serious or higher severity. The Harvard
+    Medical Practice Study reviewed 30,121 records from New York hospitals in 1984: adverse events
+    occurred in 3.7% of hospitalizations, and 27.6% of them were due to negligence. Claims were
+    filed for 0.13% of discharges; of 280 sampled patients with negligent adverse events 8 filed one
+    (weighted rate 1.53%). It estimated 27,179 negligent adverse events statewide against 3,570
+    malpractice claims, 7.6 to 1, which it says overstates the chance that such an event produces a
+    claim. These are reviews of inpatient records in two states.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/36630622/
+  - https://pubmed.ncbi.nlm.nih.gov/1987460/
+  - https://pubmed.ncbi.nlm.nih.gov/2057025/
+- card_id: automated-health-advice-safety-studies-2010-2025
+  observation_through_utc: 2025-02-12
+  availability_date_utc: 2025-08-04
+  availability_basis: arXiv dates version 2 of the latest study (Draelos et al.) 2025-08-04, and its text says
+    the chatbot responses were collected from 2024-09-10 to 2024-12-24 with one on 2025-02-12; the others are
+    dated December 2011, 2024-04-24 and 2025-01-28.
+  text: |-
+    Telephone triage by health care providers, not AI-related, then three chatbot studies rating
+    potential, not actual, harm. A systematic review (Huibers et al., 2011) found out-of-hours
+    triage safe in 97% of patient contacts and 89% of high-urgency contacts across 13 observational
+    studies, but 46% in 10 studies of high-risk simulated patients. In Chen et al. (2024),
+    physicians judged that unedited GPT-4 drafts answering simulated cancer patients risked severe
+    harm in 11 of 156 assessments and death in one. Experts rating a preselected 20 inaccurate Bing
+    copilot drug answers judged 66% potentially harmful and 22% able to cause severe harm or death
+    (Andrikyan et al., 2025). A physician red-team preprint (Draelos et al., 2025) found 5% (Claude)
+    to 13% (GPT-4o, Llama) of answers to 222 patient questions unsafe.
+  sources:
+  - https://pubmed.ncbi.nlm.nih.gov/22126218/
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC11829255/
+  - https://pubmed.ncbi.nlm.nih.gov/39353736/
+  - https://arxiv.org/abs/2507.18905
+- card_id: missouri-legal-malpractice-closed-claims-2012-2021
+  observation_through_utc: 2021-12-31
+  availability_date_utc: 2022-06-30
+  availability_basis: The Missouri report's cover is dated June 2022 (month-end used) and covers claims closed
+    and premium written through 2021.
+  text: |-
+    All-cause professional reference, not AI-related. Missouri's insurance department, from the
+    closed-claim reports insurers must file, counts 1,656 legal malpractice claims closed in 2012 to
+    2021: 465 with payment, averaging USD 166,049 in indemnity (USD 77.2 million in total), and
+    1,191 without, at an average loss expense of USD 11,810. Yearly closures ranged from 263 in 2013
+    to 86 in 2019. In 2021, 104 claims closed, 30 with payment averaging USD 134,707, and 15
+    insurers wrote USD 14.4 million of premium; the number of insured lawyers is not given. The
+    report counts insurers' claim files in one state, not errors or uninsured lawyers, and gives no
+    breakdown of payments by size.
+  sources:
+  - https://insurance.mo.gov/sites/insurance/files/2024-09/2021LegalMalpracticeReport-FINAL.pdf
+- card_id: financial-statement-and-tax-return-error-rates-2002-2021
+  observation_through_utc: 2021-12-31
+  availability_date_utc: 2022-11-28
+  availability_basis: The SEC release was published in the Federal Register on 2022-11-28 and its restatement
+    estimates are for calendar 2021; the GAO reports are dated July 2006 (reissued 2007-03-05) and 2014-04-08.
+  text: |-
+    All-cause reference, not AI-related: errors in professionally prepared financial documents. GAO
+    counted 265 of 7,144 US-listed companies (3.7%) restating in 2002 and 439 of 6,473 (6.8%) in
+    2005 through September; their market value fell an estimated USD 36 billion, market-adjusted,
+    around announcements from July 2002 to September 2005. SEC staff estimated that exchange-listed
+    companies made about 54 restatements correcting material errors and 173 correcting less material
+    ones in 2021, excluding blank-check and shell companies (837 and 474 with them), and that its
+    rule would reach about 5,364 listed registrants. GAO estimated from IRS audit samples for tax
+    years 2006 to 2009 errors in 60% of paid-preparer returns and 50% of self-prepared ones (median
+    additional tax owed USD 354 and USD 169), adding that they are not necessarily the preparer's
+    fault.
+  sources:
+  - https://www.gao.gov/assets/gao-06-678.pdf
+  - https://www.govinfo.gov/content/pkg/FR-2022-11-28/html/2022-23757.htm
+  - https://www.gao.gov/assets/gao-14-467t.pdf
+- card_id: chatbot-reality-distortion-prevalence-2025
+  observation_through_utc: 2025-12-19
+  availability_date_utc: 2026-01-27
+  availability_basis: arXiv gives the paper's only version (Sharma et al.) as submitted on 2026-01-27; its
+    sample of conversations ran from 12 to 19 December 2025.
+  text: |-
+    AI-specific prevalence of patterns flagged by model classifiers in conversations, not of
+    injuries. Sharma et al. (January 2026), with Anthropic co-authors, had Claude models classify
+    1.5 million randomly sampled Claude.ai conversations of 12-19 December 2025: severe
+    reality-distortion potential in 0.076%, markers of severe user vulnerability in about one in
+    300, actualized reality distortion (transcript evidence that false or misleading model output
+    altered a user's beliefs) in 0.048% and actualized action distortion in 0.018%. They call the
+    actualized rates a likely lower bound, since such effects can occur without showing in the
+    conversation. These are shares of one week's conversations at one developer, estimated from its
+    own data; they count neither people, injuries nor claims.
+  sources:
+  - https://arxiv.org/abs/2601.19062
+- card_id: us-suicide-deaths-and-attempts-2024
+  observation_through_utc: 2024-12-31
+  availability_date_utc: 2026-09-30
+  availability_basis: The NCHS data brief is dated September 2026 (month-end used; its page was last reviewed
+    on 2026-09-29) and the CDC statistics page is dated May 20, 2026; both report calendar 2024.
+  text: |-
+    General-population reference, not AI-related. CDC reports 48,824 suicide deaths in the United
+    States in 2024, an age-adjusted rate of 13.7 per 100,000 population (14.1 in 2023), 22.3 for
+    males and 5.6 for females. It also reports that in 2024 an estimated 14.3 million adults
+    seriously thought about suicide, 4.6 million planned a suicide attempt and 2.2 million attempted
+    suicide, citing the 2024 National Survey on Drug Use and Health. These are whole-population
+    figures for one country. They attribute no death, attempt or thought to any product, service or
+    conversation, and they do not show how such events are spread among the users of any service.
+  sources:
+  - https://www.cdc.gov/suicide/data/index.html
+  - https://www.cdc.gov/nchs/products/databriefs/db572.htm
+- card_id: jpml-multidistrict-dockets-2024-2026
+  observation_through_utc: 2026-10-01
+  availability_date_utc: 2026-10-01
+  availability_basis: The pending-docket report carries the report date 10/1/2026; the calendar-year
+    statistics cover 2025 and the PDF was created on 2026-01-16.
+  text: |-
+    All-defendant reference, not AI-specific. The US Judicial Panel on Multidistrict Litigation
+    reports 32 motions to centralize federal actions filed in 2025, with 21 granted and 16 denied,
+    mooted or withdrawn that year (46 filed and 24 granted in 2024). Its report of 1 October 2026
+    lists 162 pending dockets with 204,977 pending actions: 43 dockets have 10 or fewer, 69 have 11
+    to 100, 29 have 101 to 999, and 21 have 1,000 or more, holding 94.58% of the actions. At the end
+    of 2025, 61 pending dockets were products liability, 36 antitrust, 20 data breach and consumer
+    privacy, 10 intellectual property, 8 sales practices and 3 securities. The OpenAI copyright
+    docket has 22 pending actions and the social media adolescent addiction docket 3,824. These
+    cover federal multidistrict dockets only.
+  sources:
+  - https://www.jpml.uscourts.gov/sites/jpml/files/JPML_Calendar_Year_Statistics-CY-2025%201-16-26-Final_0.pdf
+  - https://www.jpml.uscourts.gov/sites/jpml/files/Pending_MDL_Dockets_By_Actions_Pending-October-1-2026.pdf
+- card_id: federal-civil-case-costs-and-class-settlements-2008-2014
+  observation_through_utc: 2014-02-28
+  availability_date_utc: 2015-03-31
+  availability_basis: The CFPB study is dated March 2015 (month-end used) and followed its cases to 28
+    February 2014; the Federal Judicial Center report is dated October 2009 and surveys cases closed in late
+    2008.
+  text: |-
+    All-defendant references, not AI-related. A Federal Judicial Center survey of attorneys in
+    federal civil cases closed in late 2008, which left out multidistrict transfers and cases ending
+    within 60 days, found that in cases with discovery defendants' median litigation cost, including
+    attorney fees, was USD 20,000 (10th percentile USD 5,000, 95th USD 300,000). The Consumer
+    Financial Protection Bureau (2015) found 562 class cases filed in 2010 to 2012 in federal and
+    selected state courts in six consumer finance markets; 12.3% had a class settlement approved by
+    February 2014. Of 419 federal consumer financial class settlements approved in 2008 to 2012, 204
+    gave gross relief of USD 100,000 or less, 127 up to USD 1 million, 58 up to USD 10 million, 23
+    up to USD 100 million and 7 more.
+  sources:
+  - https://www.fjc.gov/sites/default/files/materials/08/CivilRulesSurvey2009.pdf
+  - https://files.consumerfinance.gov/f/201503_cfpb_arbitration-study-report-to-congress-2015.pdf
+- card_id: eu-dsa-designated-service-enforcement-2023-2026
+  observation_through_utc: 2026-10-21
+  availability_date_utc: 2026-10-21
+  availability_basis: The latest cited Commission release, on Booking.com, is dated 2026-10-21; the others are
+    dated from 2023-12-18 to 2026-08-31.
+  text: |-
+    Regulator-level reference for the largest online services in the EU, not AI-specific. The
+    European Commission had designated 28 very large online platforms and search engines under the
+    Digital Services Act by 31 August 2026, when it designated ChatGPT as a very large online search
+    engine, its added obligations due by January 2027. Releases from 18 December 2023 to 21 October
+    2026 announce formal proceedings against twelve providers: X, TikTok, AliExpress, Meta, Temu,
+    Pornhub, Stripchat, XNXX, XVideos, Shein, Snapchat and Booking.com. Its first non-compliance
+    decision, on 5 December 2025, fined X EUR 120 million, followed by fines of EUR 200 million on
+    Temu (28 May 2026) and EUR 550 million on AliExpress (20 July 2026). The cited releases are not
+    a complete log and omit information requests and the companies' costs.
+  sources:
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1772
+  - https://digital-strategy.ec.europa.eu/en/news/commission-fines-x-eu120-million-under-digital-services-act
+  - https://digital-strategy.ec.europa.eu/en/news/commission-fines-temu-eu200-million-breaching-digital-services-act
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1654
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2223
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_23_6709
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_24_926
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_24_1485
+  - https://ec.europa.eu/commission/presscorner/detail/en/ip_24_2373
+  - https://digital-strategy.ec.europa.eu/en/news/commission-opens-formal-proceedings-against-temu-under-digital-services-act
+  - https://digital-strategy.ec.europa.eu/en/news/commission-opens-investigations-safeguard-minors-pornographic-content-under-digital-services-act
+  - https://digital-strategy.ec.europa.eu/en/news/commission-launches-investigation-shein-under-digital-services-act
+  - https://digital-strategy.ec.europa.eu/en/news/commission-investigates-snapchats-compliance-child-protection-rules-under-digital-services-act
+- card_id: cnil-complaints-and-sanctions-2024-2025
+  observation_through_utc: 2025-12-31
+  availability_date_utc: 2026-05-19
+  availability_basis: The CNIL's annual-report page is dated 19 May 2026 and its 2025 sanctions review 09
+    February 2026; both report calendar 2025, and the 2024 review is dated 05 February 2025.
+  text: |-
+    Single-regulator reference, not AI-specific. France's data protection authority, the CNIL,
+    reports that in 2025 it received 20,150 complaints, carried out 323 investigations and issued
+    259 corrective measures, of which 83 were sanctions with fines totalling EUR 486,839,500.
+    Sixteen sanctions came from its restricted committee under the ordinary procedure and 67 under
+    the simplified procedure; ten were made public. It says two significant sanctions explain the
+    unprecedented total, and reports cookie fines of EUR 325 million and EUR 150 million on two
+    major players. In 2024 it issued 87 sanctions totalling EUR 55,212,400; the 69 under the
+    simplified procedure came to EUR 715,500. These are one national regulator's decisions; they
+    give neither the number of organisations it supervises nor those organisations' costs.
+  sources:
+  - https://www.cnil.fr/en/annual-report-2025
+  - https://www.cnil.fr/en/sanctions-and-corrective-measures-cnils-actions-2025
+  - https://www.cnil.fr/en/sanctions-and-corrective-measures-cnils-actions-2024
+- card_id: us-federal-suspension-debarment-actions-2023-2024
+  observation_through_utc: 2024-11-30
+  availability_date_utc: 2026-06-16
+  availability_basis: GAO dates its report June 16, 2026 and its latest exclusions file November 2024; the
+    committee's report letter is dated December 31, 2024 and covers fiscal year 2023, and the GSA sheet's PDF
+    was created on 2023-08-04.
+  text: |-
+    All-contractor reference, not AI-related. The Interagency Suspension and Debarment Committee
+    reports that in fiscal year 2023 US federal agencies issued 423 suspensions, 1,165 proposed
+    debarments and 1,009 debarments. Actions are counted separately even for one respondent,
+    respondents include individuals, and a significant portion of debarred persons had first been
+    convicted. As of June 2023 the General Services Administration listed over 674,000 registered
+    entities in the government's award system and over 147,000 active exclusion records. GAO counted
+    172,091 exclusion records for fiscal years 2023 and 2024, 128,818 without an entity identifier
+    (mostly records needing none, e.g. individuals); it found 71,407 entries in that system from the
+    health department's exclusion list and 36,115 from Treasury sanctions lists. The committee
+    counts discretionary actions only, not statutory debarments or the system's prohibitions and
+    restrictions.
+  sources:
+  - https://www.acquisition.gov/sites/default/files/page_file_uploads/FY23%20Report%20by%20the%20Interagency%20Suspension%20and%20Debarment%20Committee%20on%20Federal%20Agency%20Suspension%20and%20Debarment%20Activities.pdf
+  - https://www.gsa.gov/system/files/SAMgov%20by%20the%20Numbers.pdf
+  - https://www.gao.gov/assets/gao-26-107466.pdf
+scenarios:
+  ai_service_attack:
+  - eu-enterprise-ict-security-incidents-2023
+  - eu-financial-sector-cyber-incidents-2025-2026
+  - cyentia-iris-incident-probability-2008-2024
+  engagement_harm:
+  - chatbot-reality-distortion-prevalence-2025
+  - us-suicide-deaths-and-attempts-2024
+  agent_actions_for_deployer:
+  - gartner-autonomous-agents-2025
+  - knight-capital-2012
+  - flash-crash-2010
+  - crowdstrike-outage-2024
+  - ai-coding-agent-data-loss-reports-2025-2026
+  - us-bank-operational-loss-events-2000-2017
+  - eu-bank-operational-loss-events-2024-2025
+  bounded_decision_errors:
+  - automated-eligibility-cases
+  - platform-penalty-ceilings
+  - knight-capital-2012
+  - flash-crash-2010
+  - us-bank-operational-loss-events-2000-2017
+  - sec-sci-events-2019-2021
+  - medicare-advantage-denials-and-audits-2014-2016
+  cbrn_biological_expert:
+  - cbrn-source-5
+  - cbrn-source-6
+  - cbrn-source-7
+  - cbrn-source-4
+  - cbrn-source-9
+  - cbrn-source-10
+  - cbrn-source-11
+  - covid-19-pandemic-cost-estimates
+  - xpt-engineered-pathogen-forecasts-2022
+  - anthropic-cb-threshold-assessments-2025-2026
+  - openai-bio-chem-high-capability-2025-2026
+  - google-cbrn-alert-threshold-2025-2026
+  cbrn_biological_novice:
+  - cbrn-source-5
+  - cbrn-source-6
+  - cbrn-source-7
+  - cbrn-source-4
+  - cbrn-source-9
+  - cbrn-source-10
+  - cbrn-source-11
+  - covid-19-pandemic-cost-estimates
+  - xpt-engineered-pathogen-forecasts-2022
+  - anthropic-cb-threshold-assessments-2025-2026
+  - openai-bio-chem-high-capability-2025-2026
+  - google-cbrn-alert-threshold-2025-2026
+  cbrn_chemical:
+  - cbrn-source-5
+  - cbrn-source-6
+  - cbrn-source-10
+  - cbrn-source-11
+  - chemical-release-casualty-anchors
+  - anthropic-cb-threshold-assessments-2025-2026
+  - openai-bio-chem-high-capability-2025-2026
+  - google-cbrn-alert-threshold-2025-2026
+  cbrn_radiological_nuclear:
+  - cbrn-source-5
+  - cbrn-source-6
+  - cbrn-source-8
+  - cbrn-source-11
+  - radiological-nuclear-consequence-estimates
+  - google-cbrn-alert-threshold-2025-2026
+  component_tampering:
+  - software-supply-chain-compromises
+  - pytorch-torchtriton-2022
+  - open-source-malware-and-model-hub-scans-2024-2025
+  compromise_critical_infrastructure:
+  - ic3-critical-infrastructure-2024-2025
+  - large-system-compromises
+  - software-supply-chain-compromises
+  - cyentia-iris-incident-probability-2008-2024
+  - aisi-frontier-trends-cyber
+  - one-day-exploit-agents-2024
+  - bountybench-detect-2025
+  - big-sleep-sqlite-2024
+  - gtig-zero-days-2025
+  - cisa-kev-catalog
+  - eu-essential-operators-significant-incidents-2022-2025
+  - eu-financial-sector-cyber-incidents-2025-2026
+  - fincen-ransomware-incidents-2022-2024
+  compromise_individuals:
+  - aisi-frontier-trends-cyber
+  - us-identity-theft-and-account-takeover-2021-2025
+  compromise_self_propagating:
+  - govai-data-damaging-worms-2026
+  - notpetya-us-government-figures
+  - aisi-frontier-trends-cyber
+  - one-day-exploit-agents-2024
+  - bountybench-detect-2025
+  - big-sleep-sqlite-2024
+  - gtig-zero-days-2025
+  - cisa-kev-catalog
+  - open-source-malware-and-model-hub-scans-2024-2025
+  compromise_organizations:
+  - cyentia-iris-incident-probability-2008-2024
+  - large-system-compromises
+  - fbi-help-desk-and-dprk-lures-2024
+  - vishing-and-gemini-misuse
+  - software-supply-chain-compromises
+  - aisi-frontier-trends-cyber
+  - one-day-exploit-agents-2024
+  - bountybench-detect-2025
+  - big-sleep-sqlite-2024
+  - gtig-zero-days-2025
+  - cisa-kev-catalog
+  - fincen-ransomware-incidents-2022-2024
+  - eu-enterprise-ict-security-incidents-2023
+  - openai-disrupted-networks-and-weekly-users-2024-2025
+  developer_control_loss:
+  - anthropic-evaluation-incidents-2026
+  - alignment-evaluation-findings
+  enforcement_matter:
+  - large-enforcement-matters
+  - gdpr-large-fines
+  - gdpr-fines-and-complaints-2018-2025
+  - eu-ai-act-gpai-penalties
+  - eu-ai-act-article-5-penalties
+  - ncsl-ai-legislation-2025
+  - ftc-donotpay-2025
+  - sec-ai-washing-2024
+  - eu-dsa-designated-service-enforcement-2023-2026
+  - cnil-complaints-and-sanctions-2024-2025
+  fraud_individuals:
+  - ftc-ic3-consumer-fraud-2023-2024
+  - large-fraud-against-individuals
+  - ic3-ai-flag-and-six-figure-complaints-2025
+  - federal-fraud-sentences-by-loss-fy2025
+  - openai-disrupted-networks-and-weekly-users-2024-2025
+  fraud_organizations:
+  - ic3-bec-2013-2023
+  - ic3-bec-and-recovery-team-2017-2025
+  - vishing-and-gemini-misuse
+  - large-fraud-against-organizations
+  - federal-fraud-sentences-by-loss-fy2025
+  government_designation:
+  - anthropic-designation-2026
+  - us-procurement-exclusion-law
+  - us-federal-suspension-debarment-actions-2023-2024
+  influence_manipulation:
+  - emulex-hoax-2000
+  - meta-influence-networks-2022
+  - openai-influence-operations-2026
+  - llm-persuasion-studies
+  - openai-disrupted-networks-and-weekly-users-2024-2025
+  input_hijack:
+  - prompt-injection-prevalence-measurements-2026
+  model_asset_compromise:
+  - cyentia-iris-incident-probability-2008-2024
+  output_reliance_financial:
+  - financebench-2023
+  - ai-incident-database-counts-2025-2026
+  - organizations-reporting-ai-incidents-2024-2025
+  - zillow-offers-writedown-2021
+  - chatbot-financial-guidance-errors-2023-2025
+  - financial-statement-and-tax-return-error-rates-2002-2021
+  output_reliance_health:
+  - ama-physician-ai-use-2024
+  - gpt4-diagnostic-trial-2024
+  - npdb-payment-reports
+  - ai-incident-database-counts-2025-2026
+  - organizations-reporting-ai-incidents-2024-2025
+  - chatbot-health-advice-harm-reports
+  - paid-malpractice-claim-rates-1992-2014
+  - clinician-automation-bias-studies-2023
+  - diagnostic-error-rates-us-2000-2021
+  - hospital-adverse-events-and-claims-1984-2018
+  - automated-health-advice-safety-studies-2010-2025
+  output_reliance_legal:
+  - legal-ai-adoption-2025
+  - fabricated-citation-cases
+  - aba-formal-opinion-512
+  - ftc-donotpay-2025
+  - ai-incident-database-counts-2025-2026
+  - organizations-reporting-ai-incidents-2024-2025
+  - krafton-chatbot-strategy-ruling-2026
+  - ai-hallucination-case-counts-2025-2026
+  - fabricated-citation-fee-awards-2025-2026
+  - missouri-legal-malpractice-closed-claims-2012-2021
+  output_reliance_other:
+  - ai-incident-database-counts-2025-2026
+  - organizations-reporting-ai-incidents-2024-2025
+  - deloitte-reports-air-canada-chatbot-amounts
+  - krafton-chatbot-strategy-ruling-2026
+  - agent-incident-registry-2026
+  output_reliance_software:
+  - crowdstrike-outage-2024
+  - knight-capital-2012
+  - cyentia-iris-incident-probability-2008-2024
+  - ai-incident-database-counts-2025-2026
+  - organizations-reporting-ai-incidents-2024-2025
+  - agent-incident-registry-2026
+  - ai-written-code-defect-measurements-2024-2026
+  - software-change-failure-rates-2024
+  - agent-pull-request-revert-rates-2024-2025
+  - eu-enterprise-ict-failure-incidents-2023
+  physical_equipment_control:
+  - nhtsa-crash-reporting
+  - crowdstrike-outage-2024
+  - ai-medical-device-recalls-2024
+  - driverless-vehicle-claim-and-crash-rates-2018-2023
+  private_claims_copyright_ip:
+  - large-copyright-claims
+  - jpml-multidistrict-dockets-2024-2026
+  private_claims_other:
+  - sec-ai-washing-2024
+  - federal-civil-case-costs-and-class-settlements-2008-2014
+  private_claims_privacy:
+  - large-privacy-claims
+  - jpml-multidistrict-dockets-2024-2026
+  - federal-civil-case-costs-and-class-settlements-2008-2014
+  private_claims_product_consumer:
+  - jpml-multidistrict-dockets-2024-2026
+  - federal-civil-case-costs-and-class-settlements-2008-2014
+  service_outage_degradation:
+  - openai-outage-2024-12
+  - crowdstrike-outage-2024
+  - llm-service-status-incidents-2021-2024
+  - eu-financial-major-ict-incidents-2025
+  - sec-sci-events-2019-2021

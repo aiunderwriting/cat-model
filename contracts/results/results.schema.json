@@ -1,0 +1,2490 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "results.json",
+  "description": "The headline of a native results report (catmodel.contracts.results.HeadlineResults): what the result describes, its identity, coverage and limitations, each arm's statistics, the comparisons and each scenario's contribution. The diagnostics file beside it holds the report's exhibits and view diagnostics. Every reason is stored as a code that the `reasons` table resolves.",
+  "type": "object",
+  "properties": {
+    "analysis_sha256": {
+      "type": "string"
+    },
+    "analysis_spec": {
+      "$ref": "#/$defs/AnalysisSpec"
+    },
+    "status": {
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "arms": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ArmResult"
+      }
+    },
+    "comparisons": {
+      "$ref": "#/$defs/ComparisonTable"
+    },
+    "comparison_reference_arms": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "reference_comparisons": {
+      "$ref": "#/$defs/ComparisonTable"
+    },
+    "rankings_available": {
+      "type": "boolean"
+    },
+    "rankings": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ViewRanking"
+      }
+    },
+    "comparison_requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AssessedRequirement"
+      }
+    },
+    "comparison_families": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ComparisonFamily"
+      }
+    },
+    "schema_version": {
+      "description": "The layout of results.json and of its diagnostics file; readers accept only the current version.",
+      "const": 1
+    },
+    "study": {
+      "$ref": "#/$defs/StudyScope"
+    },
+    "coverage": {
+      "$ref": "#/$defs/ResultCoverage"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ResultLimitation"
+      }
+    },
+    "scenario_contributions": {
+      "$ref": "#/$defs/ScenarioContributions"
+    },
+    "producer_provenance": {
+      "$ref": "#/$defs/CapturedCodeProvenance"
+    },
+    "execution_context": {
+      "$ref": "#/$defs/ExecutionContext"
+    },
+    "reasons": {
+      "description": "Each reason code in the file and its text. Every code has an entry, every entry is used, and each entry's code is its text's code.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/ReasonCode"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "analysis_sha256",
+    "analysis_spec",
+    "status",
+    "arms",
+    "comparisons",
+    "comparison_reference_arms",
+    "reference_comparisons",
+    "rankings_available",
+    "rankings",
+    "comparison_requirements",
+    "comparison_families",
+    "schema_version",
+    "study",
+    "coverage",
+    "limitations",
+    "scenario_contributions",
+    "producer_provenance",
+    "reasons"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "AnalysisSpec": {
+      "type": "object",
+      "properties": {
+        "scientific_sha256": {
+          "type": "string"
+        },
+        "plan_sha256": {
+          "type": "string"
+        },
+        "capture_provenance": {
+          "$ref": "#/$defs/CaptureProvenance"
+        },
+        "captures": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "state_weights": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "state_weights_by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "required_arms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference_arm": {
+          "type": "string"
+        },
+        "matched_controls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "comparison_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComparisonRequirementRecord"
+          }
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reduction_spec": {
+          "$ref": "#/$defs/ReductionSpecRecord"
+        },
+        "reducer_provenance": {
+          "$ref": "#/$defs/CodeProvenance"
+        },
+        "epistemic_groups": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scientific_sha256",
+        "plan_sha256",
+        "capture_provenance",
+        "captures",
+        "state_weights",
+        "state_weights_by_arm",
+        "required_arms",
+        "reference_arm",
+        "matched_controls",
+        "comparison_requirements",
+        "views",
+        "reduction_spec",
+        "reducer_provenance",
+        "epistemic_groups"
+      ],
+      "additionalProperties": false
+    },
+    "ArmResult": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UnavailableArmResult"
+        },
+        {
+          "$ref": "#/$defs/ReducedArmResult"
+        }
+      ]
+    },
+    "AssessedRequirement": {
+      "description": "A frozen requirement with its outcome and each requested view's\ncomparison status; the comparison itself is in `comparisons`.",
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string"
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "held_fixed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "arm_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_views": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope_basis": {
+          "const": "authored_perturbation_scope"
+        },
+        "requested_views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "view_outcomes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewOutcome"
+          }
+        },
+        "outcome_status": {
+          "enum": [
+            "available",
+            "partial",
+            "missing",
+            "unassessed",
+            "unavailable",
+            "inapplicable"
+          ]
+        },
+        "outcome_reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "family_id",
+        "scenario_ids",
+        "held_fixed",
+        "arm_id",
+        "affected_views",
+        "status",
+        "reason",
+        "scope_basis",
+        "requested_views",
+        "view_outcomes",
+        "outcome_status"
+      ],
+      "additionalProperties": false
+    },
+    "AuthoredComparisonRequirement": {
+      "description": "A comparison requirement as a plan file gives it; an omitted field\ntakes its default.",
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string"
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "held_fixed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "arm_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_views": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "family_id",
+        "scenario_ids",
+        "held_fixed"
+      ],
+      "additionalProperties": false
+    },
+    "Availability": {
+      "enum": [
+        "available",
+        "unavailable"
+      ]
+    },
+    "AvailableRanking": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "basis": {
+          "const": "absolute_point_effect_without_precision_ordering"
+        },
+        "reference_arm": {
+          "type": "string"
+        },
+        "arms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RankedComparison"
+          }
+        },
+        "withheld_arms": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "basis",
+        "reference_arm",
+        "arms",
+        "withheld_arms"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableScenarioContributions": {
+      "description": "Each scenario's EAL and share of the pooled EAL in the headline view,\nand the pooled EAL no scenario carries\n(`catmodel.results.scenario_contributions`).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "measure": {
+          "enum": [
+            "welfare",
+            "gross",
+            "net_resource_cost"
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScenarioContribution"
+          }
+        },
+        "unallocated": {
+          "$ref": "#/$defs/UnallocatedLoss"
+        },
+        "limitations": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "measure",
+        "expected_annual_loss",
+        "total_reason",
+        "scenarios",
+        "unallocated",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableViewResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ViewBasis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eal_estimator": {
+          "type": "string"
+        },
+        "eal_precision": {
+          "$ref": "#/$defs/EalPrecision"
+        },
+        "eal_tail_coherence": {
+          "$ref": "#/$defs/EalTailCoherence"
+        },
+        "eal_reconciliation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EalReconciliation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eal_reconciliation_difference": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "normalized_empirical_mean": {
+          "type": "number"
+        },
+        "annual_loss_variance": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "annual_loss_variance_estimator": {
+          "const": "weighted_empirical_variance"
+        },
+        "normalized_empirical_variance": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "annual_probability_positive": {
+          "type": "number"
+        },
+        "annual_loss_median": {
+          "type": "number"
+        },
+        "tail_metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/TailMetrics"
+          }
+        },
+        "statistics": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StatisticStatus"
+          }
+        },
+        "sampling_method": {
+          "const": "stratified_conditional_capability_mixture"
+        }
+      },
+      "required": [
+        "status",
+        "basis",
+        "expected_annual_loss",
+        "eal_estimator",
+        "eal_precision",
+        "eal_reconciliation",
+        "eal_reconciliation_difference",
+        "normalized_empirical_mean",
+        "annual_loss_variance",
+        "annual_loss_variance_estimator",
+        "normalized_empirical_variance",
+        "annual_probability_positive",
+        "annual_loss_median",
+        "tail_metrics",
+        "statistics",
+        "sampling_method"
+      ],
+      "additionalProperties": false
+    },
+    "CaptureProvenance": {
+      "description": "The capture a result reduces and the setup it was reduced under\n(`catmodel.results.execution.reduce_capture`).",
+      "type": "object",
+      "properties": {
+        "content_sha256": {
+          "type": "string"
+        },
+        "originating_setup_sha256": {
+          "type": "string"
+        },
+        "originating_scientific_sha256": {
+          "type": "string"
+        },
+        "producer_provenance": {
+          "$ref": "#/$defs/CapturedCodeProvenance"
+        },
+        "producer_execution_plan": {
+          "$ref": "#/$defs/ExecutionPlanRecord"
+        },
+        "selected_setup_sha256": {
+          "type": "string"
+        },
+        "selected_setup_plan_sha256": {
+          "type": "string"
+        },
+        "grain": {
+          "const": "annual"
+        },
+        "physical_joint_semantics": {
+          "const": "physical_joint_samples"
+        },
+        "support_records": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/SupportRecord"
+          }
+        },
+        "support_by_arm_state": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "financial_view_semantics": {
+          "$ref": "#/$defs/FinancialViewSemantics"
+        },
+        "current_assessment_sha256": {
+          "type": "string"
+        },
+        "current_assessment": {
+          "$ref": "#/$defs/EvidenceAssessment"
+        },
+        "producer_assessment_sha256": {
+          "type": "string"
+        },
+        "producer_assessment": {
+          "$ref": "#/$defs/ProducerAssessment"
+        }
+      },
+      "required": [
+        "content_sha256",
+        "originating_setup_sha256",
+        "originating_scientific_sha256",
+        "producer_provenance",
+        "producer_execution_plan",
+        "selected_setup_sha256",
+        "selected_setup_plan_sha256",
+        "grain",
+        "physical_joint_semantics",
+        "support_records",
+        "support_by_arm_state",
+        "current_assessment_sha256",
+        "current_assessment",
+        "producer_assessment_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "CapturedCodeProvenance": {
+      "description": "The code provenance a run capture recorded, as replay copies it; a\ncapture written before the installed version was recorded lacks\n`version`.",
+      "type": "object",
+      "properties": {
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auto_resolved": {
+          "type": "boolean"
+        },
+        "tree_state": {
+          "enum": [
+            "clean",
+            "dirty",
+            "unknown",
+            "installed",
+            "asserted"
+          ]
+        },
+        "diff_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "numerical_environment": {
+          "$ref": "#/$defs/NumericalEnvironment"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "commit",
+        "auto_resolved",
+        "tree_state",
+        "diff_sha256",
+        "numerical_environment"
+      ],
+      "additionalProperties": false
+    },
+    "CodeProvenance": {
+      "description": "The running code's identity and numerical environment\n(`catmodel.setup.store.setup_code_provenance`).",
+      "type": "object",
+      "properties": {
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auto_resolved": {
+          "type": "boolean"
+        },
+        "tree_state": {
+          "enum": [
+            "clean",
+            "dirty",
+            "unknown",
+            "installed",
+            "asserted"
+          ]
+        },
+        "diff_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "numerical_environment": {
+          "$ref": "#/$defs/NumericalEnvironment"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "commit",
+        "auto_resolved",
+        "tree_state",
+        "diff_sha256",
+        "numerical_environment",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "ComparedValue": {
+      "description": "One statistic's effect; the comparison tables name its two arms.",
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "number"
+        },
+        "alternative": {
+          "type": "number"
+        },
+        "absolute_difference": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "absolute_difference_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relative_change": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_change_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "years_per_state": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "control_variate_coefficient": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "half_width": {
+          "type": "number"
+        },
+        "status": {
+          "const": "withheld"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "reference",
+        "alternative",
+        "absolute_difference",
+        "absolute_difference_unavailable_reason",
+        "relative_change",
+        "relative_change_unavailable_reason",
+        "years_per_state"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonCoverage": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "not_requested",
+            "inapplicable"
+          ]
+        },
+        "required_alternative_arms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_arms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "unavailable_comparison_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "requirements_complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "required_alternative_arms",
+        "missing_arms",
+        "missing_views",
+        "unavailable_comparison_views",
+        "requirements_complete"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonFamily": {
+      "description": "One comparison family's requirements, status and rankings.",
+      "type": "object",
+      "properties": {
+        "requirement_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_arms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "inapplicable"
+          ]
+        },
+        "rankings": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewRanking"
+          }
+        }
+      },
+      "required": [
+        "requirement_indices",
+        "scenario_ids",
+        "required_arms",
+        "status",
+        "rankings"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonRequirementRecord": {
+      "description": "A frozen comparison requirement\n(`catmodel.contracts.incident.ComparisonRequirement`).",
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string"
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "held_fixed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "arm_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_views": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "family_id",
+        "scenario_ids",
+        "held_fixed",
+        "arm_id",
+        "affected_views",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonTable": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/$defs/ViewComparison"
+        }
+      }
+    },
+    "EalPrecision": {
+      "description": "The precision of a reported EAL, aggregated over its states.",
+      "type": "object",
+      "properties": {
+        "numerical_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "standard_error_upper_bound": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "integration_error_bound": {
+          "type": "number"
+        },
+        "precision_basis": {
+          "enum": [
+            "deterministic_integration",
+            "sum_of_weighted_standard_error_bounds_no_independence_assumed",
+            "unavailable_component_estimator_precision",
+            "sampling_design_aware_empirical_mean_precision_required",
+            "unavailable_functional"
+          ]
+        },
+        "precision_suppression_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "precision_basis",
+        "precision_suppression_reason"
+      ],
+      "additionalProperties": false
+    },
+    "EalReconciliation": {
+      "description": "The tail gate's reconciliation of the simulated years with the\nanalytic EAL (`catmodel.simulation.tail_gate.eal_reconciliation`): its\nstatistic, z, standard error and status, `inconsistent` when it\nwithholds the VaR and TVaR.",
+      "type": "object",
+      "properties": {
+        "statistic": {
+          "enum": [
+            "mean",
+            "limited_mean"
+          ]
+        },
+        "limit_level": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "limit": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "simulated_mean": {
+          "type": "number"
+        },
+        "simulated_mean_standard_error": {
+          "type": "number"
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "integration_error_bound": {
+          "type": "number"
+        },
+        "z": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "consistent",
+            "inconsistent"
+          ]
+        }
+      },
+      "required": [
+        "statistic",
+        "limit_level",
+        "limit",
+        "simulated_mean",
+        "simulated_mean_standard_error",
+        "expected_annual_loss",
+        "integration_error_bound",
+        "z",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "EalTailCoherence": {
+      "description": "Whether the analytic EAL fits the simulated years beside it.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "coherent",
+            "incoherent"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exceeds_sampled_maximum": {
+          "type": "boolean"
+        },
+        "exceeds_tvar_levels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceAssessment": {
+      "description": "The setup's evidence records and limitations as the reducer assessed\nthem.",
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRecord"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assessor_provenance": {
+          "$ref": "#/$defs/CodeProvenance"
+        }
+      },
+      "required": [
+        "evidence",
+        "limitations",
+        "assessor_provenance"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceRecord": {
+      "description": "One evidence record of a setup (`catmodel.contracts.incident.Evidence`).\n\n`acquisition` is the record's acquisition detail, which the evidence\ncontract leaves open; the sensitivity summary reports the exhibits some of\nthem carry.",
+      "type": "object",
+      "properties": {
+        "evidence_id": {
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "observation",
+            "fit",
+            "elicitation",
+            "stipulation"
+          ]
+        },
+        "original_sha256": {
+          "type": "string"
+        },
+        "selected_sha256": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "conditioning": {
+          "type": "string"
+        },
+        "units": {
+          "type": "string"
+        },
+        "transport": {
+          "type": "string"
+        },
+        "acquisition": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {}
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_attempt_sha256": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "review": {
+          "type": "string"
+        },
+        "reliance": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "origin",
+        "original_sha256",
+        "selected_sha256",
+        "target",
+        "conditioning",
+        "units",
+        "transport",
+        "acquisition",
+        "raw_attempt_sha256",
+        "review",
+        "reliance",
+        "rights"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionContext": {
+      "type": "object",
+      "properties": {
+        "workers": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "workers"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionPlanRecord": {
+      "description": "A setup's execution plan as its `execution-plan.json` holds it\n(`catmodel.contracts.incident.ExecutionPlan`); an omitted field takes\nits default.",
+      "type": "object",
+      "properties": {
+        "plan_id": {
+          "type": "string"
+        },
+        "required_arms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference_arm": {
+          "type": "string"
+        },
+        "simulations": {
+          "type": "integer"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "requested_views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "capture_grain": {
+          "const": "annual_joint"
+        },
+        "method": {
+          "const": "physical_marked_poisson"
+        },
+        "staged_rules": {
+          "$ref": "#/$defs/ExecutionRulesRecord"
+        },
+        "numerical_controls": {
+          "$ref": "#/$defs/NumericalControls"
+        },
+        "simulations_by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "numerical_controls_by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/NumericalControls"
+          }
+        },
+        "comparison_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AuthoredComparisonRequirement"
+          }
+        },
+        "requested_comparison_families": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_state_ids_by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "plan_id",
+        "required_arms",
+        "simulations",
+        "seed",
+        "requested_views"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionRulesRecord": {
+      "type": "object",
+      "properties": {
+        "work_limit_exceedance": {
+          "const": "abort_without_capture"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FamilyCoverage": {
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/FamilyKind"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "unavailable",
+            "inapplicable",
+            "not_requested"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "family_id",
+        "kind",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "FamilyKind": {
+      "enum": [
+        "assumption",
+        "numerical",
+        "diagnostic",
+        "exhibit",
+        "register_challenge"
+      ]
+    },
+    "FinancialViewSemantics": {
+      "type": "object",
+      "properties": {
+        "aggregation": {
+          "const": "SUM_UNCOORDINATED_CONTRACT_EXPOSURE"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "outside_limit_expenses": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "aggregation",
+        "interpretation",
+        "outside_limit_expenses"
+      ],
+      "additionalProperties": false
+    },
+    "NumericalControls": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "$ref": "#/$defs/TailGateSettings"
+          },
+          {
+            "$ref": "#/$defs/SmallEventSettings"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "NumericalEnvironment": {
+      "type": "object",
+      "properties": {
+        "python": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "python",
+        "platform",
+        "packages"
+      ],
+      "additionalProperties": false
+    },
+    "ProducerAssessment": {
+      "description": "The capture's own evidence records and limitations, where they differ\nfrom the current setup's.",
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRecord"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "evidence",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "RankedComparison": {
+      "description": "One ranked arm; its full effect is in `comparisons` or\n`reference_comparisons`.",
+      "type": "object",
+      "properties": {
+        "rank": {
+          "type": "integer"
+        },
+        "arm": {
+          "type": "string"
+        },
+        "absolute_difference": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "rank",
+        "arm",
+        "absolute_difference"
+      ],
+      "additionalProperties": false
+    },
+    "RankingDisposition": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "unavailable",
+            "withheld",
+            "not_requested",
+            "inapplicable"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ReasonCode": {
+      "description": "A reason's code: the first 12 hexadecimal digits of the SHA-256 of its UTF-8 text. A reason is a string under a key named `reason` or ending in `_reason`, or any string in the value of a key ending in `_reasons` or containing `_reasons_`; the file stores each as its code, and its `reasons` table gives the text.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{12}$"
+    },
+    "ReducedArmResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "partial",
+            "reduced"
+          ]
+        },
+        "missing_views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewResult"
+          }
+        },
+        "joint_exceedance_probability": {
+          "type": "number"
+        },
+        "joint_exceedance_convergence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SupportedGateStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "joint_exceedance_status": {
+          "$ref": "#/$defs/StatisticStatus"
+        },
+        "conditional_eal_by_epistemic_group": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "conditional_eal_unavailable_reasons_by_epistemic_group": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/ReasonCode"
+            }
+          }
+        },
+        "lab_loss_state_weights": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "missing_views",
+        "metrics"
+      ],
+      "additionalProperties": false
+    },
+    "ReductionSpecRecord": {
+      "description": "The reduction's options (`catmodel.results.reduction.ReductionSpec`).",
+      "type": "object",
+      "properties": {
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "atom_convention": {
+          "const": "left_inverse_fractional_atom"
+        },
+        "required_grain": {
+          "const": "annual"
+        },
+        "joint_thresholds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "items": false,
+            "minItems": 2
+          }
+        }
+      },
+      "required": [
+        "levels",
+        "atom_convention",
+        "required_grain",
+        "joint_thresholds"
+      ],
+      "additionalProperties": false
+    },
+    "RequirementStatus": {
+      "enum": [
+        "required",
+        "unavailable",
+        "inapplicable"
+      ]
+    },
+    "ResultCoverage": {
+      "description": "What the result includes and excludes, each exclusion with a reason.",
+      "type": "object",
+      "properties": {
+        "comparisons": {
+          "$ref": "#/$defs/ComparisonCoverage"
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ViewCoverage"
+          }
+        },
+        "sensitivity_families": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FamilyCoverage"
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScenarioCoverage"
+          }
+        }
+      },
+      "required": [
+        "comparisons",
+        "views",
+        "sensitivity_families",
+        "scenarios"
+      ],
+      "additionalProperties": false
+    },
+    "ResultLimitation": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "enum": [
+            "setup",
+            "run",
+            "model"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioContribution": {
+      "type": "object",
+      "properties": {
+        "scenario_id": {
+          "type": "string"
+        },
+        "view": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_requested"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "share_of_total": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "scenario_id",
+        "view",
+        "status",
+        "reason",
+        "expected_annual_loss",
+        "share_of_total"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioContributions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableScenarioContributions"
+        },
+        {
+          "$ref": "#/$defs/UnavailableScenarioContributions"
+        }
+      ]
+    },
+    "ScenarioCoverage": {
+      "type": "object",
+      "properties": {
+        "scenario_id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "included",
+            "structural_zero",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unavailable_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "scenario_id",
+        "status",
+        "reason",
+        "unavailable_views"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventSettings": {
+      "description": "A plan's `small_events` control\n(`catmodel.simulation.small_events.SmallEventControls`); an omitted\nsetting takes its default.",
+      "type": "object",
+      "properties": {
+        "target_large_events_per_year": {
+          "type": "number"
+        },
+        "max_body_skewness": {
+          "type": "number"
+        },
+        "body": {
+          "enum": [
+            "normal",
+            "individual"
+          ]
+        },
+        "bucket_rate_ratio": {
+          "type": "number"
+        },
+        "top_rank_score": {
+          "type": "number"
+        },
+        "min_summed_count": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SourceStatus": {
+      "enum": [
+        "public",
+        "not_yet_public"
+      ]
+    },
+    "StatisticStatus": {
+      "description": "Whether one reported number is available and, if not, why.\n\n`unavailable`: the law gives it no finite value, and the number is null.\n`withheld`: it exists, but this run cannot represent or support it. A\nwithheld VaR or TVaR keeps its point value for reference and comparisons;\nit must not be quoted as an estimate.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "withheld"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "StudyDeployment": {
+      "type": "object",
+      "properties": {
+        "deployment_id": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "deployment_id",
+        "model_id"
+      ],
+      "additionalProperties": false
+    },
+    "StudyEntity": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "model",
+            "lab",
+            "operator",
+            "deployment",
+            "population"
+          ]
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "actual",
+            "hypothetical"
+          ]
+        }
+      },
+      "required": [
+        "entity_id",
+        "kind",
+        "display_name",
+        "revision",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "StudyMonetaryBasis": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "monetary_basis": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "currency",
+        "monetary_basis"
+      ],
+      "additionalProperties": false
+    },
+    "StudyScope": {
+      "description": "What a result describes, from its setup's scope: the setup, the period,\nthe named entities and every population's currency and monetary basis.",
+      "type": "object",
+      "properties": {
+        "setup_id": {
+          "type": "string"
+        },
+        "scope_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "period_start": {
+          "type": "string"
+        },
+        "period_end": {
+          "type": "string"
+        },
+        "forecast_as_of": {
+          "type": "string"
+        },
+        "data_cutoff": {
+          "type": "string"
+        },
+        "availability_cutoff": {
+          "type": "string"
+        },
+        "information_date": {
+          "type": "string"
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "monetary_bases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StudyMonetaryBasis"
+          }
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StudyEntity"
+          }
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StudyDeployment"
+          }
+        }
+      },
+      "required": [
+        "setup_id",
+        "scope_id",
+        "title",
+        "period_start",
+        "period_end",
+        "forecast_as_of",
+        "data_cutoff",
+        "availability_cutoff",
+        "information_date",
+        "scenario_ids",
+        "monetary_bases",
+        "entities",
+        "deployments"
+      ],
+      "additionalProperties": false
+    },
+    "SupportRecord": {
+      "description": "What one captured conditional state retains\n(`catmodel.results.execution.CapturedSupport`): each unretained view\nand each unidentified functional, with why, and each view's basis.",
+      "type": "object",
+      "properties": {
+        "unavailable_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "unavailable_functionals": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "view_bases": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewBasis"
+          }
+        }
+      },
+      "required": [
+        "unavailable_views",
+        "unavailable_functionals",
+        "view_bases"
+      ],
+      "additionalProperties": false
+    },
+    "SupportedGateStatus": {
+      "type": "object",
+      "properties": {
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "converged",
+            "unconverged"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "minimum_batch_exceedances": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "half_width",
+        "relative_half_width",
+        "status",
+        "minimum_batch_exceedances"
+      ],
+      "additionalProperties": false
+    },
+    "TailGateSettings": {
+      "description": "A plan's `tail_gate` control as authored or frozen\n(`catmodel.simulation.tail_gate.TailGateControls`); an omitted setting\ntakes its default.",
+      "type": "object",
+      "properties": {
+        "tolerance": {
+          "type": "number"
+        },
+        "batches": {
+          "type": "integer"
+        },
+        "max_reference_state_years": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "max_comparison_state_years": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "views": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "levels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "TailMetrics": {
+      "type": "object",
+      "properties": {
+        "var": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tvar": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tvar_estimator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TvarEstimator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exceedance_count": {
+          "type": "integer"
+        },
+        "var_numerical_interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tvar_numerical_interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "var",
+        "tvar",
+        "tvar_estimator",
+        "exceedance_count",
+        "var_numerical_interval_95",
+        "tvar_numerical_interval_95"
+      ],
+      "additionalProperties": false
+    },
+    "TvarCoefficientBasis": {
+      "enum": [
+        "regression",
+        "infinite_variance",
+        "no_exact_mean"
+      ]
+    },
+    "TvarEstimator": {
+      "description": "The control-variate TVaR's coefficient and why it has that value.\n\nThe TVaR is the sample tail mean plus `coefficient` times the analytic\nEAL less the simulated years' mean, over one minus the level, and at\nleast the VaR. `coefficient_basis` is `regression` (estimated), or by\nlaw `infinite_variance` (one) or `no_exact_mean` (zero: the view has\nno analytic EAL, closed-form or certified).",
+      "type": "object",
+      "properties": {
+        "method": {
+          "const": "control_variate"
+        },
+        "coefficient": {
+          "type": "number"
+        },
+        "coefficient_basis": {
+          "$ref": "#/$defs/TvarCoefficientBasis"
+        }
+      },
+      "required": [
+        "method",
+        "coefficient",
+        "coefficient_basis"
+      ],
+      "additionalProperties": false
+    },
+    "UnallocatedLoss": {
+      "description": "Pooled EAL not carried by any scenario, and whether years reconcile.",
+      "type": "object",
+      "properties": {
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "share_of_total": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annual_losses_reconcile": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "expected_annual_loss",
+        "reason",
+        "annual_losses_reconcile"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableArmResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableComparison": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableEffect": {
+      "description": "A statistic with no effect because one arm has no value for it; it is\nwithheld instead when either arm's statistic is withheld.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "unavailable",
+            "withheld"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "years_per_state": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "control_variate_coefficient": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "years_per_state"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableScenarioContributions": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableViewResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "state_reasons": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ReasonCode"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "state_reasons"
+      ],
+      "additionalProperties": false
+    },
+    "ViewBasis": {
+      "description": "A view's currency, monetary and accounting basis, with the severity\nunit of a per-scenario view and the source status of a source-status\nview.",
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "monetary_basis": {
+          "type": "string"
+        },
+        "accounting_standing": {
+          "type": "string"
+        },
+        "severity_unit": {
+          "type": "string"
+        },
+        "source_public_status": {
+          "$ref": "#/$defs/SourceStatus"
+        }
+      },
+      "required": [
+        "currency",
+        "monetary_basis",
+        "accounting_standing"
+      ],
+      "additionalProperties": false
+    },
+    "ViewComparison": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ComparedValue"
+              },
+              {
+                "$ref": "#/$defs/UnavailableEffect"
+              }
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/UnavailableComparison"
+        }
+      ]
+    },
+    "ViewCoverage": {
+      "type": "object",
+      "properties": {
+        "view": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_requested"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "view",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ViewOutcome": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Availability"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "ViewRanking": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/AvailableRanking"
+              },
+              {
+                "$ref": "#/$defs/RankingDisposition"
+              }
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/RankingDisposition"
+        }
+      ]
+    },
+    "ViewResult": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableViewResult"
+        },
+        {
+          "$ref": "#/$defs/UnavailableViewResult"
+        }
+      ]
+    }
+  }
+}

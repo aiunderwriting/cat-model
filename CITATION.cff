@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it using the metadata below, and name
+  the code revision recorded in the setup of any result you report.
+title: cat-model
+type: software
+authors:
+  - name: Artificial Intelligence Underwriting Company
+    website: https://aiuc.com
+    email: tom@aiuc.com
+contact:
+  - name: Artificial Intelligence Underwriting Company
+    email: tom@aiuc.com
+repository-code: https://github.com/aiunderwriting/cat-model
+url: https://github.com/aiunderwriting/cat-model
+license: Apache-2.0
+version: 0.1.0
+abstract: >-
+  Experimental catastrophe model for AI risk. It estimates the distribution of
+  annual monetary loss from AI-caused incidents for a declared study year,
+  from quantile judgments of a panel of large language models, conditioned on
+  forecast AI-capability trajectories, and from a register of assumptions.
+keywords:
+  - AI risk
+  - catastrophe model
+  - expert elicitation
+  - large language models

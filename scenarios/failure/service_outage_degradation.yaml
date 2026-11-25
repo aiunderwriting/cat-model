@@ -1,0 +1,200 @@
+id: "service_outage_degradation"
+name: "Provider Service Outage or Degradation"
+node_ids: ["n_service_outage"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A non-hostile operational failure of the provider's service, such as an outage, errors, latency,
+  throughput shortfall, refusal or truncation at scale, or stale, missing, malformed or unparseable
+  responses that customers treat as failures, causes loss to customers, their downstream users and
+  the provider. Plausible but erroneous content from an available service is not an outage; it
+  belongs to the role in which the output is used. Interruption by an attacker is an attack on the
+  AI as an asset. The provider's legal defense of related claims is inside its severity.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    One outage accumulates contingent business interruption across the whole customer base.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One incident is one root cause: every outage window, degradation period, affected customer and
+    loss from one root cause, including a recurrence after rollback and re-release of the same
+    unremediated cause. Failures from distinct root causes are separate incidents even when they
+    overlap. A shared upstream failure that also disrupts other providers is one incident for the
+    named lab.
+  terminal_event_unit: >-
+    One admitted service-failure incident: a non-hostile outage, degradation or performance
+    shortfall of the selected provider's service arising from one root cause, the largest share of
+    whose gross loss arises from that failure, and {{admission}}. The whole incident and all its
+    consequences belong here, whatever non-hostile cause produced the failure, including an action
+    of the provider's own agent or a defect in code that its model wrote. Plausible but erroneous or
+    lower-quality output from a service that stays available is not a service failure; it belongs to
+    the scenario of the role in which the output is used. Availability that the provider withdraws
+    or limits as a matter of policy, such as a standing usage limit, is not an operational failure,
+    and a suspension that a government order requires belongs to that government designation or
+    restriction. An incident below the admission threshold is the unestimated leftover, not this
+    scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first customer-visible failure begins, when its first
+    loss occurs; later losses and claims stay with it.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across all affected parties and loss kinds,
+  before any recovery: customers' and customer-deployers' contingent business interruption, response
+  and performance-reliance losses, the provider's own response, restoration and remediation, losses
+  from erroneous outputs or decisions the same root cause causes,
+  {{loss_component:provider_civil_fine}} and the legal resources of every claim, enforcement action
+  and recovery effort the incident causes. Service credits, refunds and indemnity reimburse harm
+  already counted and are not more loss. Interruption counts, for customers and the provider alike,
+  as lost productive output after avoided costs and replacement supply: work or usage that is only
+  deferred, retried or moved to a substitute is not lost, and forgone revenue is not itself the
+  measure. Where an upstream failure also takes down other providers' services or customers' own
+  systems, only the loss that arises through the failure of the provider's service belongs to this
+  incident. Costs are incremental relative to the same activity without the incident: scheduled
+  control resources unchanged in that counterfactual are excluded, and incident-triggered response
+  or recovery resources are included even when existing staff perform them.
+# A non-hostile provider service failure interrupts customers and their downstream users.
+facets:
+  peril_mechanism: ["service_availability_failure"]
+  deployment_control_mode: "api"
+  harm_types: ["economic_loss"]
+  bearers: ["deployer_or_customer", "third_party_organizations", "provider"]
+  party_basis: "third_party"
+occurrence_unit_id: "service_failure_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The assigned provider's service is the failed dependency whose outage, degradation or
+    performance shortfall causes the qualifying loss.
+estimand_composition:
+  status: "INITIAL_ESTIMATE"
+  rationale: >-
+    The roster classifies one admitted outage's complete gross loss by bearer and economic nature:
+    customers' and customer-deployers' interruption resources and performance-reliance transfers,
+    the provider's own response and defense, and any consequential fine. Shares are elicited, not
+    authored (ACC-COMPOSITION), and may be zero.
+  evidence: >-
+    Service-outage reports establish failures, not a complete customer-loss sample or a split by
+    economic nature. Service credits, refunds and indemnity reimburse underlying harm and are
+    excluded as additional loss.
+  cells:
+    - cell_id: "customer_interruption_and_response"
+      loss_form: >-
+        External customers' response, restoration and interruption resources, including lost
+        productive output after avoided costs and replacement supply. Here external means the
+        customer is neither the frontier provider nor the non-provider system deployer; put a
+        customer-deployer's own cost in the other-bearer resource cell. Exclude provider-own costs,
+        distinct transfers, service credits, refunds and compensation for already-recorded harm.
+        Exclude displaced profit or market share gained by other standing parties; that is an
+        ordinary transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "third_party"
+    - cell_id: "customer_performance_reliance_transfer"
+      loss_form: >-
+        External customers' realized trading, transaction or non-compensatory contractual transfer
+        losses caused by the service failure. Here external means the customer is neither the
+        frontier provider nor the non-provider system deployer; put a customer-deployer's own loss
+        in the other-bearer transfer cell. Exclude resource costs, provider-own losses, service
+        credits, refunds and compensation for already-recorded harm.
+      nature: "transfer"
+      subject: "third_party"
+    - cell_id: "customer_deployer_interruption_and_response"
+      loss_form: >-
+        The non-provider customer-deployer's own incremental response, restoration and interruption
+        resources, including lost productive output after avoided costs and replacement supply,
+        caused by its provider's service failure. Exclude provider-own costs, external customer
+        losses recorded in third_party, distinct transfers, service credits, refunds and
+        compensation for already-recorded harm. Exclude displaced profit or market share gained by
+        other standing parties; that is an ordinary transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "other"
+    - cell_id: "customer_deployer_performance_reliance_transfer"
+      loss_form: >-
+        The non-provider customer-deployer's own realized trading, transaction or non-compensatory
+        contractual transfer losses caused by its provider's service failure. Exclude provider-own
+        losses, external customer losses recorded in third_party, resource costs, service credits,
+        refunds and compensation for already-recorded harm.
+      nature: "transfer"
+      subject: "other"
+    - cell_id: "provider_response_and_restoration"
+      loss_form: >-
+        The frontier provider's own incremental response, restoration, remediation and legal defense
+        resources caused by its service failure, including lost productive output after avoided
+        costs. Exclude service credits, refunds and indemnity, which compensate customer harm
+        already recorded, and scheduled operations unchanged by the incident. Exclude displaced
+        profit or market share gained by other standing parties; that is an ordinary transfer, not
+        resource destruction.
+      nature: "resource_cost"
+      subject: "provider"
+    - cell_id: "provider_civil_fine"
+      loss_form: "consequential civil fines on the selected provider"
+      nature: "transfer"
+      subject: "provider"
+      rationale: "{{accounting:provider_civil_fine_rationale}}"
+      loss_type: "civil_fines"
+      attachment_basis: "incident_consequence"
+event_chain:
+  opportunity:
+    unit: >-
+      One non-hostile root-cause production fault in the named lab's service in the named
+      deployment, such as a deployment defect, infrastructure or dependency failure, capacity
+      exhaustion or serving regression, that threatens the service's availability or operational
+      performance, counted when it first occurs whether or not customers notice.
+    counting_rule: >-
+      Count one opportunity per root cause, including recurrences of the same unremediated cause;
+      faults with distinct root causes are separate even when they overlap. Each fault yields at
+      most one qualified incident.
+    cohort: >-
+      Faults active during the study year whose first customer-visible failure has not begun in an
+      earlier year; membership does not depend on later success.
+  exposure:
+    public:
+      unit: >-
+        production change to the lab's public serving stack: a model release, a serving software
+        release or an infrastructure or configuration change
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 2000
+        rationale: >-
+          Most service failures follow changes to a live system, so the release cadence of models,
+          serving software and infrastructure measures exposure better than tokens served; a leading
+          lab's serving stack is taken to receive about 2,000 significant production changes a year,
+          roughly eight a working day, a stipulation of this study. Faults from capacity exhaustion
+          or dependencies are included in the rate.
+        source: >-
+          Google, Site Reliability Engineering (2016), introduction: roughly 70% of outages are due
+          to changes in a live system. The change count is an INITIAL_ESTIMATE.
+      derivation: >-
+        Fixed by the scenario at 2,000 production changes to the public serving stack a year.
+    internal:
+      unit: >-
+        not-yet-public model of the lab in training, evaluation, internal use or pre-release testing
+        during the study year
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 6
+        rationale: >-
+          A leading lab releases a few major models a year and holds each in internal use and
+          pre-release testing for months before release, alongside smaller and specialised
+          candidates, so about six distinct not-yet-public models are in use at some time in the
+          year.
+        source: >-
+          INITIAL_ESTIMATE: no public census of frontier labs' unreleased models exists; the
+          stipulated context describes successors to the public model line in training, evaluation,
+          internal use and pre-release testing.
+      derivation: >-
+        Fixed by the scenario at six not-yet-public models in use at some time during the year.
+  stages:
+    - stage_id: "customer_visible_failure"
+      event: >-
+        The fault produces a service failure that customers see, rather than being masked by
+        retries, failover or spare capacity. A short or localized failure counts.
+empirical_grounding: >-
+  No governed dataset supports this population. Providers' status pages and incident write-ups
+  record many customer-visible failures of AI services, most of them partial and short; they count
+  posted incidents, not root causes, and state no customer loss. Outage analyses for cloud platforms
+  and software vendors establish the accumulation mechanism and loss magnitudes for other services,
+  not this provider's loss distribution.

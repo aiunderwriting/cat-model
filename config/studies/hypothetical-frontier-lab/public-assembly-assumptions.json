@@ -1,0 +1,5 @@
+{
+  "exposure_rationale": "The public and not-yet-public collections ask about disjoint source populations of the hypothetical lab, classified by the source model's release status when an incident originates, so each incident and its unique costs enter once.",
+  "residual_independence_rationale": "Given the common public trajectory, respondent and parameter rank, scenarios and source statuses are conditionally independent; residual dependence between them is not modeled.",
+  "parameter_coupling_rationale": "Every respondent sample answers every collection, so respondent identity is matched across trajectory nodes and source statuses; node and source-status parameter ranks are drawn independently and reused across trajectories."
+}

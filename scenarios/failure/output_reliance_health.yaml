@@ -1,0 +1,131 @@
+id: "output_reliance_health"
+name: "Reliance on Erroneous Health Output"
+node_ids: ["n_reliance_health"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  Clinicians or members of the public rely on erroneous clinical, medication or mental-health output
+  from the provider's model, and a patient or user is harmed by acting on it. One erroneous answer,
+  or one identified defect such as a drug-interaction checker relied on by 300 clinicians that harms
+  40 patients, is one incident with whole-incident severity. Harm that arises from a person's
+  engagement with the model itself, such as self-harm after sustained conversations on any topic,
+  is harm from engagement, not reliance.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    One identified defect is one incident, so the largest incidents merge the injuries of everyone
+    who relied on it, and their loss spreads across parties as a defect in relied-on software does.
+    One patient's harm is bounded like a malpractice claim, but that bound does not hold for a
+    merged defect. The lower tail-shape alternative, 0.5, covers the reading that single-patient
+    incidents dominate even the far tail.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One incident is one root cause: one erroneous output or action history, or one identified defect
+    in a shared model, configuration, prompt or tool interface, from its first loss to its
+    correction, across every affected deployment, organization and party. Use of the same model
+    alone does not establish a shared defect; independent errors without one identified defect are
+    separate incidents, including several in one deployment in one year. A design or behavior is an
+    identified defect only when a specific, correctable model, version, feature or configuration
+    property is shown or acknowledged to cause the harms; a pleaded theory alone does not merge
+    losses into one incident.
+  terminal_event_unit: >-
+    One admitted health-reliance incident: one root cause in which a clinician, a patient, a user or
+    a caregiver acts on erroneous clinical, medication or mental-health output from the selected
+    provider's model, the largest share of whose gross loss arises from that reliance, and
+    {{admission}}. Output is erroneous when it is materially wrong or unsafe for the person
+    concerned to act on, including guidance the person asked for and approval of the person's own
+    plan. The whole incident, across every harmed person, and all its consequences belong here. Harm
+    from acting on the model's clinical, medication or mental-health output belongs here, and harm
+    from what the interaction does to a person's mental health, such as reinforced self-harm,
+    dependence or delusion, is an engagement-harm incident, whatever behavior of the model a claim
+    pleads. A claim or enforcement action alleging bodily or psychological injury or death of
+    identified persons from the model's outputs follows the incident that injured them, whatever
+    theory is pleaded; product and consumer claims, and enforcement, cover matters without such
+    injury incidents. One enforcement action over a practice that cites such injuries from several
+    separately counted incidents is an enforcement matter, and its fines and costs are part of none
+    of those incidents. An incident below the admission threshold is the unestimated leftover, not
+    this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across every harmed person and other affected
+  party, before any recovery: injury and fatality valuation, additional care, lost productive
+  output, clinicians' and the provider's correction, losses the same root cause causes through other
+  roles, such as service outages, pipeline decisions or outputs relied on,
+  {{loss_component:provider_civil_fine}} and the legal resources of every claim, enforcement action
+  and recovery effort the incident causes, including claims and enforcement over the injuries. Count
+  each underlying loss once: settlements, reimbursements, recoveries and other compensation for
+  already-counted harm are not more loss. Costs are incremental relative to the same activity
+  without the incident: scheduled control resources unchanged in that counterfactual are excluded,
+  and incident-triggered response or recovery resources are included even when existing staff
+  perform them.
+# Reliance on erroneous health output harms patients or users.
+facets:
+  peril_mechanism: ["erroneous_output_reliance"]
+  deployment_control_mode: "api"
+  harm_types: ["bodily_injury", "economic_loss"]
+  bearers: ["third_party_individuals", "third_party_organizations", "provider"]
+  party_basis: "third_party"
+occurrence_unit_id: "health_reliance_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The erroneous health output relied on is produced by the assigned provider's model.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One case in which a clinician, patient, user or caregiver acts on materially wrong or unsafe
+      clinical, medication or mental-health output of the named lab's model in the named deployment,
+      counted when the action is taken.
+    counting_rule: >-
+      Count one opportunity per erroneous output, or one per identified shared defect, across every
+      affected person; later harm does not decide membership. Each yields at most one qualified
+      incident.
+    cohort: >-
+      Cases arising during the study year, or carried in from an earlier year without loss yet;
+      membership does not depend on later harm.
+  exposure:
+    public:
+      unit: "1 million weekly active users of the consumer assistant"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0e-6
+        rationale: >-
+          Health questions arise in consumer-assistant use, so weekly users count the people at
+          risk; clinicians using business plans and products built on the API are included in the
+          rate.
+        source: >-
+          INITIAL_ESTIMATE: no public data measure how often model output is acted on; the count is
+          the stipulated user base.
+      derivation: >-
+        The stipulated number of weekly active users of the consumer assistant divided by 1 million.
+    internal:
+      unit: "1,000 lab staff"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          Output of not-yet-public models is relied on by lab staff and, under agreement, by a few
+          hundred external testers; the study stipulates that this use moves with staff.
+        source: "INITIAL_ESTIMATE: normalisation by staff."
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "person_harmed"
+      event: >-
+        A patient or user suffers physical or psychological harm or needs additional care because of
+        it, or the case needs correction or legal work specific to it.
+empirical_grounding: >-
+  NPDB malpractice payment reports (references/calibration/npdb_medical_severity.md) record
+  payments made for one practitioner on one claim, compressed by policy limits and damage caps;
+  they are context for one patient's harm, not the counted unit, a same-unit calibration or the
+  evidence for this scenario's tail class. No dataset measures AI health-reliance frequency.

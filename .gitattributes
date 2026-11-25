@@ -1,0 +1,9 @@
+# Files whose bytes are digest-pinned check out unchanged on every platform:
+# the respondent-calibration resolvers (seeds.yaml records each script's
+# SHA-256) and the captured Epoch table (its provenance file records its).
+scripts/calibration_seeds/*.py -text
+data/capability/epoch_eci_scores.csv -text
+# Goldens compared byte for byte with rendered text keep LF on every platform.
+docs/example-questions/*.txt text eol=lf
+docs/example-questions/*.diff text eol=lf
+tests/fixtures/summary/*.md text eol=lf

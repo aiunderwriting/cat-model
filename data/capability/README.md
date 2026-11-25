@@ -1,0 +1,7 @@
+# Public-frontier capability evidence
+
+`epoch_eci_scores.csv` is Epoch AI's ECI model-score table, unchanged (273 models, 33,836 bytes). [`epoch_eci_scores.provenance.yaml`](epoch_eci_scores.provenance.yaml) records its source, retrieval time, vintage, license and scale anchors, and what Epoch reports a gain in points to have corresponded to. The table is committed because Epoch serves only its latest fit, and each refit can change earlier models' scores, so the source cannot reproduce this vintage. The license permits redistributing it unmodified with the credit below, which [NOTICE](../../NOTICE) repeats and `capability-forecast public-study` adds to every forecast it fills from the table.
+
+**Credit (CC BY 4.0):** Epoch AI, "Capabilities & benchmarking", published online at epoch.ai, retrieved from https://epoch.ai/benchmarks. Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+`public-frontier-forecast-template.json` is the forecast template (roster, 24-month trend window, rationales) behind the fit reported in the [methodology](../../methodology.md#observable-capability-conditioning) and the backtest described in [capability forecasting](../../docs/capability-frontiers.md) and the `OBS-PUBLIC-JOINT` entry of the [assumption register](../../assumptions.md). The [runbook](../../runbook.md#public-frontier-trajectory-studies) shows how a study captures the table and fills the template, and [capability forecasting](../../docs/capability-frontiers.md) describes which rows become releases and how their scores and dates are read.

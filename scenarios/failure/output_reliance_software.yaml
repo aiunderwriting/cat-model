@@ -1,0 +1,129 @@
+id: "output_reliance_software"
+name: "Reliance on AI-Written Code"
+node_ids: ["n_reliance_software"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A developer relies on and deploys code written by the provider's model that malfunctions, destroys
+  data or contains a vulnerability. A vulnerability that a third party later exploits without a
+  model materially assisting the attack belongs here, because the AI failure started the history; if
+  a copy of the model materially assisted the attack, it is misuse. One defect in widely reused code
+  is one incident, its reach part of severity.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    A vulnerability in deployed code can be exploited at scale, so losses follow cyber
+    operational-loss evidence.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One incident is one root cause: one erroneous output or action history, or one identified defect
+    in a shared model, configuration, prompt or tool interface, from its first loss to its
+    correction, across every affected deployment, organization and party. Use of the same model
+    alone does not establish a shared defect; independent errors without one identified defect are
+    separate incidents, including several in one deployment in one year. A design or behavior is an
+    identified defect only when a specific, correctable model, version, feature or configuration
+    property is shown or acknowledged to cause the harms; a pleaded theory alone does not merge
+    losses into one incident.
+  terminal_event_unit: >-
+    One admitted software reliance incident: one root cause in which developers act on erroneous
+    code from the selected provider's model, the largest share of whose gross loss arises from that
+    reliance, and {{admission}}. The whole incident and all its consequences belong here. In this
+    scenario a person considers the code and decides to deploy it, however carelessly; code that
+    goes live without a person considering that individual change, including under automatic or bulk
+    approval and when an agent deploys code it wrote, is an agent or bounded-decision incident. An
+    incident whose loss arises mostly from a failure of the provider's own service is a
+    service-failure incident, even when code its model wrote caused the failure. Harm to a person's
+    mental health from engaging with the model, whatever the topic, is an engagement-harm incident.
+    An incident below the admission threshold is the unestimated leftover, not this scenario's
+    incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across all affected parties and loss kinds,
+  before any recovery: the harm to those who relied on the output and to the people their decisions
+  affected, correction and rework, injury where caused, losses the same root cause causes through
+  other roles, such as service outages, pipeline decisions or outputs relied on,
+  {{loss_component:provider_civil_fine}} and the legal resources of every claim, enforcement action
+  and recovery effort the incident causes. Count each underlying loss once: settlements,
+  reimbursements, recoveries and other compensation for already-counted harm are not more loss.
+  Costs are incremental relative to the same activity without the incident: scheduled control
+  resources unchanged in that counterfactual are excluded, and incident-triggered response or
+  recovery resources are included even when existing staff perform them.
+# A person relies on erroneous software output; the harm falls on them and those their decisions affect.
+facets:
+  peril_mechanism: ["erroneous_output_reliance"]
+  deployment_control_mode: "api"
+  harm_types: ["economic_loss"]
+  bearers:
+    - "deployer_or_customer"
+    - "third_party_organizations"
+    - "third_party_individuals"
+    - "provider"
+  party_basis: "third_party"
+occurrence_unit_id: "output_reliance_software_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The erroneous code relied on is produced by the assigned provider's model.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One defect in code written by the named lab's model in the named deployment that a developer
+      deploys to production and that must be fixed, rolled back or patched once found, such as a
+      malfunction, a bug that destroys or corrupts data, or a security vulnerability. One defect in
+      widely reused code counts once, when first deployed.
+    counting_rule: >-
+      Count one opportunity per root cause; a defect reaching many deployments or decisions is one
+      opportunity. Each yields at most one qualified incident.
+    cohort: >-
+      Defects in production during the study year whose first loss has not occurred in an earlier
+      year; membership does not depend on later failure.
+  exposure:
+    public:
+      unit: "business customer that ships code written by the lab's models to production"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 0.4
+        rationale: >-
+          AI coding tools are in daily use by about half of professional developers; the study
+          stipulates that about four in ten of the lab's paying business customers ship code written
+          by its models to production. Code from the consumer assistant is included in the rate.
+        source: >-
+          Stack Overflow Developer Survey 2025: 84% of respondents use or plan to use AI tools and
+          about 51% of professional developers use them daily (all tools, not one lab). The share
+          for this lab's customers is an INITIAL_ESTIMATE.
+      derivation: >-
+        About 40% of the stipulated paying business customers ship code written by the lab's models
+        to production.
+    internal:
+      unit: "lab staff member who ships code written with not-yet-public models"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 0.6
+        rationale: >-
+          Research and engineering staff, with their internal agents, write the lab's own code with
+          its not-yet-public models; they are taken to be about 60% of staff.
+        source: "INITIAL_ESTIMATE: the stipulated context gives no share."
+      derivation: >-
+        About 60% of the stipulated lab staff ship code written with not-yet-public models.
+  stages:
+    - stage_id: "harm_or_costly_fix"
+      event: >-
+        The defect causes operational harm, such as a failure, lost or corrupted data or an
+        exploited vulnerability, or needs investigation, rollback or remediation beyond a routine
+        fix.
+empirical_grounding: >-
+  No governed dataset supports this population. Studies of model-written code measure reverts, later
+  fixes and security weaknesses, and a few public records tie a production failure to a change a
+  model co-authored; none gives an incident rate, and loss amounts are rarely stated.
+  Software-defect and exploitation losses are mechanism context.

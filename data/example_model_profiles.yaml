@@ -1,0 +1,103 @@
+# AIUC's example model profiles: the respondent models and collection
+# settings of each --profile. AIUC's hypothetical-lab study collects with
+# `example`; `test` and `dev` are cheaper development profiles. They are one
+# choice of roster: bring your own profiles file, with the same schema, by
+# naming it in the CATMODEL_PROFILES environment variable. The collection
+# scripts under scripts/ also take --profiles FILE; the catmodel command has
+# no such option (runbook.md, "Model profiles").
+#
+# provider is openai, anthropic, google, xai, meta (the Meta Model API) or
+# openrouter. Every provider is called through LiteLLM: OpenAI as a
+# background Responses run, the others as a stream (runbook section 3).
+# The profiles below use OpenAI, Anthropic and xAI. Google, Meta and
+# OpenRouter are available but in no profile here, and their requests are
+# checked only by offline tests; probe such a model's ceiling with
+# scripts/probe_output_ceilings.py before its first collection.
+#
+# max_output_tokens is the largest output-token count one request to the model
+# may ask for; a collection asks for the smaller of it and the elicitation
+# output budget. 128,000 is Anthropic's documented maximum. The other models'
+# 100,000 is a configured ceiling, not a documented provider limit, that they
+# are assumed to accept and rarely reach (NUM-CALL-LIMITS);
+# scripts/probe_output_ceilings.py can check each ceiling before a run.
+#
+# request_timeout_seconds is long enough for the output budget at a slow
+# output rate (NUM-CALL-LIMITS), so the deadline does not run out before the
+# budget does. Dev's deadline is a deliberate fast-fail setting instead.
+#
+# reasoning_effort is each provider's own setting, and the levels are not
+# comparable between providers. A lower level uses fewer output tokens; in the
+# example profile grok-4.7 runs at medium for that reason.
+#
+# max_concurrency is each model's ceiling of concurrent calls, and
+# max_concurrency_by_provider replaces it for one provider's models. A
+# collection starts at the ceiling, lowers it after a rate-limit response and
+# raises it again. A collection ends when its slowest model has answered, so
+# the example profile gives xAI's model a higher ceiling. A ceiling is useful
+# only up to what the collecting machine's CPU serves: runbook.md, "What
+# bounds throughput", sizes it.
+
+profiles:
+  example:
+    models:
+      - provider: openai
+        model_id: "gpt-6.2-sol"
+        reasoning_effort: high
+        max_output_tokens: 100000
+      - provider: anthropic
+        model_id: "claude-opus-5-5"
+        reasoning_effort: high
+        max_output_tokens: 128000
+      - provider: xai
+        model_id: "grok-4.7"
+        reasoning_effort: medium
+        max_output_tokens: 100000
+    settings:
+      samples_per_question: 5
+      max_concurrency: 200
+      max_concurrency_by_provider:
+        xai: 400
+      request_timeout_seconds: 2400.0
+
+  test:
+    models:
+      - provider: openai
+        model_id: "gpt-6-luna"
+        reasoning_effort: max
+        max_output_tokens: 100000
+      # This model runs at `high`, not `max`: at `max` its reasoning alone can
+      # reach the elicitation output budget, which ends the attempt as an
+      # output-limit stop with no answer.
+      - provider: anthropic
+        model_id: "claude-haiku-5-5"
+        reasoning_effort: high
+        max_output_tokens: 128000
+    settings:
+      samples_per_question: 5
+      # A ceiling, not a target: each model's lane starts here and backs off
+      # after a 429 (src/catmodel/collection/collection_scheduler.py). While
+      # no rate limit binds and every slot stays busy, collection time is the
+      # total call time divided by the ceiling, so a higher ceiling shortens a
+      # collection at the same cost.
+      max_concurrency: 800
+      max_concurrency_by_provider: {}
+      request_timeout_seconds: 2400.0
+
+  dev:
+    models:
+      - provider: openai
+        model_id: "gpt-6-luna"
+        reasoning_effort: low
+        max_output_tokens: 100000
+      - provider: anthropic
+        model_id: "claude-haiku-5-5"
+        reasoning_effort: low
+        max_output_tokens: 128000
+    settings:
+      samples_per_question: 5
+      max_concurrency: 40
+      max_concurrency_by_provider: {}
+      # Fast fail: a low-effort answer still running after five minutes
+      # signals a fault worth stopping for, so this deadline may run out
+      # before the output budget does.
+      request_timeout_seconds: 300.0

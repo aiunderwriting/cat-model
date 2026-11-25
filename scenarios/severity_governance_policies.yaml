@@ -1,0 +1,147 @@
+# Scenario files reference one policy by id; the loader expands it into the
+# scenario's severity_governance block before validation. The loader derives
+# sensitivity_range from the scenario's cap posture, replacing the default cap
+# sentence when finite-cap endpoints are authored and adding the uncapped stress
+# alternative when a finite-capped scenario requests it.
+#
+# Every scenario under governed_tail_shape names one tail class below and
+# states in one line why it belongs there. The class owns the governed
+# gpd_shape; a class with an endpoint also owns the cap, its two cap stresses
+# and the uncapped stress alternative, so every member shares one endpoint convention.
+# A scenario-authored finite cap or endpoint stress records its basis in
+# severity_cap_basis.
+#
+# Developer-control loss excludes existential or civilizational value without a
+# quantifiable economic measure (assumptions.md#population-and-accounting),
+# while quantifiable loss counts however large. The catastrophe endpoint is a
+# valuation and truncation convention on one episode's quantifiable loss, not a
+# physical bound. Hierarchy validation checks the exclusions and finite posture.
+
+policies:
+  governed_tail_shape:
+    rationale: >
+      Respondents supply uncapped occurrence-loss quantiles p5 through p99 and a
+      p99.9 diagnostic. The runtime attaches a GPD tail above p95 whose scale
+      reproduces the respondent's p99, so the scenario's tail-class gpd_shape
+      shapes the GPD above p95, chiefly beyond p99. The p99.9 answer never
+      enters the law; capture validation reports the shape it implies as a
+      diagnostic, because stated extreme quantiles are not reliable authority
+      for a tail parameter. The shape is therefore a visible modelling
+      assumption shared by every scenario in a tail class rather than something
+      respondent answers set. The cap posture states whether the
+      occurrence-loss estimand has a finite endpoint; a finite cap is applied
+      after the uncapped law is built.
+    empirical_grounding: >
+      Internal judgment informed by analog tail-index evidence, not an
+      empirical fit. No scenario has a same-unit occurrence-loss fit that
+      identifies its tail shape. Each tail class records the analog evidence it
+      relies on, tabulated in
+      references/calibration/README.md; that evidence is
+      context for the judgment, not calibration,
+      and heavier tails than the class shape cannot be excluded. The 0.20 shape
+      step is a stress sized to that evidence, not an uncertainty range for the
+      shape.
+    source_classification: internal_judgment
+    status: INITIAL_ESTIMATE
+    materiality: high
+    sensitivity_evidence_refs: []
+    sensitivity_range_by_cap_posture:
+      finite: >
+        Test 75% and 125% of the base severity_cap, and re-derive the GPD scale
+        from the unchanged p95/p99 anchor at gpd_shape 0.20 lower and higher.
+      uncapped: >
+        Re-derive the GPD scale from the unchanged p95/p99 anchor at gpd_shape
+        0.20 lower and higher. Apply the scenario's authored
+        uncapped_endpoint_stress as a finite severity cap; where no endpoint is
+        authored, report that stress unavailable.
+
+tail_classes:
+  liability_enforcement:
+    gpd_shape: 0.5
+    rationale: >
+      Loss from one enforcement or private civil matter, or one provider's own
+      business loss from a designation. Its size is bounded in practice by the
+      claimants' economic interest in the matter, a statutory maximum or one
+      firm's balance sheet, so the tail is heavy but not systemic. A shape of
+      0.5 has a finite mean and borderline infinite variance.
+    empirical_grounding: >
+      One analog peaks-over-threshold fit lies near 0.5. NPDB malpractice
+      payment reports give 0.534 at a USD 2 million threshold (90% bootstrap
+      interval 0.488 to 0.578, and 0.37 to 0.63 across thresholds); policy
+      limits and state damage caps compress payments, so gross loss is
+      heavier. It is not same-unit AI loss experience, and no fit to
+      regulatory fines supports the shape.
+  cyber_operational:
+    gpd_shape: 0.7
+    rationale: >
+      Compromise, fraud, influence, hijack, tampering and asset-attack
+      campaigns, and operational failures of agents, bounded decision
+      pipelines, physical equipment, output relied on by people, engagement
+      that harms a person or the provider's service, whose loss can propagate
+      across many organisations,
+      systems, users or markets. A tail shape describes the largest incidents.
+      The reliance and bounded-decision cells count one root cause as one
+      incident, so their largest incidents are defects relied on at many
+      deployments or by many users, and the bound on one reliance or one
+      deployment does not hold for a merged defect; the lower shape
+      alternative, 0.5, covers the reading that single-reliance incidents
+      dominate even the far tail. Operational-risk and cyber dollar losses are
+      among the heaviest-tailed loss data published, so the class sits well
+      above the liability class with a finite mean and infinite variance.
+    empirical_grounding: >
+      Published estimates are at least as heavy as this shape. Basel
+      operational-loss data give GPD shapes of 1.01 to 1.39 in six of eight
+      business lines (Moscadelli 2004, Banca d'Italia Temi di discussione 517,
+      Table 5, as reproduced in arXiv 2403.20171; see also Nešlehová, Embrechts
+      and Chavez-Demoulin 2006, Journal of Operational Risk 1(1), 3-25).
+      Advisen US cyber-event losses are of the
+      infinite-mean type across sectors and risk categories (Malavasi et al.
+      2022, Insurance: Mathematics and Economics 106, 90-114). 0.7 is a
+      judgment below these estimates, not a fitted value: database selection
+      and multi-event records can inflate fitted shapes, and an uncapped shape
+      at or above 1 has no finite mean. The higher alternative, 0.9, is the heaviest
+      uncapped finite-mean shape represented; heavier tails are not excluded.
+  mass_casualty_catastrophe:
+    gpd_shape: 0.8
+    rationale: >
+      CBRN, loss of developer control and critical-infrastructure compromise,
+      whose loss is limited only by the size of the affected population and
+      economy.
+      Casualty-count evidence is fat-tailed up to a physical bound, so the
+      class takes the heaviest shape and one endpoint convention shared by
+      every member cell, whichever of them owns the event.
+    empirical_grounding: >
+      Deaths per terrorist attack follow a power law with density exponent 2.4
+      plus or minus 0.2 (Clauset and Wiegel 2010, Journal of Conflict
+      Resolution 54(1)), a GPD shape of about 0.6 to 0.8. Pandemic fatalities
+      over 2,500 years were fitted with a shape near 1.6 for an unbounded dual
+      variable whose transform is bounded by world population (Cirillo and
+      Taleb 2020, Nature Physics 16, 606-613); a published comment disputes
+      that the data establish a power-law tail (Corral, arXiv 2007.06876).
+      Both are casualty counts, not economic loss. 0.8 below the endpoint is a
+      judgment within that range; the higher alternative, 1.0, has a finite mean only
+      because of the cap.
+    endpoint:
+      severity_cap: 100000000000000
+      severity_cap_sensitivity_values: [10000000000000, 500000000000000]
+      basis: >
+        USD 100 trillion is somewhat below one year of world output (IMF World
+        Economic Outlook database, read on 2026-11-11: USD 111.9 trillion in 2024
+        and 118.5 trillion in 2025; the plausibility reference,
+        data/reference/world_output.yaml, uses its projection of USD 135.1
+        trillion for 2027). One episode's quantifiable economic loss is treated as bounded at
+        that scale by convention, applied to the incident's origin-year
+        ultimate loss rather than to output lost within a calendar year;
+        existential or civilizational value without a quantifiable
+        economic measure is outside the estimand, as the developer-control
+        severity scope states. The same endpoint also caps the contextual lab law of a member
+        scenario, because the lab's loss is part of the event's loss. The lower
+        stress, USD 10 trillion, is below the IMF's January 2022 projection of
+        USD 13.8 trillion cumulative global output loss from COVID-19 through
+        2024. The higher stress, USD 500 trillion, is about global personal
+        wealth (UBS Global Wealth Report 2025: USD 471 trillion in 2024). The
+        uncapped stress removes the cap at the class shape. The cap bounds each
+        episode only: the annual aggregate over the six member cells and over
+        repeated events in a year is not capped and can exceed world output.
+        The bound is a judgment, not a measured maximum, and is the same for
+        every member whatever its mechanism.

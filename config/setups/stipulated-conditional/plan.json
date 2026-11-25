@@ -1,0 +1,25 @@
+{
+  "plan_id": "stipulated-conditional",
+  "required_arms": [
+    "reference"
+  ],
+  "reference_arm": "reference",
+  "simulations": 128,
+  "seed": 31,
+  "requested_views": [
+    "welfare",
+    "lab_loss::lab",
+    "gross"
+  ],
+  "capture_grain": "annual_joint",
+  "method": "physical_marked_poisson",
+  "staged_rules": {
+    "work_limit_exceedance": "abort_without_capture"
+  },
+  "numerical_controls": {},
+  "simulations_by_arm": {},
+  "numerical_controls_by_arm": {},
+  "comparison_requirements": [],
+  "requested_comparison_families": [],
+  "required_state_ids_by_arm": {}
+}

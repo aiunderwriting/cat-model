@@ -1,0 +1,126 @@
+id: "physical_equipment_control"
+name: "AI Control of Physical Equipment"
+node_ids: ["n_failure_physical_control"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  AI built on the provider's model controls physical equipment, such as vehicles, robots, industrial
+  controls or medical devices, whether with discretionary authority or within a bounded control
+  task, and an erroneous actuation or a systematic fault causes most of the loss, through injury,
+  property damage, a preventive recall or interruption of the controlled operation, such as a plant
+  halt. An isolated error at one site and a fault across a fielded installed base are both incidents
+  of this leaf; the installed base's size is severity. Positive preventive-recall cost qualifies
+  before any harmful actuation; a costless alert does not.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    A physical-control fault accumulates injury, damage and recall cost across an installed base.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One incident is one root cause: one erroneous output or action history, or one identified defect
+    in a shared model, configuration, prompt or tool interface, from its first loss to its
+    correction, across every affected deployment, organization and party. Use of the same model
+    alone does not establish a shared defect; independent errors without one identified defect are
+    separate incidents, including several in one deployment in one year. A design or behavior is an
+    identified defect only when a specific, correctable model, version, feature or configuration
+    property is shown or acknowledged to cause the harms; a pleaded theory alone does not merge
+    losses into one incident.
+  terminal_event_unit: >-
+    One admitted physical-control incident: one root cause in which AI built on the selected
+    provider's model, controlling physical equipment, makes an erroneous actuation or carries a
+    systematic fault, the largest share of whose gross loss arises from that actuation or fault
+    (injury, property damage, preventive recall or interruption of the controlled operation), and
+    {{admission}}. The whole incident and all its consequences belong here. An incident below the
+    admission threshold is the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across all affected parties and loss kinds,
+  before any recovery: injury and fatality valuation, medical care, property damage, preventive
+  recall, repair and replacement across the installed base, interruption or halt of the controlled
+  operation, losses the same root cause causes through other roles, such as service outages,
+  pipeline decisions or outputs relied on, {{loss_component:provider_civil_fine}} and the legal
+  resources of every claim, enforcement action and recovery effort the incident causes. Count each
+  underlying loss once: settlements, reimbursements, recoveries and other compensation for
+  already-counted harm are not more loss. Costs are incremental relative to the same activity
+  without the incident: scheduled control resources unchanged in that counterfactual are excluded,
+  and incident-triggered response or recovery resources are included even when existing staff
+  perform them.
+# AI controlling equipment causes injury, damage or recall. The deployment mode mixes managed and API
+# control, an ambiguity that `provisional` marks.
+facets:
+  peril_mechanism: ["shared_component_defect", "autonomous_goal_pursuit", "bounded_pipeline_error"]
+  deployment_control_mode: "managed"
+  harm_types: ["bodily_injury", "property_damage", "economic_loss"]
+  bearers:
+    - "third_party_individuals"
+    - "third_party_organizations"
+    - "deployer_or_customer"
+    - "provider"
+  party_basis: "third_party"
+  provisional: true
+occurrence_unit_id: "physical_control_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The assigned provider's model is the control component whose erroneous actuation or systematic
+    fault produces the qualifying harm, whether it drives the equipment directly or directs a
+    lower-level controller that carries out its commands.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One root cause in an AI component that controls physical equipment and runs on the named lab's
+      model in the named deployment, whether with discretionary authority or within a bounded
+      control task, that produces at least one unsafe actuation or is found in fielded equipment,
+      counted when the first unsafe actuation occurs or the fault is found.
+    counting_rule: >-
+      Count one opportunity per root cause; a defect reaching many deployments or decisions is one
+      opportunity. Each yields at most one qualified incident.
+    cohort: >-
+      Root causes active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "business customer using the lab's models to control physical equipment"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 5.0e-3
+        rationale: >-
+          AI control of vehicles, robots, industrial controls or medical devices is a business
+          integration, and few customers do it; about one in two hundred paying business customers
+          is taken to.
+        source: >-
+          INITIAL_ESTIMATE: no census counts deployments of general-purpose models controlling
+          equipment.
+      derivation: >-
+        About 0.5% of the stipulated paying business customers use the lab's models to control
+        physical equipment.
+    internal:
+      unit: "1,000 lab staff"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          The lab's own robotics and hardware work with not-yet-public models is done by its staff
+          and a few external testers.
+        source: "INITIAL_ESTIMATE: normalisation by staff."
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "physical_consequence"
+      event: >-
+        People are hurt, equipment or property is damaged, or operators incur costs recalling,
+        repairing or stopping affected equipment.
+empirical_grounding: >-
+  No governed dataset supports this population. NHTSA Standing General Order reports
+  (data/external/README.md) and product recalls are mechanism context, not an exposure-normalized
+  sample.

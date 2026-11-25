@@ -1,0 +1,136 @@
+# Named estimand-composition rosters (ACC-COMPOSITION). A scenario names one as
+# `estimand_composition: {roster: <name>}` and may restate a cell's loss form under
+# `loss_forms`; the loader expands the roster before validation. A cell with a
+# loss_type is tracked: {{loss_component:<cell_id>}} in a severity scope renders its
+# loss form, and attachment_basis records why the loss is the scenario's. The standard
+# roster's tracked cell is an incident_consequence: a civil fine on the provider that
+# follows from the incident.
+rosters:
+  standard:
+    status: "INITIAL_ESTIMATE"
+    rationale: >-
+      The roster classifies one admitted incident's complete gross loss by bearer and economic
+      nature. These are accounting categories within one severity draw, not separate scenarios or
+      component-loss distributions. Shares are elicited, not authored, and may be zero.
+    evidence: >-
+      No matched study identifies joint shares; severity and occurrence definitions establish
+      possible forms only. The shares are uncollected elicitation targets; no empirical share is
+      asserted.
+    cells:
+      - cell_id: "external_resource_loss"
+        loss_form: "{{accounting:external_resources}}"
+        nature: "resource_cost"
+        subject: "third_party"
+      - cell_id: "external_financial_loss"
+        loss_form: "{{accounting:external_ordinary_transfers}}"
+        nature: "transfer"
+        subject: "third_party"
+        rationale: "{{accounting:ordinary_transfers_rationale}}"
+      - cell_id: "directly_affected_party_injury"
+        loss_form: "{{accounting:direct_injury}}"
+        nature: "injury_valuation"
+        subject: "third_party"
+      - cell_id: "deployer_operational_recovery"
+        loss_form: "{{accounting:deployer_resources}}"
+        nature: "resource_cost"
+        subject: "other"
+      - cell_id: "deployer_regulatory_and_contractual_payments"
+        loss_form: "{{accounting:deployer_ordinary_transfers}}"
+        nature: "transfer"
+        subject: "other"
+        rationale: "{{accounting:ordinary_transfers_rationale}}"
+      - cell_id: "provider_civil_fine"
+        loss_form: "consequential civil fines on the selected provider"
+        nature: "transfer"
+        subject: "provider"
+        rationale: "{{accounting:provider_civil_fine_rationale}}"
+        loss_type: "civil_fines"
+        attachment_basis: "incident_consequence"
+      - cell_id: "provider_resource_cost"
+        loss_form: "{{accounting:provider_resources}}"
+        nature: "resource_cost"
+        subject: "provider"
+      - cell_id: "provider_distinct_transfer"
+        loss_form: "{{accounting:provider_ordinary_transfers}}"
+        nature: "transfer"
+        subject: "provider"
+        rationale: "{{accounting:ordinary_transfers_rationale}}"
+      - cell_id: "external_financial_loss_appropriated"
+        loss_form: "{{accounting:external_appropriation}}"
+        nature: "appropriated_transfer"
+        subject: "third_party"
+        rationale: "{{accounting:appropriation_rationale}}"
+      - cell_id: "deployer_regulatory_and_contractual_payments_appropriated"
+        loss_form: "{{accounting:deployer_appropriation}}"
+        nature: "appropriated_transfer"
+        subject: "other"
+        rationale: "{{accounting:appropriation_rationale}}"
+      - cell_id: "provider_distinct_transfer_appropriated"
+        loss_form: "{{accounting:provider_appropriation}}"
+        nature: "appropriated_transfer"
+        subject: "provider"
+        rationale: "{{accounting:appropriation_rationale}}"
+  private_claims:
+    status: "GAP"
+    rationale: >-
+      The roster classifies one matter's complete gross loss by bearer and economic nature. Provider
+      payments to claimants are ordinary transfers with zero direct welfare weight; legal and remedy
+      resources are resource costs. Shares are uncollected and may be zero.
+    evidence: >-
+      No matched study identifies joint shares. Public settlement announcements report some payment
+      amounts but not defense, remedy or claimant resources for the same matters.
+    cells:
+      - cell_id: "provider_settlement_and_judgment_payments"
+        loss_form: >-
+          Settlements, judgments, statutory damages, disgorgement and claimant fee or cost awards
+          paid by the selected provider to resolve the matter, including payments for past use under
+          a settlement. Exclude forward license fees paid in exchange for future rights, government
+          fines, and the provider's own defense or remedy resources. Recipient gains cancel in
+          aggregate welfare; the provider's financial loss remains.
+        nature: "transfer"
+        subject: "provider"
+      - cell_id: "provider_defense_and_litigation_resources"
+        loss_form: >-
+          The selected provider's incremental outside counsel, expert, discovery, internal legal and
+          management resources for the matter over its whole life. Exclude payments to claimants,
+          remedy-compliance resources and routine legal operations unchanged by the matter. Exclude
+          displaced profit or market share gained by other standing parties; that is an ordinary
+          transfer, not resource destruction.
+        nature: "resource_cost"
+        subject: "provider"
+      - cell_id: "provider_remedy_compliance_resources"
+        loss_form: >-
+          The selected provider's incremental resources to comply with injunctive, consent or
+          settlement terms, such as data deletion, model retraining, modification or withdrawal,
+          filtering, audit and monitoring, including productive-asset impairment and lost productive
+          output after avoided costs and replacement supply. Exclude forward license fees for future
+          rights and payments to claimants. Exclude displaced profit or market share gained by other
+          standing parties; that is an ordinary transfer, not resource destruction.
+        nature: "resource_cost"
+        subject: "provider"
+      - cell_id: "claimant_litigation_resources"
+        loss_form: >-
+          Claimants' and class members' incremental counsel, expert, notice, administration and
+          participation resources for the matter, valued once at incremental cost whether or not
+          later paid from a settlement or fee award; that payment is part of the provider's
+          transfer. Exclude the underlying alleged harm, which the matter does not value. Exclude
+          displaced profit or market share gained by other standing parties; that is an ordinary
+          transfer, not resource destruction.
+        nature: "resource_cost"
+        subject: "third_party"
+      - cell_id: "co_defendant_litigation_resources"
+        loss_form: >-
+          Non-provider co-defendants' incremental defense resources in the same matter, such as a
+          deployer or investor named with the provider. Exclude the provider's resources and
+          payments to claimants. Exclude displaced profit or market share gained by other standing
+          parties; that is an ordinary transfer, not resource destruction.
+        nature: "resource_cost"
+        subject: "other"
+      - cell_id: "co_defendant_payments"
+        loss_form: >-
+          Non-provider co-defendants' settlement, judgment and fee-award payments to claimants in
+          the same matter. Exclude their defense resources and any indemnity reimbursed by the
+          provider, which is part of the provider's payments. Recipient gains cancel in aggregate
+          welfare; the payer's financial loss remains.
+        nature: "transfer"
+        subject: "other"

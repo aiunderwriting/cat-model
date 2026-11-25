@@ -1,0 +1,173 @@
+id: "government_designation"
+name: "Government Designation or Restriction of the Provider"
+node_ids: ["n_conduct_designation"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A government formally designates, excludes or restricts the provider over its own conduct or
+  status, for example by a supply-chain designation, procurement exclusion, removal order or export
+  control, and the provider loses business while its customers bear forced migration and switching
+  costs. Civil fines in the same matter count with it. A designation that responds to an AI incident
+  follows that incident. The unit is one matter with all its losses over its life.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "liability_enforcement"
+  tail_class_rationale: >-
+    One designation's loss is bounded by the provider's affected business and its customers'
+    migration costs.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One matter is one unit: one asserted ground, with every designation or restriction action that
+    any authority takes on it, their appeals and civil fines in the same matter. A distinct ground
+    is a separate matter, even when the same authority acts on both.
+  terminal_event_unit: >-
+    One admitted designation matter: a formal government designation, exclusion or restriction of
+    the selected provider over its own conduct or status, the largest share of whose gross loss
+    arises from that action, and {{admission}} over the matter's life. The whole matter, including
+    civil fines in it, belongs here. Where one government matter both bars or limits the supply of
+    the provider's models or services and imposes fines or other remedies, it is a designation
+    matter when that bar or limit causes the largest share of its gross loss, and an enforcement
+    matter otherwise. A matter over a product or line of business that does not involve the
+    provider's AI models is outside this scenario. Exclude a designation that responds to an AI
+    incident, which follows that incident. A designation that responds to a reported weakness or
+    risk, and not to a misuse or failure incident, belongs here. So does a designation over an
+    attack or fraud that used the provider's model without material assistance, where that attack is
+    no scenario's incident. Assistance is material when it gives the attacker capability, scale or
+    speed that the attacker would not have had without any AI model, and the loss, or more than half
+    of it, would not have occurred without that gain. An incident below the admission threshold is
+    the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    A matter is assigned to the year its first loss occurs, normally when the action is first
+    initiated or binds; later losses, fines and appeals stay with it.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted designation matter over its life, before any recovery: the
+  provider's lost profit from terminated contracts, churn and displacement, its legal,
+  crisis-management and response resources and lost productive capacity, customers' and
+  customer-deployers' forced migration and switching costs, and
+  {{loss_component:provider_civil_fine}}. Count each underlying loss once. Costs are incremental
+  relative to the same business without the matter.
+# A government designation or restriction of the provider causes it business loss and forces its customers to migrate.
+facets:
+  peril_mechanism: ["government_designation"]
+  deployment_control_mode: "api"
+  harm_types: ["economic_loss", "regulatory_sanction"]
+  bearers: ["provider", "deployer_or_customer", "third_party_organizations"]
+  party_basis: "first_party"
+occurrence_unit_id: "designation_matter"
+attribution_nexus:
+  kind: "regulatory_respondent"
+  terminal_qualification: >-
+    The assigned provider is the subject of the designation, exclusion or restriction.
+estimand_composition:
+  status: "INITIAL_ESTIMATE"
+  rationale: >-
+    A designation matter's loss includes the provider's incremental resource costs, ordinary
+    displaced-profit transfers and civil fines in the same matter, and its customers' and
+    customer-deployers' forced migration and switching resources. Provider ownership alone does not
+    entail resource destruction. The shares are uncollected elicitation targets (ACC-COMPOSITION).
+  evidence: >-
+    Designation precedents do not identify the resource, transfer or fine shares. Coverage weights
+    classify financial response only and supply no composition estimate.
+  cells:
+    - cell_id: "provider_resource_cost"
+      loss_form: >-
+        Selected provider's incremental legal, crisis-management, response, restoration and actual
+        productive-capacity loss attributable to the designation over the matter's life, including
+        lost productive output after avoided costs and replacement supply. Exclude displaced profit
+        or market share gained by other standing parties; that is an ordinary transfer, not resource
+        destruction. Exclude civil fines, avoided costs, unchanged routine work and a second
+        capitalization of already-counted cash flows.
+      nature: "resource_cost"
+      subject: "provider"
+    - cell_id: "provider_transfer"
+      loss_form: >-
+        Selected provider's lost profit from contract termination, attributable customer churn,
+        partner withdrawal or competitive displacement to parties with welfare standing over the
+        matter's life. These ordinary transfers remain gross provider financial loss and cancel in
+        welfare. Exclude real response or productive-capacity costs, civil fines and a second
+        capitalization of already-counted cash flows.
+      nature: "transfer"
+      subject: "provider"
+    - cell_id: "provider_civil_fine"
+      loss_form: "civil fines imposed on the selected provider in the same designation matter"
+      nature: "transfer"
+      subject: "provider"
+      loss_type: "civil_fines"
+      attachment_basis: "regulatory_scenario"
+    - cell_id: "customer_migration_and_switching"
+      loss_form: >-
+        External customers' incremental forced migration, switching, requalification and
+        interruption resources caused by the designation, including lost productive output after
+        avoided costs and replacement supply. Here external means the customer is neither the
+        frontier provider nor a non-provider system deployer; put a customer-deployer's own cost in
+        the deployer cell. Exclude price differences paid to a replacement supplier, which are
+        ordinary transfers, and the provider's own costs. Exclude displaced profit or market share
+        gained by other standing parties; that is an ordinary transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "third_party"
+    - cell_id: "deployer_migration_and_switching"
+      loss_form: >-
+        Non-provider customer-deployers' own incremental forced migration, re-engineering,
+        requalification and interruption resources caused by the designation, including lost
+        productive output after avoided costs and replacement supply. Exclude external customers'
+        costs, price differences paid to a replacement supplier, which are ordinary transfers, and
+        the provider's own costs. Exclude displaced profit or market share gained by other standing
+        parties; that is an ordinary transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "other"
+event_chain:
+  opportunity:
+    unit: >-
+      One asserted government ground for formally restricting the named lab, such as supply-chain
+      integrity, foreign control, security, compliance, procurement terms or a dispute over the
+      lab's usage restrictions, raised by any authority and live during the study year before any
+      formal action on it.
+    counting_rule: >-
+      Count one opportunity per course of conduct or grievance; each yields at most one qualified
+      matter.
+    cohort: >-
+      Grounds live during the study year on which no formal action caused loss in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "1 million paying business customers"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 1.0e-6
+        rationale: >-
+          Grounds such as procurement terms, supply-chain integrity and disputes over usage
+          restrictions arise from government and enterprise business, which paying business
+          customers measure. Grounds are few, so the rate is per 1 million and the driver is a
+          normalisation.
+        source: >-
+          INITIAL_ESTIMATE: public designation and procurement-exclusion precedents establish the
+          mechanism, not a rate.
+      derivation: "The stipulated number of paying business customers divided by 1 million."
+    internal:
+      unit: "1,000 lab staff"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          Internal and pre-release use has one stipulated scale, lab staff, so the internal rate is
+          per 1,000 lab staff, a normalisation: matters over not-yet-public models arise from the
+          lab's own conduct, which no stipulated scale measures.
+        source: >-
+          INITIAL_ESTIMATE: normalisation only; no stipulated scale measures the lab's own conduct.
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "formal_action_initiated"
+      event: >-
+        An authority formally initiates or issues a designation, procurement exclusion, removal
+        order, export control or equivalent action on that ground.
+empirical_grounding: >-
+  No governed dataset supports this population. Court records, official orders and company
+  statements document individual designation, exclusion and export-restriction matters against AI
+  developers and other technology suppliers. They establish the mechanism and the forms of business
+  loss, not a frequency, realized loss amounts or the split between resource costs and transfers.

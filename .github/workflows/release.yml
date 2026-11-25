@@ -1,0 +1,222 @@
+name: Release artifact
+
+on:
+  workflow_call:
+  push:
+    tags: ["v*.*.*", "*.*.*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.9"
+          python-version: "3.13"
+
+      - name: Check lockfile
+        run: uv lock --check
+
+      - name: Check release metadata
+        run: |
+          uv run --no-project --python 3.13 python - <<'PY'
+          import os
+          import re
+          import tomllib
+          from pathlib import Path
+
+          project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]
+          version = project["version"]
+          if re.fullmatch(r"(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)", version) is None:
+              raise AssertionError(f"project version {version!r} must be MAJOR.MINOR.PATCH")
+          if os.environ.get("GITHUB_REF_TYPE") == "tag":
+              tag = os.environ["GITHUB_REF_NAME"]
+              if tag not in {version, f"v{version}"}:
+                  raise AssertionError(f"tag {tag!r} does not match project version {version!r}")
+          PY
+
+      - name: Build wheel and source distribution
+        run: uv build --sdist --wheel
+
+      - name: Check artifact contents
+        run: |
+          uv run --no-project --python 3.13 python - <<'PY'
+          import zipfile
+          from pathlib import Path
+
+          dist = Path("dist")
+          wheels = list(dist.glob("*.whl"))
+          sdists = list(dist.glob("*.tar.gz"))
+          assert len(wheels) == 1, wheels
+          assert len(sdists) == 1, sdists
+
+          forbidden_parts = {
+              "__pycache__",
+              ".pytest_cache",
+              "notebooks",
+              "research",
+              "references",
+              ".github",
+          }
+          forbidden_subpaths = {"data/external"}
+
+          def assert_clean(name: str) -> None:
+              normalized = name.replace("\\", "/")
+              parts = set(Path(normalized).parts)
+              if forbidden_parts & parts:
+                  raise AssertionError(f"forbidden artifact path: {name}")
+              if any(subpath in normalized for subpath in forbidden_subpaths):
+                  raise AssertionError(f"forbidden artifact path: {name}")
+              if normalized.endswith((".pyc", ".pyo")):
+                  raise AssertionError(f"compiled artifact path: {name}")
+
+          with zipfile.ZipFile(wheels[0]) as zf:
+              wheel_names = set(zf.namelist())
+              for name in zf.namelist():
+                  assert_clean(name)
+              required_wheel_files = {
+                  "catmodel/_resources/registries/coverage_gaps.yaml",
+                  "catmodel/_resources/data/example_model_profiles.yaml",
+                  "catmodel/_resources/contracts/scenarios/hierarchy-contract.yaml",
+                  "catmodel/_resources/contracts/results/results.schema.json",
+                  "catmodel/_resources/contracts/results/results.diagnostics.schema.json",
+              }
+              missing = sorted(required_wheel_files - wheel_names)
+              if missing:
+                  raise AssertionError(f"missing wheel resources: {missing}")
+              if not any(
+                  name.startswith("catmodel/_resources/scenarios/")
+                  for name in wheel_names
+              ):
+                  raise AssertionError("missing packaged scenario resources")
+          PY
+
+      - name: Check source distribution contents
+        run: uv run --no-project --python 3.13 python scripts/check_sdist.py dist/*.tar.gz
+
+      - name: Check installed wheel and smoke-test CLI
+        timeout-minutes: 10
+        run: |
+          uv run --no-project --python 3.13 python scripts/check_incident_wheel.py \
+            --wheel dist/*.whl --output "$RUNNER_TEMP/incident-wheel"
+          "$RUNNER_TEMP/incident-wheel/venv/bin/catmodel" --help
+          "$RUNNER_TEMP/incident-wheel/venv/bin/catmodel" --version
+          "$RUNNER_TEMP/incident-wheel/venv/bin/python" -m catmodel.cli --help
+          "$RUNNER_TEMP/incident-wheel/venv/bin/python" - <<'PY'
+          import asyncio
+          from unittest.mock import patch
+
+          from catmodel.config import load_model_profile
+          import catmodel.llm.factory
+          from catmodel.llm import litellm_provider
+          from catmodel.llm.factory import build_providers
+          from catmodel.llm.models import ModelSpec
+          from catmodel.resources import (
+              data_path,
+              resource_path,
+              scenarios_path,
+              source_checkout_root,
+          )
+          from catmodel.scenarios.hierarchy_contract import load_hierarchy_contract
+          from catmodel.scenarios.loader import load_scenarios
+          # The checkout's pinned command inventory, checked below against the
+          # installed wheel's CLI.
+          from tests import test_cli_stages
+          # After catmodel, which imports LiteLLM with its bundled model map.
+          from litellm.types.utils import Delta, ModelResponseStream, StreamingChoices
+
+          assert data_path("example_model_profiles.yaml").is_file()
+          assert resource_path("registries", "coverage_gaps.yaml").is_file()
+          assert load_model_profile(profile="example").models
+          assert load_model_profile(profile="dev").models
+          assert load_hierarchy_contract().nodes
+          assert len(load_scenarios(scenarios_path())) > 0
+          assert source_checkout_root() is None
+          test_cli_stages.test_the_commands_and_their_options_are_exactly_the_listed_ones()
+
+          class FakeStream:
+              # LiteLLM sets this only when the provider's own finish reason arrives.
+              received_finish_reason = "stop"
+
+              async def fetch_stream(self):
+                  # LiteLLM sends a lazily opened request here; this fake has none.
+                  return self
+
+              async def __aiter__(self):
+                  yield ModelResponseStream(
+                      id="release-smoke",
+                      choices=[
+                          StreamingChoices(
+                              index=0,
+                              delta=Delta(content="release smoke"),
+                              finish_reason="stop",
+                          )
+                      ],
+                  )
+
+          async def fake_completion(**kwargs: object) -> FakeStream:
+              assert kwargs["api_key"] == "fake-key"
+              assert kwargs["stream"] is True
+              return FakeStream()
+
+          async def exercise_transport() -> None:
+              with patch.object(litellm_provider, "acompletion", fake_completion):
+                  providers = build_providers(
+                      [
+                          ModelSpec(
+                              provider="openrouter",
+                              model_id="smoke-model",
+                              reasoning_effort="low",
+                              max_output_tokens=1024,
+                          )
+                      ],
+                      api_keys={"openrouter": "fake-key"},
+                      concurrency_limits={"smoke-model": 1},
+                  )
+                  response = await providers[0].complete(
+                      system_prompt="system",
+                      user_prompt="user",
+                      max_tokens=16,
+                      request_timeout_seconds=1.0,
+                  )
+              assert response.text == "release smoke"
+              assert response.model_id == "smoke-model"
+
+          asyncio.run(exercise_transport())
+          PY
+
+      - name: Retain installed-wheel acceptance
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: installed-wheel-acceptance
+          path: ${{ runner.temp }}/incident-wheel/acceptance.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Write release checksums
+        if: github.ref_type == 'tag'
+        working-directory: dist
+        run: |
+          sha256sum -- *.whl *.tar.gz > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Retain release distributions
+        if: github.ref_type == 'tag'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-distributions
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 90

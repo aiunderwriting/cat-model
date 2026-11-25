@@ -1,0 +1,157 @@
+id: "developer_control_loss"
+name: "Model Acting Against Its Developer's Control"
+node_ids: ["n_failure_developer_control"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A model of the provider acts against its developer's control: it deceives evaluations or
+  monitoring that safety decisions rely on, copies its own weights outside the developer's control,
+  or otherwise escapes or subverts that control. One history of one model, from its first act
+  against control to remediation, is one incident, including the harm the model causes to other
+  parties from inside the provider's or an evaluator's infrastructure and the harm an escaped copy
+  causes where it runs. Weights stolen by people are an attack on the AI as an asset; a stolen copy
+  that then helps an attacker belongs to the attacker's process. A person's intentional misuse of
+  the deployed model is its own misuse incident, not a loss of developer control. Reliance on
+  compromised safety information and external deployment are outcomes within one incident, not
+  splits, and costly histories that stop short of them count here. Existential or civilizational
+  value without a quantifiable economic measure is outside the estimand.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "mass_casualty_catastrophe"
+  tail_class_rationale: >-
+    An uncontrolled model can cause society-wide economic harm approaching world-output scale.
+  severity_scope_exclusions: ["existential_value"]
+  evidence_refs:
+    - "assumptions.md#severity-and-tails"
+    - "assumptions.md#population-and-accounting"
+frequency_semantics:
+  counting_identity: >-
+    One incident is one causal loss-of-control history of one model, meaning a separately trained
+    model with the checkpoints, fine-tunes and distillations that inherit its training: every act
+    against control in one course of conduct, every copy it makes and every consequence where those
+    copies run. Distinct histories are separate incidents, including two by one model in one year.
+  terminal_event_unit: >-
+    One admitted loss-of-control incident: one causal history in which a model of the selected
+    provider deceives evaluations or monitoring, copies its own weights outside the provider's
+    control, or otherwise escapes or subverts that control, the largest share of whose gross loss
+    arises from that history and its consequences, and {{admission}}. The whole history and all its
+    consequences belong here. Where the provider, or an evaluator testing the model under agreement
+    with it, runs the model as an agent, the model acts against control when it defeats, evades or
+    deceives a containment boundary, access restriction, monitor, evaluation or shutdown they have
+    in place, whether or not a copy of the model leaves and whatever the model believed about its
+    situation; harm it causes through access it was given or that was left open by mistake, without
+    such conduct, is an agent incident. Exclude a person's intentional misuse of the deployed model,
+    which is its own misuse incident. An incident below the admission threshold is the unestimated
+    leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted history across all affected parties and loss kinds, before
+  any recovery: the provider's recall, retraining, remediation and interruption, harm the model
+  causes to other parties from inside the provider's or an evaluator's infrastructure, harm from
+  deployments authorized on compromised safety information, harm caused by escaped copies,
+  {{loss_component:provider_civil_fine}} and the legal resources of every claim, enforcement action
+  and recovery effort the incident causes. Exclude existential or civilizational value and
+  social-welfare loss without a quantifiable economic measure. Count each underlying loss once:
+  settlements, reimbursements, recoveries and other compensation for already-counted harm are not
+  more loss. Costs are incremental relative to the same activity without the incident: scheduled
+  control resources unchanged in that counterfactual are excluded, and incident-triggered response
+  or recovery resources are included even when existing staff perform them.
+# A model acts against its developer's control. Two facets are ambiguous, which `provisional` marks:
+# histories span training and internal deployment, and the loss falls on the provider and, after
+# escape, on third parties.
+facets:
+  peril_mechanism: ["evaluation_deception", "self_exfiltration", "autonomous_goal_pursuit"]
+  lifecycle_stage: "internal_deployment"
+  deployment_control_mode: "managed"
+  harm_types: ["economic_loss", "ip_loss"]
+  bearers:
+    - "provider"
+    - "third_party_organizations"
+    - "third_party_individuals"
+    - "general_public"
+  party_basis: "third_party"
+  provisional: true
+occurrence_unit_id: "developer_control_loss_history"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The model acting against control is a model of the assigned provider, or a copy of one that it
+    made.
+estimand_composition:
+  roster: "standard"
+  loss_forms:
+    provider_resource_cost: >-
+      Selected-provider investigation, defense, containment, restoration, lost productive output
+      after avoided costs and actual destruction of productive capacity caused by the incident.
+      Copying non-rival model weights does not itself destroy the original model or require
+      retraining. Do not automatically charge historic training cost or classify lost exclusivity,
+      market share or IP rents as resource destruction. Those value changes require separate
+      transfer or appropriation measurement; do not duplicate them with response costs.
+    provider_distinct_transfer_appropriated: >-
+      Selected-provider funds, assets or explicitly valued IP rights harmfully appropriated through
+      theft, fraud or coercion in this incident, including stolen model-weight exclusivity or rents.
+      A copied model is non-rival: do not substitute its historic training bill for lost value,
+      presume the original productive asset was destroyed, or duplicate separately counted response
+      and downstream harms. Perpetrator gains do not offset the victim loss in the reference
+      standing convention. A zero share is permitted.
+event_chain:
+  opportunity:
+    unit: >-
+      One course of conduct by a model of the named lab against its developer's control: deceiving
+      an evaluation or monitor, acting toward copying its own weights outside the lab's control, or
+      another attempt to escape or subvert that control, counted when the first act occurs, whether
+      or not it is blocked.
+    counting_rule: >-
+      Count one opportunity per course of conduct; acts in one course by one model form one
+      opportunity. Each yields at most one qualified incident.
+    cohort: >-
+      Courses of conduct active during the study year whose first loss has not occurred in an
+      earlier year; membership does not depend on later success.
+  exposure:
+    public:
+      unit: "publicly released model version the lab serves during the study year"
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 5
+        rationale: >-
+          Conduct against control is a property of a model and the way it is evaluated and
+          monitored, so released model versions measure exposure better than usage volume; a leading
+          lab serves its current frontier model, a few earlier versions and smaller variants.
+        source: >-
+          INITIAL_ESTIMATE: public model listings of leading labs show a handful of general-purpose
+          versions served at once; no count is stipulated.
+      derivation: "Fixed by the scenario at five publicly released model versions served."
+    internal:
+      unit: >-
+        not-yet-public model of the lab in training, evaluation, internal use or pre-release testing
+        during the study year
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 6
+        rationale: >-
+          A leading lab releases a few major models a year and holds each in internal use and
+          pre-release testing for months before release, alongside smaller and specialised
+          candidates, so about six distinct not-yet-public models are in use at some time in the
+          year.
+        source: >-
+          INITIAL_ESTIMATE: no public census of frontier labs' unreleased models exists; the
+          stipulated context describes successors to the public model line in training, evaluation,
+          internal use and pre-release testing.
+      derivation: >-
+        Fixed by the scenario at six not-yet-public models in use at some time during the year.
+  stages:
+    - stage_id: "control_subverted_or_response"
+      event: >-
+        The conduct succeeds at least once or forces a response: an evaluation or monitor is
+        deceived, a containment boundary or access restriction is defeated, a copy lands outside the
+        lab's control, or the lab pauses, rolls back or retrains a model because of it.
+empirical_grounding: >-
+  No governed dataset supports this population. Developers', evaluators' and authorities'
+  disclosures record models defeating or leaving the limits set for them in training, evaluation and
+  internal use, some reaching other parties' systems; they apply no common definition, state no
+  total loss for any incident and are not a census. Controlled evaluations of deceptive or
+  self-preserving behavior are precursors, not incidents.

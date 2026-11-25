@@ -1,0 +1,300 @@
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "catmodel"
+version = "0.1.0"
+description = "Experimental catastrophe model for AI risk"
+readme = "README.md"
+requires-python = ">=3.13,<3.15"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Artificial Intelligence Underwriting Company", email = "tom@aiuc.com" }]
+maintainers = [{ name = "Artificial Intelligence Underwriting Company", email = "tom@aiuc.com" }]
+keywords = ["AI risk", "catastrophe model", "expert elicitation", "large language models"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "pydantic==2.14.3",
+    "pydantic-settings==2.16.3",
+    "numpy==2.5.5",
+    "scipy==1.18.1",
+    "click==8.5.1",
+    "pyyaml==6.0.3",
+    "httpx==0.28.1",
+    "structlog==26.1.0",
+    # 1.109 is the first CVE-2026-114612-fixed line without the filelock<4 cap.
+    "litellm==1.109.1",
+    # Reading a results file checks it against its committed JSON Schema.
+    "jsonschema==4.26.0",
+]
+
+[project.urls]
+Homepage = "https://aiuc.com"
+Repository = "https://github.com/aiunderwriting/cat-model"
+Documentation = "https://github.com/aiunderwriting/cat-model/blob/main/methodology.md"
+Issues = "https://github.com/aiunderwriting/cat-model/issues"
+
+[project.scripts]
+catmodel = "catmodel.cli:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/catmodel"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config" = "catmodel/_resources/config"
+"scenarios" = "catmodel/_resources/scenarios"
+"data/example_model_profiles.yaml" = "catmodel/_resources/data/example_model_profiles.yaml"
+"data/reference" = "catmodel/_resources/data/reference"
+"contracts" = "catmodel/_resources/contracts"
+"registries" = "catmodel/_resources/registries"
+
+# The tracked tree: scripts/check_sdist.py compares a built archive with what
+# Git tracks, less the files .gitattributes marks export-ignore. .gitignore
+# keeps local downloads under data/ and references/, so only their tracked
+# paths are named.
+[tool.hatch.build.targets.sdist]
+only-include = [
+    ".env.example",
+    ".gitattributes",
+    ".github",
+    ".pre-commit-config.yaml",
+    "pyproject.toml",
+    "uv.lock",
+    "README.md",
+    "ARCHITECTURE.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "CITATION.cff",
+    "runbook.md",
+    "RELEASE.md",
+    "TESTING.md",
+    "methodology.md",
+    "assumptions.md",
+    "model-intended-purpose.md",
+    "model-governance.md",
+    "docs",
+    "src",
+    "tests",
+    "scripts",
+    "test_support",
+    "scenarios",
+    "config",
+    "contracts",
+    "registries",
+    "data/calibration",
+    "data/capability",
+    "data/elicitation_source_cards.yaml",
+    "data/example_model_profiles.yaml",
+    "data/external/README.md",
+    "data/reference",
+    "data/threat_models.yaml",
+    "references/calibration",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = [
+    "stochastic: tests whose assertions rely on simulation, sampling, or bootstrap noise even when seeded",
+]
+filterwarnings = [
+    "error",
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+    # LiteLLM installs this filter when imported; pytest resets filters per test.
+    "ignore:.*`ReadOnly` qualifier:UserWarning",
+]
+
+[dependency-groups]
+calibration-seeds = [
+    "beautifulsoup4==4.15.0",
+    "requests==2.34.2",
+]
+dev = [
+    # ty checks scripts/calibration_seeds, which import the resolver dependencies.
+    { include-group = "calibration-seeds" },
+    "aiohttp==3.14.5",
+    "pytest==9.2.0",
+    "pytest-asyncio==1.5.0",
+    "pytest-cov==7.1.0",
+    "pytest-xdist==3.8.0",
+    "ruff==0.17.5",
+    "ty==0.0.105",
+    "pre-commit==4.7.0",
+    "import-linter==2.16",
+    "packaging==26.3",
+]
+
+[tool.uv]
+# uv 0.9.17 is the first release that reads a relative cooldown. An older uv
+# warns and ignores this whole table.
+exclude-newer = "7 days"
+# check_dependency_pins.py also enforces exact first-party pins.
+add-bounds = "exact"
+# Security constraints prevent advisory regressions when re-locking.
+# uv.lock records the exact resolution.
+constraint-dependencies = [
+    "aiohttp>=3.14.4",
+    "anyio>=4.14.2",
+    "certifi>=2026.10.19",
+    "filelock>=4.2.1",
+    "fsspec>=2026.6.0",
+    "multidict>=6.9.1",
+    "soupsieve>=4.0.0",
+    "urllib3>=2.8.0",
+    "virtualenv>=21.14.13",
+]
+
+[tool.ty.environment]
+root = [
+    ".",
+]
+
+# The calibration seed resolvers are frozen: seeds.yaml records each script's
+# SHA-256, so they take no annotations. In these files the rules below fire
+# only on ty's inference of unannotated `{}` and `[]` literals.
+[[tool.ty.overrides]]
+include = [
+    "scripts/calibration_seeds/arxiv.py",
+    "scripts/calibration_seeds/cisa_csaf.py",
+    "scripts/calibration_seeds/doj.py",
+    "scripts/calibration_seeds/federal_register.py",
+    "scripts/calibration_seeds/nhtsa_defects.py",
+]
+
+[tool.ty.overrides.rules]
+invalid-argument-type = "ignore"
+invalid-explicit-return = "ignore"
+not-subscriptable = "ignore"
+unsupported-operator = "ignore"
+
+[[tool.ty.overrides]]
+include = ["scripts/calibration_seeds/sec_edgar.py"]
+
+[tool.ty.overrides.rules]
+missing-union-attribute = "ignore"
+
+[tool.importlinter]
+# Scan cat-model as the root package while allowing contracts to name external modules.
+root_packages = ["catmodel"]
+include_external_packages = true
+exclude_type_checking_imports = true
+
+# One layer per pipeline stage, top first. "|" separates packages that do not
+# import each other.
+[[tool.importlinter.contracts]]
+name = "Pipeline stages"
+type = "layers"
+layers = [
+    "catmodel.cli",
+    # Collection and run execution both read a setup's plan; neither imports the other.
+    "catmodel.collection | catmodel.results",
+    "catmodel.setup",
+    "catmodel.calibration | catmodel.evidence | catmodel.forecast | catmodel.simulation",
+    "catmodel.elicitation",
+    "catmodel.contracts",
+    "catmodel.probability",
+    "catmodel.config | catmodel.frozen_calls | catmodel.scenarios | catmodel.worker_pool | catmodel.worktree",
+    "catmodel.artifacts | catmodel.assumption_vocabulary | catmodel.dateutil | catmodel.economic_loss | catmodel.hashing | catmodel.identifiers | catmodel.json_io | catmodel.linear_algebra_threads | catmodel.llm | catmodel.logging | catmodel.output_paths | catmodel.path_safety | catmodel.resources | catmodel.stored_files | catmodel.yaml_io",
+    "catmodel.validation_errors",
+]
+
+
+[[tool.importlinter.contracts]]
+name = "Only the CLI uses the command-line framework"
+type = "forbidden"
+source_modules = [
+    "catmodel.calibration",
+    "catmodel.collection",
+    "catmodel.contracts",
+    "catmodel.elicitation",
+    "catmodel.evidence",
+    "catmodel.forecast",
+    "catmodel.probability",
+    "catmodel.results",
+    "catmodel.scenarios",
+    "catmodel.setup",
+    "catmodel.simulation",
+]
+forbidden_modules = ["click"]
+
+
+[[tool.importlinter.contracts]]
+name = "Only collection uses the LLM transport"
+type = "forbidden"
+source_modules = [
+    "catmodel.calibration",
+    "catmodel.contracts",
+    "catmodel.elicitation",
+    "catmodel.evidence",
+    "catmodel.forecast",
+    "catmodel.probability",
+    "catmodel.results",
+    "catmodel.scenarios",
+    "catmodel.setup",
+    "catmodel.simulation",
+]
+forbidden_modules = ["catmodel.llm", "litellm", "anthropic", "google", "openai"]
+
+
+[[tool.importlinter.contracts]]
+name = "Collection does not author source bundles"
+type = "forbidden"
+source_modules = ["catmodel.cli._capability", "catmodel.collection"]
+forbidden_modules = ["catmodel.evidence.source_inputs"]
+allow_indirect_imports = "true"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "F",
+    "E",
+    "W",
+    "I",
+    "UP",
+    "B",
+    "SIM",
+    "RUF",
+    "TC004",
+    "TC005",
+    "TC007",
+    "TC010",
+    "TID251",
+]
+ignore = [
+    "E501",    # line length (left to ruff format)
+    "E741",    # permits a short local name in a test comprehension
+    "B008",    # frozen option/state dataclasses as argument defaults
+    "B905",    # non-strict zip() calls truncate intentionally or use matched inputs
+    "RUF001",  # intentional Unicode in strings (notation or typography)
+    "RUF002",  # intentional Unicode in docstrings (notation or typography)
+    "RUF003",  # intentional Unicode in comments (notation or typography)
+    "RUF012",  # mutable class attributes are intentional or Pydantic-managed
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["catmodel"]
+
+[tool.ruff.lint.flake8-type-checking]
+quote-annotations = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B011", "B017"]
+"__init__.py" = ["F401", "RUF022"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"logging".msg = "Use structlog.get_logger(...) for application logging."

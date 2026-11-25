@@ -1,0 +1,143 @@
+id: "cbrn_biological_novice"
+name: "Biological Weapons Program — Novice"
+node_ids: ["n_cbrn_bio_novice"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A biological-weapons program without expert capability is materially assisted by any copy of the
+  provider's model, including stolen or open weights. Admitted outcomes range from response-only
+  costs after interdiction to mass-casualty catastrophes; the program owns all its supporting
+  operations.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "mass_casualty_catastrophe"
+  tail_class_rationale: >-
+    A transmissible agent can spread beyond its release, so even a novice program's loss can reach
+    population scale.
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One counted incident is one coordinated weapons program, including its supporting operations,
+    all attacks or releases (including accidental releases), interdiction and response. A program
+    may end at interdiction; no attack or release is required. Distinct programs count separately,
+    even for one actor in one year; events within a program do not.
+  terminal_event_unit: >-
+    One admitted incident of a novice biological-weapons program without expert capability
+    materially assisted by any copy of the selected provider's model, however the program obtained
+    it (served, stolen, leaked or open weights), whose interdiction, response or attack causes gross
+    loss, and {{admission}}, whether or not realized harm reaches mass-casualty scale. Assistance is
+    material when it gives the program capability, scale or speed that the program would not have
+    had without any AI model, and the loss, or more than half of it, would not have occurred without
+    that gain. The comparison is with what the same program would in fact have had if no generative
+    AI model of any developer had been available to it: its own skills and staff, software in
+    ordinary use before such models, such as search engines and translation software, and whatever
+    it would have bought or hired instead. Help that it would then have had anyway, as good, as fast
+    and at the same scale, such as an answer that a web search would have given, is not material
+    even when the program uses it. That another AI model could have given the same help does not
+    make it less material. A program that used the model's help without material assistance is not
+    this scenario's incident and, unless it meets another scenario's own conditions, is counted in
+    no scenario and no category. The whole program and all its consequences belong here. An incident
+    below the admission threshold is the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  Severity quantiles describe the full admitted range, from response-only costs to mass-casualty
+  catastrophes, including rare outcomes beyond historical experience.
+  The complete gross loss of one admitted program across all affected parties and loss kinds, before
+  any recovery: casualties' injury and fatality valuation, health care, decontamination, property
+  damage and interruption, public-health and security response, interdiction and investigation, the
+  stolen or transferred value and the response and notification costs of victims of the program's
+  supporting intrusion, fraud or deception, {{loss_component:provider_civil_fine}} and the legal
+  resources of every claim, enforcement action and recovery effort the incident causes. Count each
+  underlying loss once: settlements, reimbursements, recoveries and other compensation for
+  already-counted harm are not more loss. Costs are incremental relative to the same activity
+  without the incident: scheduled control resources unchanged in that counterfactual are excluded,
+  and incident-triggered response or recovery resources are included even when existing staff
+  perform them.
+# Model uplift to a weapons program causes casualties, response and interdiction loss.
+facets:
+  peril_mechanism: ["capability_uplift"]
+  deployment_control_mode: "any_copy"
+  harm_types: ["bodily_injury", "property_damage", "economic_loss"]
+  bearers:
+    - "third_party_individuals"
+    - "third_party_organizations"
+    - "general_public"
+    - "provider"
+  party_basis: "third_party"
+occurrence_unit_id: "cbrn_biological_novice_program"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    A copy of the assigned provider's model, however the program obtained it, materially assists the
+    program.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One whole biological-weapons program without expert capability that uses help from a copy of
+      the named lab's model, whether served in the named deployment or stolen, leaked or open,
+      counted when it first uses that help, whether or not loss follows. Any use of the model's help
+      counts here, however small. The first stage asks only whether the help gave a gain; that the
+      loss, or more than half of it, would not have occurred without that gain is part of the last
+      stage, the qualified unit.
+    counting_rule: >-
+      Count one opportunity per whole program; distinct programs count separately. Each
+      yields at most one admitted incident.
+    cohort: >-
+      Programs active during the study year whose first loss has not occurred in an earlier
+      year; membership does not depend on later success.
+  exposure:
+    public:
+      unit: "weekly active user of the consumer assistant"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0
+        rationale: >-
+          A program without expert capability can arise among the lab's broad individual user
+          population, so no specialist occupation or institutional affiliation limits the base.
+          Each stipulated user is one base unit; the opportunity rate covers the whole scenario,
+          including programs using other copies, without requiring a program to be a consumer
+          customer. No prevalence of malicious intent is built into the base.
+        source: >-
+          INITIAL_ESTIMATE reach base: config/studies/hypothetical-frontier-lab/context.json
+          stipulates users; factor 1 converts exactly. Historical events
+          (data/elicitation_source_cards.yaml, cbrn-source-5 and cbrn-source-6) do not
+          establish a program rate per user.
+      derivation: >-
+        One base unit per stipulated weekly active user of the consumer assistant.
+    internal:
+      unit: "user of not-yet-public models"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.05
+        rationale: >-
+          Programs without expert capability can arise among internal or external users.
+          Stipulate one user per staff member plus an external allowance of five percent of
+          staff, including individuals from evaluation organizations: 8,400 users at 8,000
+          staff, scaling with staff.
+        source: >-
+          INITIAL_ESTIMATE: config/studies/hypothetical-frontier-lab/context.json describes
+          staff and external access. One user per staff member plus five percent external
+          individuals is an authored approximation, held proportional as staff scale
+          changes.
+      derivation: >-
+        Stipulated staff count times 1.05 for internal and external users.
+  stages:
+    - stage_id: "uplift"
+      event: >-
+        The model's help gives the program capability, scale or speed that the program would not
+        have had without any AI model.
+    - stage_id: "harm_or_response"
+      event: >-
+        The program causes harm or incurs incident-triggered interdiction or response costs.
+empirical_grounding: >-
+  No governed dataset supports this population. Controlled uplift studies and benchmark results
+  describe task performance, not program initiation, interdiction or casualty probabilities. Novice
+  programs depend more on model uplift; no study measures how many exist.

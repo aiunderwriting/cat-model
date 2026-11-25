@@ -1,0 +1,1542 @@
+[
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "background",
+    "model": "gpt-5.4",
+    "name": "openai-low",
+    "provider": "openai",
+    "reasoning_effort": "low",
+    "request": {
+      "json": {
+        "background": true,
+        "input": "user-openai-low",
+        "instructions": "system-openai-low",
+        "max_output_tokens": 123,
+        "model": "gpt-5.4",
+        "prompt_cache_key": "catmodel-system-6cbe3f102faf276cb2e8a9abd6d2ee93",
+        "reasoning": {
+          "effort": "low"
+        },
+        "store": true
+      },
+      "path": "/v1/responses"
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openai-low",
+    "user_prompt": "user-openai-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "background",
+    "model": "gpt-5.4",
+    "name": "openai-medium",
+    "provider": "openai",
+    "reasoning_effort": "medium",
+    "request": {
+      "json": {
+        "background": true,
+        "input": "user-openai-medium",
+        "instructions": "system-openai-medium",
+        "max_output_tokens": 123,
+        "model": "gpt-5.4",
+        "prompt_cache_key": "catmodel-system-056f825584bbc1424b5e5053bcecd464",
+        "reasoning": {
+          "effort": "medium"
+        },
+        "store": true
+      },
+      "path": "/v1/responses"
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openai-medium",
+    "user_prompt": "user-openai-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "background",
+    "model": "gpt-5.4",
+    "name": "openai-high",
+    "provider": "openai",
+    "reasoning_effort": "high",
+    "request": {
+      "json": {
+        "background": true,
+        "input": "user-openai-high",
+        "instructions": "system-openai-high",
+        "max_output_tokens": 123,
+        "model": "gpt-5.4",
+        "prompt_cache_key": "catmodel-system-a4553bc0b1e3b8adc7cbedb6952a1cc9",
+        "reasoning": {
+          "effort": "high"
+        },
+        "store": true
+      },
+      "path": "/v1/responses"
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openai-high",
+    "user_prompt": "user-openai-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "background",
+    "model": "gpt-5.4",
+    "name": "openai-xhigh",
+    "provider": "openai",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "json": {
+        "background": true,
+        "input": "user-openai-xhigh",
+        "instructions": "system-openai-xhigh",
+        "max_output_tokens": 123,
+        "model": "gpt-5.4",
+        "prompt_cache_key": "catmodel-system-6fcdfce50429c424899961e89f08a058",
+        "reasoning": {
+          "effort": "xhigh"
+        },
+        "store": true
+      },
+      "path": "/v1/responses"
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openai-xhigh",
+    "user_prompt": "user-openai-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "background",
+    "model": "gpt-5.4",
+    "name": "openai-max",
+    "provider": "openai",
+    "reasoning_effort": "max",
+    "request": {
+      "json": {
+        "background": true,
+        "input": "user-openai-max",
+        "instructions": "system-openai-max",
+        "max_output_tokens": 123,
+        "model": "gpt-5.4",
+        "prompt_cache_key": "catmodel-system-fc7e6245391fa75cae46efab1a4955de",
+        "reasoning": {
+          "effort": "max"
+        },
+        "store": true
+      },
+      "path": "/v1/responses"
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openai-max",
+    "user_prompt": "user-openai-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "claude-opus-4-8",
+    "name": "anthropic-low",
+    "provider": "anthropic",
+    "reasoning_effort": "low",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "system-anthropic-low",
+              "type": "text"
+            }
+          ],
+          "role": "system"
+        },
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "user-anthropic-low",
+              "type": "text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "anthropic/claude-opus-4-8",
+      "num_retries": 0,
+      "reasoning_effort": "low",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-anthropic-low",
+    "user_prompt": "user-anthropic-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "claude-opus-4-8",
+    "name": "anthropic-medium",
+    "provider": "anthropic",
+    "reasoning_effort": "medium",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "system-anthropic-medium",
+              "type": "text"
+            }
+          ],
+          "role": "system"
+        },
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "user-anthropic-medium",
+              "type": "text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "anthropic/claude-opus-4-8",
+      "num_retries": 0,
+      "reasoning_effort": "medium",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-anthropic-medium",
+    "user_prompt": "user-anthropic-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "claude-opus-4-8",
+    "name": "anthropic-high",
+    "provider": "anthropic",
+    "reasoning_effort": "high",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "system-anthropic-high",
+              "type": "text"
+            }
+          ],
+          "role": "system"
+        },
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "user-anthropic-high",
+              "type": "text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "anthropic/claude-opus-4-8",
+      "num_retries": 0,
+      "reasoning_effort": "high",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-anthropic-high",
+    "user_prompt": "user-anthropic-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "claude-opus-4-8",
+    "name": "anthropic-xhigh",
+    "provider": "anthropic",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "system-anthropic-xhigh",
+              "type": "text"
+            }
+          ],
+          "role": "system"
+        },
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "user-anthropic-xhigh",
+              "type": "text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "anthropic/claude-opus-4-8",
+      "num_retries": 0,
+      "reasoning_effort": "xhigh",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-anthropic-xhigh",
+    "user_prompt": "user-anthropic-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "claude-opus-4-8",
+    "name": "anthropic-max",
+    "provider": "anthropic",
+    "reasoning_effort": "max",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "system-anthropic-max",
+              "type": "text"
+            }
+          ],
+          "role": "system"
+        },
+        {
+          "content": [
+            {
+              "cache_control": {
+                "type": "ephemeral"
+              },
+              "text": "user-anthropic-max",
+              "type": "text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "anthropic/claude-opus-4-8",
+      "num_retries": 0,
+      "reasoning_effort": "max",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-anthropic-max",
+    "user_prompt": "user-anthropic-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini-3.1-pro-preview",
+    "name": "google-low",
+    "provider": "google",
+    "reasoning_effort": "low",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-low",
+          "role": "system"
+        },
+        {
+          "content": "user-google-low",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "low",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-low",
+    "user_prompt": "user-google-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini-3.1-pro-preview",
+    "name": "google-medium",
+    "provider": "google",
+    "reasoning_effort": "medium",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-google-medium",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "medium",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-medium",
+    "user_prompt": "user-google-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini-3.1-pro-preview",
+    "name": "google-high",
+    "provider": "google",
+    "reasoning_effort": "high",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-high",
+          "role": "system"
+        },
+        {
+          "content": "user-google-high",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "high",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-high",
+    "user_prompt": "user-google-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini-3.1-pro-preview",
+    "name": "google-xhigh",
+    "provider": "google",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-google-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "xhigh",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-xhigh",
+    "user_prompt": "user-google-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini-3.1-pro-preview",
+    "name": "google-max",
+    "provider": "google",
+    "reasoning_effort": "max",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-max",
+          "role": "system"
+        },
+        {
+          "content": "user-google-max",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "max",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-max",
+    "user_prompt": "user-google-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "grok-4.5",
+    "name": "xai-low",
+    "provider": "xai",
+    "reasoning_effort": "low",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-xai-low",
+          "role": "system"
+        },
+        {
+          "content": "user-xai-low",
+          "role": "user"
+        }
+      ],
+      "model": "xai/grok-4.5",
+      "num_retries": 0,
+      "reasoning_effort": "low",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-xai-low",
+    "user_prompt": "user-xai-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "grok-4.5",
+    "name": "xai-medium",
+    "provider": "xai",
+    "reasoning_effort": "medium",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-xai-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-xai-medium",
+          "role": "user"
+        }
+      ],
+      "model": "xai/grok-4.5",
+      "num_retries": 0,
+      "reasoning_effort": "medium",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-xai-medium",
+    "user_prompt": "user-xai-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "grok-4.5",
+    "name": "xai-high",
+    "provider": "xai",
+    "reasoning_effort": "high",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-xai-high",
+          "role": "system"
+        },
+        {
+          "content": "user-xai-high",
+          "role": "user"
+        }
+      ],
+      "model": "xai/grok-4.5",
+      "num_retries": 0,
+      "reasoning_effort": "high",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-xai-high",
+    "user_prompt": "user-xai-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "grok-4.5",
+    "name": "xai-xhigh",
+    "provider": "xai",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-xai-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-xai-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "xai/grok-4.5",
+      "num_retries": 0,
+      "reasoning_effort": "xhigh",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-xai-xhigh",
+    "user_prompt": "user-xai-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "grok-4.5",
+    "name": "xai-max",
+    "provider": "xai",
+    "reasoning_effort": "max",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-xai-max",
+          "role": "system"
+        },
+        {
+          "content": "user-xai-max",
+          "role": "user"
+        }
+      ],
+      "model": "xai/grok-4.5",
+      "num_retries": 0,
+      "reasoning_effort": "max",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-xai-max",
+    "user_prompt": "user-xai-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "muse-spark-1.2",
+    "name": "meta-low",
+    "provider": "meta",
+    "reasoning_effort": "low",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-meta-low",
+          "role": "system"
+        },
+        {
+          "content": "user-meta-low",
+          "role": "user"
+        }
+      ],
+      "model": "meta/muse-spark-1.2",
+      "num_retries": 0,
+      "reasoning_effort": "low",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-meta-low",
+    "user_prompt": "user-meta-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "muse-spark-1.2",
+    "name": "meta-medium",
+    "provider": "meta",
+    "reasoning_effort": "medium",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-meta-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-meta-medium",
+          "role": "user"
+        }
+      ],
+      "model": "meta/muse-spark-1.2",
+      "num_retries": 0,
+      "reasoning_effort": "medium",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-meta-medium",
+    "user_prompt": "user-meta-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "muse-spark-1.2",
+    "name": "meta-high",
+    "provider": "meta",
+    "reasoning_effort": "high",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-meta-high",
+          "role": "system"
+        },
+        {
+          "content": "user-meta-high",
+          "role": "user"
+        }
+      ],
+      "model": "meta/muse-spark-1.2",
+      "num_retries": 0,
+      "reasoning_effort": "high",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-meta-high",
+    "user_prompt": "user-meta-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "muse-spark-1.2",
+    "name": "meta-xhigh",
+    "provider": "meta",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-meta-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-meta-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "meta/muse-spark-1.2",
+      "num_retries": 0,
+      "reasoning_effort": "xhigh",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-meta-xhigh",
+    "user_prompt": "user-meta-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "muse-spark-1.2",
+    "name": "meta-max",
+    "provider": "meta",
+    "reasoning_effort": "max",
+    "request": {
+      "allowed_openai_params": [
+        "reasoning_effort"
+      ],
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-meta-max",
+          "role": "system"
+        },
+        {
+          "content": "user-meta-max",
+          "role": "user"
+        }
+      ],
+      "model": "meta/muse-spark-1.2",
+      "num_retries": 0,
+      "reasoning_effort": "max",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-meta-max",
+    "user_prompt": "user-meta-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openai/gpt-4o",
+    "name": "openrouter-low",
+    "provider": "openrouter",
+    "reasoning_effort": "low",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "low"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-low",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-low",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-low",
+    "user_prompt": "user-openrouter-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openai/gpt-4o",
+    "name": "openrouter-medium",
+    "provider": "openrouter",
+    "reasoning_effort": "medium",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "medium"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-medium",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-medium",
+    "user_prompt": "user-openrouter-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openai/gpt-4o",
+    "name": "openrouter-high",
+    "provider": "openrouter",
+    "reasoning_effort": "high",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "high"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-high",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-high",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-high",
+    "user_prompt": "user-openrouter-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openai/gpt-4o",
+    "name": "openrouter-xhigh",
+    "provider": "openrouter",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "xhigh"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-xhigh",
+    "user_prompt": "user-openrouter-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openai/gpt-4o",
+    "name": "openrouter-max",
+    "provider": "openrouter",
+    "reasoning_effort": "max",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "max"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-max",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-max",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-max",
+    "user_prompt": "user-openrouter-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "name": "google-prefixed-low",
+    "provider": "google",
+    "reasoning_effort": "low",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-low",
+          "role": "system"
+        },
+        {
+          "content": "user-google-low",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "low",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-low",
+    "user_prompt": "user-google-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "name": "google-prefixed-medium",
+    "provider": "google",
+    "reasoning_effort": "medium",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-google-medium",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "medium",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-medium",
+    "user_prompt": "user-google-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "name": "google-prefixed-high",
+    "provider": "google",
+    "reasoning_effort": "high",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-high",
+          "role": "system"
+        },
+        {
+          "content": "user-google-high",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "high",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-high",
+    "user_prompt": "user-google-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "name": "google-prefixed-xhigh",
+    "provider": "google",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-google-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "xhigh",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-xhigh",
+    "user_prompt": "user-google-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "gemini/gemini-3.1-pro-preview",
+    "name": "google-prefixed-max",
+    "provider": "google",
+    "reasoning_effort": "max",
+    "request": {
+      "api_key": "fixture-key",
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-google-max",
+          "role": "system"
+        },
+        {
+          "content": "user-google-max",
+          "role": "user"
+        }
+      ],
+      "model": "gemini/gemini-3.1-pro-preview",
+      "num_retries": 0,
+      "reasoning_effort": "max",
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-google-max",
+    "user_prompt": "user-google-max"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openrouter/openai/gpt-4o",
+    "name": "openrouter-prefixed-low",
+    "provider": "openrouter",
+    "reasoning_effort": "low",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "low"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-low",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-low",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-low",
+    "user_prompt": "user-openrouter-low"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openrouter/openai/gpt-4o",
+    "name": "openrouter-prefixed-medium",
+    "provider": "openrouter",
+    "reasoning_effort": "medium",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "medium"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-medium",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-medium",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-medium",
+    "user_prompt": "user-openrouter-medium"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openrouter/openai/gpt-4o",
+    "name": "openrouter-prefixed-high",
+    "provider": "openrouter",
+    "reasoning_effort": "high",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "high"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-high",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-high",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-high",
+    "user_prompt": "user-openrouter-high"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openrouter/openai/gpt-4o",
+    "name": "openrouter-prefixed-xhigh",
+    "provider": "openrouter",
+    "reasoning_effort": "xhigh",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "xhigh"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-xhigh",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-xhigh",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-xhigh",
+    "user_prompt": "user-openrouter-xhigh"
+  },
+  {
+    "api_key": "fixture-key",
+    "max_tokens": 123,
+    "mechanism": "stream",
+    "model": "openrouter/openai/gpt-4o",
+    "name": "openrouter-prefixed-max",
+    "provider": "openrouter",
+    "reasoning_effort": "max",
+    "request": {
+      "api_key": "fixture-key",
+      "extra_body": {
+        "provider": {
+          "data_collection": "deny"
+        },
+        "reasoning": {
+          "effort": "max"
+        }
+      },
+      "max_retries": 0,
+      "max_tokens": 123,
+      "messages": [
+        {
+          "content": "system-openrouter-max",
+          "role": "system"
+        },
+        {
+          "content": "user-openrouter-max",
+          "role": "user"
+        }
+      ],
+      "model": "openrouter/openai/gpt-4o",
+      "num_retries": 0,
+      "stream": true,
+      "stream_options": {
+        "include_usage": true
+      },
+      "timeout": 7.25
+    },
+    "request_timeout_seconds": 7.25,
+    "system_prompt": "system-openrouter-max",
+    "user_prompt": "user-openrouter-max"
+  }
+]

@@ -1,0 +1,85 @@
+{
+  "forecast_id": "public-frontier-epoch-eci-2026-10-29",
+  "as_of": "2026-10-29T00:00:00Z",
+  "frontier_definition": "Maximum Epoch ECI among publicly available models (API, hosted or open-weights access per Epoch's accessibility label) of OpenAI, Anthropic, Google, Meta and xAI, on Epoch's current ECI fit. Other organizations' models are outside this roster.",
+  "coordinates": [
+    {
+      "lab_id": "openai",
+      "domain_id": "general",
+      "scale_id": "epoch-eci-current-fit",
+      "units": "ECI points",
+      "evidence_refs": [
+        "https://epoch.ai/benchmarks/eci"
+      ],
+      "rationale": "OpenAI models as attributed by Epoch's Organization field.",
+      "limitations": [
+        "Epoch release dates stand in for public availability.",
+        "Scores are on Epoch's current retrospective fit, not the scores published at each release."
+      ]
+    },
+    {
+      "lab_id": "anthropic",
+      "domain_id": "general",
+      "scale_id": "epoch-eci-current-fit",
+      "units": "ECI points",
+      "evidence_refs": [
+        "https://epoch.ai/benchmarks/eci"
+      ],
+      "rationale": "Anthropic models as attributed by Epoch's Organization field.",
+      "limitations": [
+        "Epoch release dates stand in for public availability.",
+        "Scores are on Epoch's current retrospective fit, not the scores published at each release."
+      ]
+    },
+    {
+      "lab_id": "google",
+      "domain_id": "general",
+      "scale_id": "epoch-eci-current-fit",
+      "units": "ECI points",
+      "evidence_refs": [
+        "https://epoch.ai/benchmarks/eci"
+      ],
+      "rationale": "Google DeepMind and Google models as attributed by Epoch's Organization field.",
+      "limitations": [
+        "Epoch release dates stand in for public availability.",
+        "Scores are on Epoch's current retrospective fit, not the scores published at each release."
+      ]
+    },
+    {
+      "lab_id": "meta",
+      "domain_id": "general",
+      "scale_id": "epoch-eci-current-fit",
+      "units": "ECI points",
+      "evidence_refs": [
+        "https://epoch.ai/benchmarks/eci"
+      ],
+      "rationale": "Meta AI models as attributed by Epoch's Organization field.",
+      "limitations": [
+        "Epoch release dates stand in for public availability.",
+        "Scores are on Epoch's current retrospective fit, not the scores published at each release."
+      ]
+    },
+    {
+      "lab_id": "xai",
+      "domain_id": "general",
+      "scale_id": "epoch-eci-current-fit",
+      "units": "ECI points",
+      "evidence_refs": [
+        "https://epoch.ai/benchmarks/eci"
+      ],
+      "rationale": "xAI models as attributed by Epoch's Organization field.",
+      "limitations": [
+        "Epoch release dates stand in for public availability.",
+        "Scores are on Epoch's current retrospective fit, not the scores published at each release."
+      ]
+    }
+  ],
+  "trend_window_start": "2024-10-01T00:00:00Z",
+  "pace_rationale": "Default pace shape 5, a conservative round judgment informed by the rolling-origin pinball backtest of these releases (shape 8 scored best overall, 5 at three months), and default pace cap 4, a judgment that no lab progresses faster than four times the pooled trend rate, about twice the fastest twelve months of any roster lab in these releases; see methodology.md and assumptions.md (OBS-PUBLIC-JOINT).",
+  "pooling_rationale": "One trend rate for the five labs is the simplest model the roughly 44 window records support; separate per-lab fits overstate frontier growth.",
+  "likelihood_rationale": "Each frontier-raising release in the 24-month window enters once; benchmark error is half the 90% bootstrap interval width over 1.645 and the shared discrepancy is estimated by pooled restricted maximum likelihood.",
+  "limitations": [
+    "Retrospective current-vintage ECI scores dated at each model's release date; no point-in-time score vintages.",
+    "Release dates are Epoch's records. Checked on 2026-11-25 against the developers' own release pages, 38 of the 44 trend-window records match to the day, five differ by 1 to 21 days and one has no dated developer page."
+  ]
+}

@@ -1,0 +1,46 @@
+# Authoritative provenance of epoch_eci_scores.csv. A study's source-input
+# recipe cites this file as the source's metadata_file; the bundle builder adds
+# the content hash from the captured bytes.
+source_id: epoch-eci-scores
+provider: Epoch AI
+uri: https://epoch.ai/data/eci_scores.csv
+pulled_at: "2026-10-29T23:15:06Z"
+source_vintage: Epoch Capabilities Index downloads, labelled "Updated Oct. 29, 2026"
+record_count: 273
+license_access_basis: >-
+  CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Credit: Epoch AI,
+  'Capabilities & benchmarking', published online at epoch.ai, retrieved from
+  https://epoch.ai/benchmarks.
+redistribution_constraints: Attribution required.
+transformations: []
+# Epoch defines the ECI scale by assigning these two models fixed scores; the
+# table reports them, alone, without a bootstrap interval. A selected row
+# without an interval must match one exactly by model, organization and score.
+scale_anchors:
+  - model: Claude 3.5 Sonnet
+    organization: Anthropic
+    value: 130.0
+  - model: GPT-5
+    organization: OpenAI
+    value: 150.0
+scale_anchor_basis: >-
+  Epoch AI, Epoch Capabilities Index (https://epoch.ai/eci): the ECI scale is
+  arbitrary and fixed by assigning Claude 3.5 Sonnet a score of 130 and GPT-5 a
+  score of 150. The captured table lists exactly these two models at exactly
+  these scores with no 90% interval.
+# What Epoch reports a gain in ECI points to have corresponded to in another
+# measure. A question quotes it to say what a point means, and gives the
+# doublings its trajectory's rise would be if the correspondence held.
+scale_correspondence:
+  measure: >-
+    METR's time horizon, the length of task, in a human professional's working
+    time, that a model completes half the time
+  points_per_doubling: 5.0
+  observed: when the index was introduced
+scale_correspondence_basis: >-
+  Epoch AI, Epoch Capabilities Index (https://epoch.ai/eci), "How should I
+  interpret ECI values?", read on 2026-11-19: other measures need not be linear
+  in ECI units, and "at the time of ECI's launch, a 5 point gain in ECI appeared
+  to roughly correspond to a doubling of the METR Time Horizon". The description
+  of the time horizon is METR's definition of its 50% time horizon, not Epoch's
+  wording.

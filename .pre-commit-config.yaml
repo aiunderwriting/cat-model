@@ -1,0 +1,35 @@
+default_language_version:
+  python: python3.13
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: debug-statements
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.5
+    hooks:
+      - id: ruff-format
+      - id: ruff-check
+        args: [--fix]
+
+  - repo: local
+    hooks:
+      - id: ty
+        name: ty
+        entry: uv run ty check
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: check-dependency-pins
+        name: check dependency pins
+        entry: uv run python scripts/check_dependency_pins.py
+        language: system
+        pass_filenames: false
+        files: (^|/)pyproject\.toml$

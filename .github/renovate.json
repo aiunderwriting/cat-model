@@ -1,0 +1,24 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        "schedule:monthly",
+        "group:allNonMajor"
+    ],
+    "minimumReleaseAge": "7 days",
+    "pre-commit": {
+        "enabled": true
+    },
+    "reviewers": [
+        "tfehring"
+    ],
+    "packageRules": [
+        {
+            "description": "requires-python is the range of Python versions the project supports. Renovate would replace it with the newest version alone.",
+            "matchDepTypes": [
+                "requires-python"
+            ],
+            "enabled": false
+        }
+    ]
+}

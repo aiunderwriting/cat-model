@@ -1,0 +1,143 @@
+id: "influence_manipulation"
+name: "Influence and Manipulation Campaigns"
+node_ids: ["n_influence"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  An attacker materially assisted by any copy of the provider's model manipulates beliefs or
+  decisions, and most of the loss arises from those manipulated beliefs or decisions rather than
+  value transferred to the attacker: false announcements or fabricated media that move markets,
+  campaigns against a firm's reputation or consumer behavior, or public disinformation, hoax
+  threats or false emergency reports that cause response, security or injury loss. Payments the
+  campaign also induces from its audience count here. Diffuse political or democratic harm has no
+  monetary value here. A campaign whose loss is mostly payments to the attacker is fraud.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    Manipulation losses spread across many market participants or customers from one campaign.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One campaign is one unit: one causally coherent operation, identified by a shared plan, access
+    chain, pretext or payload, across every target, victim, system and affected party. An actor or
+    generic toolkit shared by independent plans does not merge them. Causally distinct campaigns are
+    separate units, including several by one actor in one year.
+  terminal_event_unit: >-
+    One admitted influence incident: a campaign in which an attacker materially assisted by any
+    copy of the selected provider's model, however the attacker obtained it (served, stolen, leaked
+    or open weights) manipulates beliefs or decisions, the largest share of whose gross loss arises
+    from manipulated beliefs or decisions rather than value transferred to the attacker, and
+    {{admission}}. Assistance is material when it gives the attacker capability, scale or speed
+    that the attacker would not have had without any AI model, and the loss, or more than half of
+    it, would not have occurred without that gain. The comparison is with what the same attacker
+    would in fact have had if no generative AI model of any developer, voice and image generators
+    included, had been available to it: its own skills and staff, software in ordinary use before
+    such models, such as search engines and translation software, and whatever it would have bought
+    or hired instead. Help that it would then have had anyway, as good, as fast and at the same
+    scale, such as tidying a message's wording or answering what a web search would have answered,
+    is not material even when the campaign uses it. That another AI model could have given the same
+    help does not make it less material. A campaign that used the model's help without material
+    assistance is not this scenario's incident and, unless it meets another scenario's own
+    conditions, such as a hijacked AI system or an AI failure that the attacker exploited, is
+    counted in no scenario and no category. The whole campaign and all its consequences belong
+    here. A hoax threat or false report of an emergency that draws a public-safety response is such
+    manipulation. An intrusion, fraud or influence operation that is part of a CBRN program belongs
+    to that program. An incident below the admission threshold is the unestimated leftover, not
+    this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted campaign across all affected parties and loss kinds,
+  before any recovery: market participants' trading losses, payments the campaign induces from its
+  audience, targeted firms' lost sales and response, public response and security costs, injury
+  where caused, {{loss_component:provider_civil_fine}} and the legal resources of every claim,
+  enforcement action and recovery effort the incident causes. Diffuse political, democratic or
+  institutional harm without a monetary measure is outside the estimand. Trading losses are the
+  losses of those who traded at prices the campaign moved, without offsetting other traders' gains;
+  a change in market value is not itself a loss. Count each underlying loss once: settlements,
+  reimbursements, recoveries and other compensation for already-counted harm are not more loss.
+  Costs are incremental relative to the same activity without the incident: scheduled control
+  resources unchanged in that counterfactual are excluded, and incident-triggered response or
+  recovery resources are included even when existing staff perform them.
+# Model-assisted manipulation changes beliefs or decisions, causing loss mostly without transfers to the attacker.
+facets:
+  peril_mechanism: ["mass_manipulation", "fabricated_content"]
+  deployment_control_mode: "any_copy"
+  harm_types: ["economic_loss"]
+  bearers: ["third_party_individuals", "third_party_organizations", "provider"]
+  party_basis: "third_party"
+occurrence_unit_id: "influence_campaign"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    A copy of the assigned provider's model, however the attacker obtained it, materially assists
+    the campaign's content, targeting or scale.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One influence campaign to manipulate a market, a firm's reputation, consumer behavior or the
+      public that uses help from a copy of the named lab's model in its content, planning, targeting
+      or scale, whether served in the named deployment or stolen, leaked or open, and whose
+      manipulation reaches its intended audience, such as traders, customers or the public, counted
+      when it first does. Any use of the model's help counts here, however small. The first stage
+      asks only whether the help gave a gain; that the loss, or more than half of it, would not have
+      occurred without that gain is part of the last stage, the qualified unit.
+    counting_rule: >-
+      Count one opportunity per causally coherent campaign; distinct campaigns by one actor are
+      separate. Each campaign yields at most one qualified incident.
+    cohort: >-
+      Campaigns active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "1 million weekly active users of the consumer assistant"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0e-6
+        rationale: >-
+          Misusing actors are a small share of the people who use the lab's models, and weekly users
+          are the broadest stipulated measure of that population; campaigns using stolen, leaked or
+          open copies are included in the rate.
+        source: >-
+          INITIAL_ESTIMATE: published threat-intelligence reports describe disrupted misuse
+          operations, not a rate per user.
+      derivation: >-
+        The stipulated number of weekly active users of the consumer assistant divided by 1 million.
+    internal:
+      unit: >-
+        not-yet-public model of the lab in training, evaluation, internal use or pre-release testing
+        during the study year
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 6
+        rationale: >-
+          Campaigns can reach a not-yet-public model through pre-release tester access, an insider
+          or a stolen copy; each route is specific to a model, so the number of not-yet-public
+          models measures exposure better than staff. About six are in use at some time in the year.
+        source: >-
+          INITIAL_ESTIMATE: no public census of frontier labs' unreleased models exists; the
+          stipulated context describes successors to the public model line in training, evaluation,
+          internal use and pre-release testing.
+      derivation: >-
+        Fixed by the scenario at six not-yet-public models in use at some time during the year.
+  stages:
+    - stage_id: "uplift"
+      event: >-
+        The model's help gives the attacker capability, scale or speed that the attacker would not
+        have had without any AI model.
+    - stage_id: "decisions_changed"
+      event: >-
+        The campaign changes the beliefs or decisions of at least part of its audience in a way that
+        matters, such as a trade, a purchase or boycott, or a public-safety response.
+empirical_grounding: >-
+  No governed dataset supports this population. Historical false-announcement cases, reports of
+  hoaxes made with AI and detected influence operations are mechanism context, not a frequency or
+  loss sample; none totals what the affected parties lost.

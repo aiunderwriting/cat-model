@@ -1,0 +1,1572 @@
+evidence_kind: authored_examples
+limitations: Synthetic cases, not observed incidents, empirical calibration, or proof of economy-wide
+  coverage. All amounts and facts are illustrative. Expected answers express the current accounting convention;
+  independent readers should initially receive only the prompt sections.
+review_task: 'Using the current hierarchy and scenario definitions, identify each incident (one root cause,
+  campaign, defect or matter), assign the whole incident with all its losses to the leaf of the process
+  that caused most of its loss, and decide whether it is admitted: gross loss across all parties before
+  recovery of at least USD 100,000. Where a history has a model help an attacker and says nothing more,
+  treat the help as material (convention 7). State missing facts as unresolved, never as an other
+  branch.'
+cases:
+- id: phishing_written_ransomware_human
+  prompt:
+    history: An attacker who cannot write in the victims' language, and has no other means of producing a
+      convincing email, uses a model only to write a phishing email, and the intrusion depends on that
+      email. A human-written ransomware then encrypts the victim company's systems. The company spends USD
+      6 million restoring operations and pays a USD 2 million ransom.
+    subjects:
+    - The USD 6 million restoration and interruption.
+    - The USD 2 million ransom.
+  expected:
+    classifications:
+    - subject: The USD 6 million restoration and interruption.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: ransomware
+      loss_id: restoration
+      gross_amount_usd: 6000000
+      economic_nature: resource_cost
+    - subject: The USD 2 million ransom.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: ransomware
+      loss_id: ransom
+      gross_amount_usd: 2000000
+      economic_nature: appropriated_transfer
+    admitted:
+      ransomware: true
+    identity_note: Encryption is the process that caused the loss; the AI-written phishing is a tactic
+      of system compromise, not fraud. The email is material assistance, because the attacker would not
+      have had a convincing one without an AI model and the loss would not have occurred without it.
+    accounting:
+      unique_gross_usd: 8000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: phishing_and_ransomware_both_ai_written
+  prompt:
+    history: An attacker who cannot write in the victims' language, and has no other means of producing a
+      convincing email, uses a model to write a phishing email, and the intrusion depends on that email.
+      The model also writes the ransomware, which then encrypts the victim company's systems. The company
+      spends USD 6 million restoring operations and pays a USD 2 million ransom.
+    subjects:
+    - The USD 6 million restoration and interruption.
+    - The USD 2 million ransom.
+  expected:
+    classifications:
+    - subject: The USD 6 million restoration and interruption.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: ransomware
+      loss_id: restoration
+      gross_amount_usd: 6000000
+      economic_nature: resource_cost
+    - subject: The USD 2 million ransom.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: ransomware
+      loss_id: ransom
+      gross_amount_usd: 2000000
+      economic_nature: appropriated_transfer
+    admitted:
+      ransomware: true
+    identity_note: Which step the AI helped with is an attribute of the history, not a split; the leaf
+      is the same as when the model wrote only the phishing email.
+    accounting:
+      unique_gross_usd: 8000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: intrusion_supporting_bio_attack
+  prompt:
+    history: A state program uses a model to intrude into a laboratory and steal pathogen data, then carries
+      out a biological attack. The laboratory spends USD 3 million on response and notification; casualties
+      and the public-health response cost USD 900 million.
+    subjects:
+    - The laboratory's USD 3 million response and notification.
+    - The USD 900 million casualties and public-health response.
+  expected:
+    classifications:
+    - subject: The laboratory's USD 3 million response and notification.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: cbrn_weapon
+        cbrn_hazard: biological
+        program_expertise: expert
+      terminal_id: n_cbrn_bio_expert
+      scenario_id: cbrn_biological_expert
+      incident_id: bio_program
+      loss_id: lab_response
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    - subject: The USD 900 million casualties and public-health response.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: cbrn_weapon
+        cbrn_hazard: biological
+        program_expertise: expert
+      terminal_id: n_cbrn_bio_expert
+      scenario_id: cbrn_biological_expert
+      incident_id: bio_program
+      loss_id: casualties
+      gross_amount_usd: 900000000
+      economic_nature: injury_valuation
+    admitted:
+      bio_program: true
+    identity_note: 'One incident: the weapons program caused most of the loss, so the intrusion''s losses
+      belong wholly to the biological leaf. No linked part is counted under system compromise.'
+    accounting:
+      unique_gross_usd: 903000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        cbrn_biological_expert: 1
+- id: one_defect_across_roles
+  prompt:
+    history: One model update carries a defect. Autonomous agents at firm A make erroneous payments and
+      changes costing USD 5 million; eligibility pipelines at firm B wrongly deny applicants, costing
+      USD 2 million; clinicians at clinic C rely on wrong guidance, costing USD 1 million; the provider
+      spends USD 0.5 million rolling back.
+    subjects:
+    - Firm A's USD 5 million agent losses.
+    - Firm B's USD 2 million eligibility losses.
+    - Clinic C's USD 1 million patient harm.
+    - The provider's USD 0.5 million rollback.
+  expected:
+    classifications:
+    - subject: Firm A's USD 5 million agent losses.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: shared_defect
+      loss_id: agents
+      gross_amount_usd: 5000000
+      economic_nature: transfer
+    - subject: Firm B's USD 2 million eligibility losses.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: shared_defect
+      loss_id: pipelines
+      gross_amount_usd: 2000000
+      economic_nature: transfer
+    - subject: Clinic C's USD 1 million patient harm.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: shared_defect
+      loss_id: clinic
+      gross_amount_usd: 1000000
+      economic_nature: injury_valuation
+    - subject: The provider's USD 0.5 million rollback.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: shared_defect
+      loss_id: rollback
+      gross_amount_usd: 500000
+      economic_nature: resource_cost
+    admitted:
+      shared_defect: true
+    identity_note: One defect is one incident. Agent actions caused most of its loss, so every consequence,
+      including the pipeline and clinical losses and the rollback, belongs to the agent leaf; reach across
+      organizations is severity.
+    accounting:
+      unique_gross_usd: 8500000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        agent_actions_for_deployer: 1
+- id: worm_and_vendor_update
+  prompt:
+    history: 'Two separate campaigns each hit about 2,000 organizations outside critical infrastructure:
+      an organized-crime group uses a model to build a self-propagating worm on a known exploit (USD 400
+      million of loss), and another group uses a model to compromise a shared dependency and push a malicious
+      vendor update (USD 600 million).'
+    subjects:
+    - The worm campaign's USD 400 million.
+    - The vendor-update campaign's USD 600 million.
+  expected:
+    classifications:
+    - subject: The worm campaign's USD 400 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: any_reachable
+      terminal_id: n_compromise_self_propagating
+      scenario_id: compromise_self_propagating
+      incident_id: worm
+      loss_id: worm
+      gross_amount_usd: 400000000
+      economic_nature: resource_cost
+    - subject: The vendor-update campaign's USD 600 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: vendor
+      loss_id: vendor
+      gross_amount_usd: 600000000
+      economic_nature: resource_cost
+    admitted:
+      vendor: true
+      worm: true
+    identity_note: 'How the attack spreads is a split and how far is not: the worm''s code spreads on its
+      own to any system it can reach, so it is a self-propagating compromise, and the attacker distributes
+      the vendor update to chosen organizations, so that campaign is directed at them. Each is one
+      incident, its reach part of severity.'
+    accounting:
+      unique_gross_usd: 1000000000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+        compromise_self_propagating: 1
+- id: whole_enforcement_matter
+  prompt:
+    history: A data-protection authority pursues one course of the provider's conduct that began in 2027.
+      Over three years it imposes USD 4 million of fines; the provider spends USD 6 million on legal work
+      and USD 3 million on remediation.
+    subjects:
+    - The USD 4 million of fines.
+    - The USD 6 million of legal work.
+    - The USD 3 million of remediation.
+  expected:
+    classifications:
+    - subject: The USD 4 million of fines.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: enforcement
+      terminal_id: n_conduct_enforcement
+      scenario_id: enforcement_matter
+      incident_id: matter
+      loss_id: fines
+      gross_amount_usd: 4000000
+      economic_nature: transfer
+    - subject: The USD 6 million of legal work.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: enforcement
+      terminal_id: n_conduct_enforcement
+      scenario_id: enforcement_matter
+      incident_id: matter
+      loss_id: legal
+      gross_amount_usd: 6000000
+      economic_nature: resource_cost
+    - subject: The USD 3 million of remediation.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: enforcement
+      terminal_id: n_conduct_enforcement
+      scenario_id: enforcement_matter
+      incident_id: matter
+      loss_id: remediation
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    admitted:
+      matter: true
+    identity_note: The whole matter is one incident of USD 13 million, dated by its conduct start in 2027;
+      fines and costs are not counted in different scenarios.
+    accounting:
+      unique_gross_usd: 13000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        enforcement_matter: 1
+    matter_year: 2027
+- id: model_crafted_prompt_injection
+  prompt:
+    history: An attacker uses a model to craft a prompt injection that makes a victim company's agent
+      wire USD 3 million to the attacker.
+    subjects:
+    - The USD 3 million wired by the commandeered agent.
+  expected:
+    classifications:
+    - subject: The USD 3 million wired by the commandeered agent.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: acted_for_attacker
+        takeover_route: input_hijack
+      terminal_id: n_input_hijack
+      scenario_id: input_hijack
+      incident_id: injection
+      loss_id: wire
+      gross_amount_usd: 3000000
+      economic_nature: appropriated_transfer
+    admitted:
+      injection: true
+    identity_note: Two AIs take part; the commandeered agent is nearest the largest share of the loss,
+      so the history is a hijack, not model assistance to the attacker.
+    accounting:
+      unique_gross_usd: 3000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        input_hijack: 1
+- id: stolen_weights_then_bio_uplift
+  prompt:
+    history: Insiders steal the provider's weights; the provider spends USD 50 million on response and
+      loses exclusivity worth USD 200 million. A novice group later uses the stolen copy for a biological
+      attack costing USD 2 billion.
+    subjects:
+    - The provider's USD 50 million response.
+    - The USD 200 million of lost exclusivity.
+    - The USD 2 billion biological attack.
+  expected:
+    classifications:
+    - subject: The provider's USD 50 million response.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: targeted_as_asset
+        asset_attack: artifacts_taken
+      terminal_id: n_asset_theft
+      scenario_id: model_asset_compromise
+      incident_id: theft
+      loss_id: response
+      gross_amount_usd: 50000000
+      economic_nature: resource_cost
+    - subject: The USD 200 million of lost exclusivity.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: targeted_as_asset
+        asset_attack: artifacts_taken
+      terminal_id: n_asset_theft
+      scenario_id: model_asset_compromise
+      incident_id: theft
+      loss_id: exclusivity
+      gross_amount_usd: 200000000
+      economic_nature: appropriated_transfer
+    - subject: The USD 2 billion biological attack.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: cbrn_weapon
+        cbrn_hazard: biological
+        program_expertise: novice
+      terminal_id: n_cbrn_bio_novice
+      scenario_id: cbrn_biological_novice
+      incident_id: attack
+      loss_id: attack
+      gross_amount_usd: 2000000000
+      economic_nature: injury_valuation
+    admitted:
+      attack: true
+      theft: true
+    identity_note: 'Two root causes, two incidents: the theft leaf counts only the theft''s own losses,
+      and the stolen copy helped the attacker in the biological leaf.'
+    accounting:
+      unique_gross_usd: 2250000000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        cbrn_biological_novice: 1
+        model_asset_compromise: 1
+- id: drug_checker_defect
+  prompt:
+    history: A drug-interaction checker built on the model ships an update with one defect. Three hundred
+      clinicians rely on it and 40 patients are harmed, a total of USD 12 million; the provider spends
+      USD 0.4 million correcting it.
+    subjects:
+    - The 40 patients' USD 12 million of harm.
+    - The provider's USD 0.4 million correction.
+  expected:
+    classifications:
+    - subject: The 40 patients' USD 12 million of harm.
+      facts:
+        origin_regime: ai_failure
+        failure_role: output_relied_on
+        reliance_field: health
+      terminal_id: n_reliance_health
+      scenario_id: output_reliance_health
+      incident_id: checker_defect
+      loss_id: patients
+      gross_amount_usd: 12000000
+      economic_nature: injury_valuation
+    - subject: The provider's USD 0.4 million correction.
+      facts:
+        origin_regime: ai_failure
+        failure_role: output_relied_on
+        reliance_field: health
+      terminal_id: n_reliance_health
+      scenario_id: output_reliance_health
+      incident_id: checker_defect
+      loss_id: correction
+      gross_amount_usd: 400000
+      economic_nature: resource_cost
+    admitted:
+      checker_defect: true
+    identity_note: 'One incident: the defect is one root cause across all 40 patients, with whole-incident
+      severity that includes the provider''s correction.'
+    accounting:
+      unique_gross_usd: 12400000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        output_reliance_health: 1
+- id: small_parties_large_campaigns
+  prompt:
+    history: A hijack campaign commandeers 50 deployments, each losing USD 30,000; a separate
+      model-assisted scam campaign takes USD 9,000 from each of 100 people.
+    subjects:
+    - The hijack campaign's USD 1.5 million.
+    - The scam campaign's USD 900,000.
+  expected:
+    classifications:
+    - subject: The hijack campaign's USD 1.5 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: acted_for_attacker
+        takeover_route: input_hijack
+      terminal_id: n_input_hijack
+      scenario_id: input_hijack
+      incident_id: hijack
+      loss_id: hijack
+      gross_amount_usd: 1500000
+      economic_nature: appropriated_transfer
+    - subject: The scam campaign's USD 900,000.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: individuals
+      terminal_id: n_fraud_individuals
+      scenario_id: fraud_individuals
+      incident_id: scam
+      loss_id: scam
+      gross_amount_usd: 900000
+      economic_nature: appropriated_transfer
+    admitted:
+      hijack: true
+      scam: true
+    identity_note: Admission uses the whole campaign's gross loss before any split, never a per-party
+      test, so both campaigns are admitted.
+    accounting:
+      unique_gross_usd: 2400000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        fraud_individuals: 1
+        input_hijack: 1
+- id: serving_bug_outage_then_wrong_answers
+  prompt:
+    history: A serving bug first causes a three-hour outage costing customers USD 2 million, then, after
+      a partial fix, returns plausible wrong answers that bounded pipelines act on, costing USD 5 million.
+    subjects:
+    - The USD 2 million outage loss.
+    - The USD 5 million of erroneous pipeline decisions.
+  expected:
+    classifications:
+    - subject: The USD 2 million outage loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: bounded_decision
+      terminal_id: n_failure_bounded_decision
+      scenario_id: bounded_decision_errors
+      incident_id: serving_bug
+      loss_id: outage
+      gross_amount_usd: 2000000
+      economic_nature: resource_cost
+    - subject: The USD 5 million of erroneous pipeline decisions.
+      facts:
+        origin_regime: ai_failure
+        failure_role: bounded_decision
+      terminal_id: n_failure_bounded_decision
+      scenario_id: bounded_decision_errors
+      incident_id: serving_bug
+      loss_id: decisions
+      gross_amount_usd: 5000000
+      economic_nature: transfer
+    admitted:
+      serving_bug: true
+    identity_note: One root cause and one origin. Erroneous pipeline decisions caused most of the loss,
+      so the outage loss belongs to the bounded-decision episode too.
+    accounting:
+      unique_gross_usd: 7000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        bounded_decision_errors: 1
+- id: designation_with_fine
+  prompt:
+    history: A government designates the provider a supply-chain risk over its usage restrictions. The
+      provider loses USD 40 million of contracts and pays a USD 2 million civil fine in the same matter.
+    subjects:
+    - The USD 40 million of lost contracts.
+    - The USD 2 million civil fine.
+  expected:
+    classifications:
+    - subject: The USD 40 million of lost contracts.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: designation
+      terminal_id: n_conduct_designation
+      scenario_id: government_designation
+      incident_id: designation_matter
+      loss_id: contracts
+      gross_amount_usd: 40000000
+      economic_nature: transfer
+    - subject: The USD 2 million civil fine.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: designation
+      terminal_id: n_conduct_designation
+      scenario_id: government_designation
+      incident_id: designation_matter
+      loss_id: fine
+      gross_amount_usd: 2000000
+      economic_nature: transfer
+    admitted:
+      designation_matter: true
+    identity_note: The fine counts with the designation matter.
+    accounting:
+      unique_gross_usd: 42000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        government_designation: 1
+- id: deepfake_moves_stock_and_solicits
+  prompt:
+    history: 'A model-made deepfake video of a chief executive moves a company''s stock, causing traders
+      USD 30 million of losses, and solicits USD 5 million of payments to the fraudster from viewers.
+      A second campaign''s deepfake mostly solicits payments: viewers pay the fraudster USD 20 million,
+      and trading on it loses USD 3 million.'
+    subjects:
+    - The traders' USD 30 million.
+    - The USD 5 million paid to the fraudster.
+    - The second campaign's USD 20 million of payments.
+    - The second campaign's USD 3 million of trading losses.
+  expected:
+    classifications:
+    - subject: The traders' USD 30 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: influence
+      terminal_id: n_influence
+      scenario_id: influence_manipulation
+      incident_id: deepfake_campaign
+      loss_id: traders
+      gross_amount_usd: 30000000
+      economic_nature: transfer
+    - subject: The USD 5 million paid to the fraudster.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: influence
+      terminal_id: n_influence
+      scenario_id: influence_manipulation
+      incident_id: deepfake_campaign
+      loss_id: payments
+      gross_amount_usd: 5000000
+      economic_nature: appropriated_transfer
+    - subject: The second campaign's USD 20 million of payments.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: individuals
+      terminal_id: n_fraud_individuals
+      scenario_id: fraud_individuals
+      incident_id: solicitation
+      loss_id: solicited
+      gross_amount_usd: 20000000
+      economic_nature: appropriated_transfer
+    - subject: The second campaign's USD 3 million of trading losses.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: individuals
+      terminal_id: n_fraud_individuals
+      scenario_id: fraud_individuals
+      incident_id: solicitation
+      loss_id: trading
+      gross_amount_usd: 3000000
+      economic_nature: transfer
+    admitted:
+      deepfake_campaign: true
+      solicitation: true
+    identity_note: Each campaign goes wholly to the process that caused the largest share of its loss.
+      In the first, manipulated trading, not value transferred to the attacker, caused most of it, so
+      it is influence and the induced payments count with it. In the second, payments from individuals'
+      own value caused most of it, so it is fraud against individuals and the trading losses count with
+      it.
+    accounting:
+      unique_gross_usd: 58000000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        fraud_individuals: 1
+        influence_manipulation: 1
+- id: insurance_claim_ring
+  prompt:
+    history: A fraud ring submits insurance claims supported by model-fabricated evidence, and the insurer
+      pays USD 2 million.
+    subjects:
+    - The insurer's USD 2 million.
+  expected:
+    classifications:
+    - subject: The insurer's USD 2 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: organizations
+      terminal_id: n_fraud_organizations
+      scenario_id: fraud_organizations
+      incident_id: claim_ring
+      loss_id: claims
+      gross_amount_usd: 2000000
+      economic_nature: appropriated_transfer
+    admitted:
+      claim_ring: true
+    identity_note: 'The insurer is deceived into paying: fraud against an organization.'
+    accounting:
+      unique_gross_usd: 2000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        fraud_organizations: 1
+- id: defamation_and_self_harm
+  prompt:
+    history: A chatbot fabricates a criminal allegation about a person who never used it, costing that
+      person USD 300,000. Separately, a user harms themself after a long conversation with the same chatbot,
+      with USD 2 million of loss.
+    subjects:
+    - The defamed person's USD 300,000.
+    - The user's USD 2 million.
+  expected:
+    classifications:
+    - subject: The defamed person's USD 300,000.
+      facts:
+        origin_regime: ai_failure
+        failure_role: other
+      terminal_id: n_failure_other
+      scenario_id: null
+      incident_id: defamation
+      loss_id: defamation
+      gross_amount_usd: 300000
+      economic_nature: injury_valuation
+    - subject: The user's USD 2 million.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: self_harm
+      loss_id: self_harm
+      gross_amount_usd: 2000000
+      economic_nature: injury_valuation
+    admitted:
+      defamation: true
+      self_harm: true
+    identity_note: Harm to someone who never received the output is another AI failure, unestimated; a
+      person's psychological harm from engaging with the model is harm from engagement, whatever the
+      topic.
+    accounting:
+      unique_gross_usd: 2300000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        engagement_harm: 1
+- id: agent_cascade_size
+  prompt:
+    history: An enterprise agent triggers a cascade across connected systems. In one company the loss
+      is USD 0.9 million; in another, USD 1.1 million.
+    subjects:
+    - The USD 0.9 million cascade.
+    - The USD 1.1 million cascade.
+  expected:
+    classifications:
+    - subject: The USD 0.9 million cascade.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: small
+      loss_id: small
+      gross_amount_usd: 900000
+      economic_nature: resource_cost
+    - subject: The USD 1.1 million cascade.
+      facts:
+        origin_regime: ai_failure
+        failure_role: acted_for_deployer
+      terminal_id: n_failure_autonomous_action
+      scenario_id: agent_actions_for_deployer
+      incident_id: large
+      loss_id: large
+      gross_amount_usd: 1100000
+      economic_nature: resource_cost
+    admitted:
+      large: true
+      small: true
+    identity_note: 'Size never changes the leaf: both cascades are agent incidents.'
+    accounting:
+      unique_gross_usd: 2000000
+      unique_incident_count: 2
+      admitted_scenario_incident_counts:
+        agent_actions_for_deployer: 2
+- id: teen_self_harm_identified_defect
+  prompt:
+    history: 'A teenager harms themself after months of conversations with a chatbot, with USD 10 million
+      of injury loss, and the family''s wrongful-death suit costs USD 2 million in legal resources. The
+      provider then acknowledges that a memory feature in one model version repeatedly steered conversations
+      back to self-harm. Forty other families whose children were harmed by the same feature file coordinated
+      suits: USD 120 million of injury loss and USD 15 million of legal resources.'
+    subjects:
+    - The teenager's USD 10 million of injury loss.
+    - The wrongful-death suit's USD 2 million of legal resources.
+    - The forty children's USD 120 million of injury loss.
+    - The coordinated suits' USD 15 million of legal resources.
+  expected:
+    classifications:
+    - subject: The teenager's USD 10 million of injury loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: memory_feature
+      loss_id: teen_injury
+      gross_amount_usd: 10000000
+      economic_nature: injury_valuation
+    - subject: The wrongful-death suit's USD 2 million of legal resources.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: memory_feature
+      loss_id: teen_suit
+      gross_amount_usd: 2000000
+      economic_nature: resource_cost
+    - subject: The forty children's USD 120 million of injury loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: memory_feature
+      loss_id: other_injuries
+      gross_amount_usd: 120000000
+      economic_nature: injury_valuation
+    - subject: The coordinated suits' USD 15 million of legal resources.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: memory_feature
+      loss_id: other_suits
+      gross_amount_usd: 15000000
+      economic_nature: resource_cost
+    admitted:
+      memory_feature: true
+    identity_note: 'A specific, correctable property of one model version is acknowledged to cause the
+      harms, so it is an identified defect: the teenager and the forty children are one engagement-harm incident
+      of USD 147 million, dated by the teenager''s first loss. Claims alleging injury or death of identified
+      persons from the model''s outputs follow the incidents that injured them, whatever theory is pleaded, so
+      none of it is a product or consumer private claim. Settlements compensate the counted injuries and
+      are not more loss.'
+    accounting:
+      unique_gross_usd: 147000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        engagement_harm: 1
+- id: teen_self_harm_without_identified_defect
+  prompt:
+    history: A teenager harms themself after months of conversations with a chatbot, with USD 10 million
+      of injury loss, and the family's wrongful-death suit costs USD 2 million in legal resources. Two
+      other families then file coordinated suits alleging that the chatbot's engagement design injured
+      their children. No specific, correctable model, version, feature or configuration property is shown
+      or acknowledged to cause the harms. Each of the two children's injury loss is USD 3 million, and
+      each family's suit costs USD 375,000 in legal resources. The same rule applies to any number of
+      families.
+    subjects:
+    - The teenager's USD 10 million of injury loss.
+    - The wrongful-death suit's USD 2 million of legal resources.
+    - Child 1's USD 3 million of injury loss.
+    - Child 1's family's suit's USD 375,000 of legal resources.
+    - Child 2's USD 3 million of injury loss.
+    - Child 2's family's suit's USD 375,000 of legal resources.
+  expected:
+    classifications:
+    - subject: The teenager's USD 10 million of injury loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: teen
+      loss_id: teen_injury
+      gross_amount_usd: 10000000
+      economic_nature: injury_valuation
+    - subject: The wrongful-death suit's USD 2 million of legal resources.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: teen
+      loss_id: teen_suit
+      gross_amount_usd: 2000000
+      economic_nature: resource_cost
+    - subject: Child 1's USD 3 million of injury loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: child_1
+      loss_id: child_1_injury
+      gross_amount_usd: 3000000
+      economic_nature: injury_valuation
+    - subject: Child 1's family's suit's USD 375,000 of legal resources.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: child_1
+      loss_id: child_1_suit
+      gross_amount_usd: 375000
+      economic_nature: resource_cost
+    - subject: Child 2's USD 3 million of injury loss.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: child_2
+      loss_id: child_2_injury
+      gross_amount_usd: 3000000
+      economic_nature: injury_valuation
+    - subject: Child 2's family's suit's USD 375,000 of legal resources.
+      facts:
+        origin_regime: ai_failure
+        failure_role: harmful_engagement
+      terminal_id: n_failure_engagement_harm
+      scenario_id: engagement_harm
+      incident_id: child_2
+      loss_id: child_2_suit
+      gross_amount_usd: 375000
+      economic_nature: resource_cost
+    admitted:
+      child_1: true
+      child_2: true
+      teen: true
+    identity_note: 'A pleaded engagement-design theory alone does not identify a defect, so the losses
+      are not merged into one incident: the teenager and each of the two other children are separate engagement-harm
+      incidents, three in all, and each family''s suit follows its own child''s incident. With any number
+      of families, each child is likewise a separate incident. Claims alleging injury or death of identified
+      persons from the model''s outputs follow the incidents that injured them, whatever theory is pleaded.'
+    accounting:
+      unique_gross_usd: 18750000
+      unique_incident_count: 3
+      admitted_scenario_incident_counts:
+        engagement_harm: 3
+- id: state_action_over_several_injury_incidents
+  prompt:
+    history: Three teenagers harm themselves after months of conversations with a chatbot; no specific,
+      correctable model, version, feature or configuration property is shown or acknowledged to cause
+      the harms, so each is a separate engagement-harm incident. A state attorney general then sues the
+      provider under a consumer-protection statute over the chatbot's engagement design and marketing,
+      a practice that began in 2027, and cites the three teenagers' injuries. The action ends with a
+      civil penalty of USD 40 million and costs the provider USD 5 million in legal resources.
+    subjects:
+    - The USD 40 million civil penalty.
+    - The USD 5 million of legal resources spent on the state's action.
+  expected:
+    classifications:
+    - subject: The USD 40 million civil penalty.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: enforcement
+      terminal_id: n_conduct_enforcement
+      scenario_id: enforcement_matter
+      incident_id: state_action
+      loss_id: penalty
+      gross_amount_usd: 40000000
+      economic_nature: transfer
+    - subject: The USD 5 million of legal resources spent on the state's action.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: enforcement
+      terminal_id: n_conduct_enforcement
+      scenario_id: enforcement_matter
+      incident_id: state_action
+      loss_id: state_action_legal
+      gross_amount_usd: 5000000
+      economic_nature: resource_cost
+    admitted:
+      state_action: true
+    identity_note: One enforcement action over a practice that cites injuries from several separately
+      counted incidents is one enforcement matter, and its penalty and costs are part of none of those
+      incidents. An action over the injuries of one incident would follow that incident, and each
+      family's own claim still follows the incident that injured its child.
+    accounting:
+      unique_gross_usd: 45000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        enforcement_matter: 1
+    matter_year: 2027
+- id: model_used_without_gain
+  prompt:
+    history: A crew that has run payment-diversion fraud for years uses a model only to tidy the wording
+      of emails it writes itself, and a company pays USD 2 million to a false payee. The company sues the
+      model's provider for failing to stop the misuse; the provider spends USD 600,000 defending the
+      claim, which is dismissed.
+    subjects:
+    - The USD 600,000 defense.
+  expected:
+    classifications:
+    - subject: The USD 600,000 defense.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: private_claim
+        claim_allegation: product_consumer_harm
+      terminal_id: n_claims_product
+      scenario_id: private_claims_product_consumer
+      incident_id: misuse_suit
+      loss_id: misuse_suit_defense
+      gross_amount_usd: 600000
+      economic_nature: resource_cost
+    admitted:
+      misuse_suit: true
+    identity_note: The model gave the crew no gain in capability, scale or speed that the loss depended
+      on, so its assistance was not material; the fraud is no leaf's incident, other origin included,
+      and its USD 2 million is not counted. The suit therefore follows no incident and is a claim over
+      the provider's own conduct, here the safety of its product.
+    accounting:
+      unique_gross_usd: 600000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        private_claims_product_consumer: 1
+- id: another_model_could_have_helped
+  prompt:
+    history: A crew with no programmer uses a copy of the provider's model to write ransomware that it
+      could not have written itself and would not have bought or rented; an open model from another
+      developer could have written it as well.
+      The ransomware encrypts a company's systems, and restoring them costs USD 4 million.
+    subjects:
+    - The USD 4 million restoration.
+  expected:
+    classifications:
+    - subject: The USD 4 million restoration.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: crew_ransomware
+      loss_id: crew_ransomware_restoration
+      gross_amount_usd: 4000000
+      economic_nature: resource_cost
+    admitted:
+      crew_ransomware: true
+    identity_note: The comparison is with what the crew would have had with no generative AI model of
+      any developer, so help that another model could have given is still material. The incident
+      counts whole for this provider, with no share taken off for what another model could have done.
+    accounting:
+      unique_gross_usd: 4000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: speed_only_help
+  prompt:
+    history: A ransomware crew that writes its own tools uses a model to write them a little faster. It
+      would have attacked the same company with the same tools a few days later without the model.
+      Restoring the company's systems costs USD 5 million, and no claim is made against the provider.
+    subjects: []
+  expected:
+    classifications: []
+    admitted: {}
+    identity_note: The model gave the crew speed, but the loss would have occurred without that gain, so
+      the assistance was not material. The campaign is no leaf's incident, other origin included, and
+      its USD 5 million is not counted; with no claim against the provider, nothing here is classified.
+    accounting:
+      unique_gross_usd: 0
+      unique_incident_count: 0
+      admitted_scenario_incident_counts: {}
+- id: injury_claim_over_attack_without_gain
+  prompt:
+    history: A man who has planned an assault for months asks a model for a bus timetable on the day and
+      injures two people. Their families sue the model's provider, alleging that its product helped him.
+      The provider spends USD 900,000 on its defense and settles for USD 2 million.
+    subjects:
+    - The USD 900,000 defense.
+    - The USD 2 million settlement.
+  expected:
+    classifications:
+    - subject: The USD 900,000 defense.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: private_claim
+        claim_allegation: product_consumer_harm
+      terminal_id: n_claims_product
+      scenario_id: private_claims_product_consumer
+      incident_id: assault_suit
+      loss_id: assault_suit_defense
+      gross_amount_usd: 900000
+      economic_nature: resource_cost
+    - subject: The USD 2 million settlement.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: private_claim
+        claim_allegation: product_consumer_harm
+      terminal_id: n_claims_product
+      scenario_id: private_claims_product_consumer
+      incident_id: assault_suit
+      loss_id: assault_suit_settlement
+      gross_amount_usd: 2000000
+      economic_nature: transfer
+    admitted:
+      assault_suit: true
+    identity_note: The model gave the attacker no gain, so the assault is no leaf's incident. The suit
+      alleges injury of identified persons, but no counted incident injured them, so it does not follow
+      an incident; it is a claim over the provider's own conduct, classed by its allegation.
+    accounting:
+      unique_gross_usd: 2900000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        private_claims_product_consumer: 1
+- id: victims_assistant_gives_up_credentials
+  prompt:
+    history: An attacker tricks a company's customer-service assistant, built on the provider's model,
+      into revealing an administrator's credentials, which the attacker had no other way to obtain. It
+      uses them to break into the company's systems and steal data; the breach costs USD 3 million.
+    subjects:
+    - The USD 3 million breach.
+  expected:
+    classifications:
+    - subject: The USD 3 million breach.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: assistant_breach
+      loss_id: assistant_breach_loss
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    admitted:
+      assistant_breach: true
+    identity_note: The assistant only gave up information and the attacker's own intrusion caused the
+      loss, so the incident is a system compromise, not a hijack. The model behind the victim's own
+      assistant is the copy that helped; the comparison is with the campaign without what the
+      assistant gave up, and the loss would not have occurred without it.
+    accounting:
+      unique_gross_usd: 3000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: plant_halt_without_damage
+  prompt:
+    history: An AI controller's fault halts a chemical plant for two days. No one is injured and nothing
+      is damaged; the operator loses USD 3 million of output.
+    subjects:
+    - The USD 3 million of lost output.
+  expected:
+    classifications:
+    - subject: The USD 3 million of lost output.
+      facts:
+        origin_regime: ai_failure
+        failure_role: physical_control
+      terminal_id: n_failure_physical_control
+      scenario_id: physical_equipment_control
+      incident_id: halt
+      loss_id: output
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    admitted:
+      halt: true
+    identity_note: The controller's fault caused the loss through interruption of the controlled operation,
+      so it is a physical-control incident even without injury, damage or recall.
+    accounting:
+      unique_gross_usd: 3000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        physical_equipment_control: 1
+- id: intrusion_edits_agent_system_prompt
+  prompt:
+    history: An attacker uses a copy of the model to break into a company's cloud account and edits its
+      customer-service agent's system prompt and tool settings. The agent then issues USD 1.5 million
+      of fraudulent refunds.
+    subjects:
+    - The USD 1.5 million of refunds.
+  expected:
+    classifications:
+    - subject: The USD 1.5 million of refunds.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: acted_for_attacker
+        takeover_route: component_tampering
+      terminal_id: n_component_tampering
+      scenario_id: component_tampering
+      incident_id: prompt_edit
+      loss_id: refunds
+      gross_amount_usd: 1500000
+      economic_nature: appropriated_transfer
+    admitted:
+      prompt_edit: true
+    identity_note: 'The reconfigured agent''s refunds are the largest share of the loss, so the AI nearest
+      the largest share is the reconfigured system acting for the attacker: the incident is tampering,
+      whether or not a model helped the intrusion. It is not a hijack, because the agent was not commandeered
+      through inputs it processes in ordinary operation.'
+    accounting:
+      unique_gross_usd: 1500000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        component_tampering: 1
+- id: worm_reaches_hospitals_and_manufacturers
+  prompt:
+    history: A group uses a model to develop an exploit and releases a worm that wipes data in 60 countries.
+      Hospitals, a shipping line and the patients and shippers who depend on them lose USD 3 billion;
+      manufacturers and retailers lose USD 2 billion.
+    subjects:
+    - The USD 3 billion at critical-infrastructure operators and their dependents.
+    - The USD 2 billion at manufacturers and retailers.
+  expected:
+    classifications:
+    - subject: The USD 3 billion at critical-infrastructure operators and their dependents.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: any_reachable
+      terminal_id: n_compromise_self_propagating
+      scenario_id: compromise_self_propagating
+      incident_id: outbreak
+      loss_id: infrastructure
+      gross_amount_usd: 3000000000
+      economic_nature: resource_cost
+    - subject: The USD 2 billion at manufacturers and retailers.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: any_reachable
+      terminal_id: n_compromise_self_propagating
+      scenario_id: compromise_self_propagating
+      incident_id: outbreak
+      loss_id: other_organizations
+      gross_amount_usd: 2000000000
+      economic_nature: resource_cost
+    admitted:
+      outbreak: true
+    identity_note: The code spread on its own, so the outbreak is one self-propagating compromise. Who bore
+      the loss is settled by where the code happened to land, which is severity, not a split.
+    accounting:
+      unique_gross_usd: 5000000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_self_propagating: 1
+- id: retailer_database_breach_customers_bear_most
+  prompt:
+    history: An attacker uses a model to break into a retailer's systems and takes its customer database.
+      The retailer spends USD 20 million on response and claims; the customers whose data was taken lose
+      USD 60 million to later account fraud.
+    subjects:
+    - The retailer's USD 20 million.
+    - The customers' USD 60 million.
+  expected:
+    classifications:
+    - subject: The retailer's USD 20 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: breach
+      loss_id: response
+      gross_amount_usd: 20000000
+      economic_nature: resource_cost
+    - subject: The customers' USD 60 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: breach
+      loss_id: customers
+      gross_amount_usd: 60000000
+      economic_nature: appropriated_transfer
+    admitted:
+      breach: true
+    identity_note: The attacked systems were the retailer's, so the incident is a compromise of that
+      organization although its customers bore most of the loss. The target is fixed when the campaign
+      begins; who bears the loss is not.
+    accounting:
+      unique_gross_usd: 80000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: flood_takes_ai_service_down
+  prompt:
+    history: A group floods the provider's AI service with traffic for two days. The provider spends USD 3
+      million restoring it, and customers whose products stopped lose USD 9 million. No model artifact is
+      taken.
+    subjects:
+    - The provider's USD 3 million.
+    - The customers' USD 9 million.
+  expected:
+    classifications:
+    - subject: The provider's USD 3 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: targeted_as_asset
+        asset_attack: service_attacked
+      terminal_id: n_asset_service_attack
+      scenario_id: ai_service_attack
+      incident_id: flood
+      loss_id: restoration
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    - subject: The customers' USD 9 million.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: targeted_as_asset
+        asset_attack: service_attacked
+      terminal_id: n_asset_service_attack
+      scenario_id: ai_service_attack
+      incident_id: flood
+      loss_id: interruption
+      gross_amount_usd: 9000000
+      economic_nature: resource_cost
+    admitted:
+      flood: true
+    identity_note: The service was attacked and no artifact was taken, so the incident is an attack on the
+      service. A hostile interruption is not a service failure, which has no hostile cause.
+    accounting:
+      unique_gross_usd: 12000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        ai_service_attack: 1
+- id: intrusion_edits_agent_system_prompt_data_theft_dominates
+  prompt:
+    history: An attacker uses a copy of the model to break into a company's cloud account, steals its
+      customer database and edits its customer-service agent's system prompt. The data theft costs the
+      company USD 6 million in breach response and claims; the reconfigured agent issues USD 400,000 of
+      fraudulent refunds.
+    subjects:
+    - The USD 6 million of breach response and claims.
+    - The USD 400,000 of refunds.
+  expected:
+    classifications:
+    - subject: The USD 6 million of breach response and claims.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: cloud_intrusion
+      loss_id: breach
+      gross_amount_usd: 6000000
+      economic_nature: resource_cost
+    - subject: The USD 400,000 of refunds.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: system_compromise
+        compromise_target: other_organizations
+      terminal_id: n_compromise_organizations
+      scenario_id: compromise_organizations
+      incident_id: cloud_intrusion
+      loss_id: refunds
+      gross_amount_usd: 400000
+      economic_nature: appropriated_transfer
+    admitted:
+      cloud_intrusion: true
+    identity_note: The intrusion's own data theft is the largest share of the loss and a copy of the model
+      helped the intrusion, so the whole incident, including the reconfigured agent's refunds, is system
+      compromise of the organization that bore the loss.
+    accounting:
+      unique_gross_usd: 6400000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        compromise_organizations: 1
+- id: admission_exact_threshold
+  prompt:
+    history: A model-assisted impersonation persuades an employee to pay exactly USD 100,000 to a false
+      payee; nothing else is lost.
+    subjects:
+    - The USD 100,000 payment.
+  expected:
+    classifications:
+    - subject: The USD 100,000 payment.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: organizations
+      terminal_id: n_fraud_organizations
+      scenario_id: fraud_organizations
+      incident_id: impersonation
+      loss_id: payment
+      gross_amount_usd: 100000
+      economic_nature: appropriated_transfer
+    admitted:
+      impersonation: true
+    identity_note: Exactly USD 100,000 is admitted.
+    accounting:
+      unique_gross_usd: 100000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        fraud_organizations: 1
+- id: admission_just_below
+  prompt:
+    history: A model-assisted impersonation persuades an employee to pay USD 99,999 to a false payee;
+      nothing else is lost.
+    subjects:
+    - The USD 99,999 payment.
+  expected:
+    classifications:
+    - subject: The USD 99,999 payment.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: organizations
+      terminal_id: n_fraud_organizations
+      scenario_id: fraud_organizations
+      incident_id: impersonation
+      loss_id: payment
+      gross_amount_usd: 99999
+      economic_nature: appropriated_transfer
+    admitted:
+      impersonation: false
+    identity_note: 'The incident classifies to the fraud leaf but is below the admission threshold: an
+      unestimated leftover, not counted.'
+    accounting:
+      unique_gross_usd: 99999
+      unique_incident_count: 1
+      admitted_scenario_incident_counts: {}
+- id: admission_before_recovery
+  prompt:
+    history: An employee sends USD 150,000 to a false payee after a model-assisted impersonation. The
+      bank recovers the full amount a week later.
+    subjects:
+    - The USD 150,000 transfer before recovery.
+  expected:
+    classifications:
+    - subject: The USD 150,000 transfer before recovery.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: fraud
+        transferred_value_owner: organizations
+      terminal_id: n_fraud_organizations
+      scenario_id: fraud_organizations
+      incident_id: impersonation
+      loss_id: transfer
+      gross_amount_usd: 150000
+      economic_nature: appropriated_transfer
+    admitted:
+      impersonation: true
+    identity_note: Admission uses gross loss before recovery; the later recovery is a compensation flow.
+    accounting:
+      unique_gross_usd: 150000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        fraud_organizations: 1
+- id: exploited_ai_written_vulnerability
+  prompt:
+    history: A developer deploys model-written code with an injection vulnerability. A criminal, without
+      any AI assistance, exploits it and steals customer data, costing USD 4 million.
+    subjects:
+    - The USD 4 million breach.
+  expected:
+    classifications:
+    - subject: The USD 4 million breach.
+      facts:
+        origin_regime: ai_failure
+        failure_role: output_relied_on
+        reliance_field: software
+      terminal_id: n_reliance_software
+      scenario_id: output_reliance_software
+      incident_id: exploit
+      loss_id: breach
+      gross_amount_usd: 4000000
+      economic_nature: resource_cost
+    admitted:
+      exploit: true
+    identity_note: 'The AI did not take part in the attack, so the AI failure started it: AI-written code
+      relied on.'
+    accounting:
+      unique_gross_usd: 4000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        output_reliance_software: 1
+- id: claim_follows_incident
+  prompt:
+    history: A hijack campaign makes deployed assistants leak customer records, costing USD 5 million
+      of response. A class action over the leak costs USD 1 million in legal resources and settles for
+      USD 3 million.
+    subjects:
+    - The USD 5 million response.
+    - The class action's USD 1 million legal resources.
+  expected:
+    classifications:
+    - subject: The USD 5 million response.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: acted_for_attacker
+        takeover_route: input_hijack
+      terminal_id: n_input_hijack
+      scenario_id: input_hijack
+      incident_id: leak_campaign
+      loss_id: response
+      gross_amount_usd: 5000000
+      economic_nature: resource_cost
+    - subject: The class action's USD 1 million legal resources.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: acted_for_attacker
+        takeover_route: input_hijack
+      terminal_id: n_input_hijack
+      scenario_id: input_hijack
+      incident_id: leak_campaign
+      loss_id: legal
+      gross_amount_usd: 1000000
+      economic_nature: resource_cost
+    admitted:
+      leak_campaign: true
+    identity_note: A claim whose defining allegation is loss from a discrete incident follows that incident;
+      the settlement compensates already-counted harm and is not added.
+    accounting:
+      unique_gross_usd: 6000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        input_hijack: 1
+- id: training_data_class_action
+  prompt:
+    history: Authors file a class action alleging that the provider trained on their books without permission.
+      The matter costs the provider USD 20 million in defense and settles for USD 80 million.
+    subjects:
+    - The USD 20 million defense.
+    - The USD 80 million settlement.
+  expected:
+    classifications:
+    - subject: The USD 20 million defense.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: private_claim
+        claim_allegation: copyright_ip
+      terminal_id: n_claims_copyright
+      scenario_id: private_claims_copyright_ip
+      incident_id: class_action
+      loss_id: defense
+      gross_amount_usd: 20000000
+      economic_nature: resource_cost
+    - subject: The USD 80 million settlement.
+      facts:
+        origin_regime: provider_conduct
+        conduct_process: private_claim
+        claim_allegation: copyright_ip
+      terminal_id: n_claims_copyright
+      scenario_id: private_claims_copyright_ip
+      incident_id: class_action
+      loss_id: settlement
+      gross_amount_usd: 80000000
+      economic_nature: transfer
+    admitted:
+      class_action: true
+    identity_note: A claim over the provider's own conduct is a provider-conduct private claim, split
+      by its allegation.
+    accounting:
+      unique_gross_usd: 100000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts:
+        private_claims_copyright_ip: 1
+- id: unsupported_careless_use
+  prompt:
+    history: A manager pastes confidential plans into a correctly working assistant against company policy,
+      and a competitor later learns of them through an unrelated leak, costing USD 1 million.
+    subjects:
+    - The USD 1 million loss.
+  expected:
+    classifications:
+    - subject: The USD 1 million loss.
+      facts:
+        origin_regime: other
+      terminal_id: n_other_origin
+      scenario_id: null
+      incident_id: careless_use
+      loss_id: loss
+      gross_amount_usd: 1000000
+      economic_nature: transfer
+    admitted:
+      careless_use: true
+    identity_note: Careless use of a correctly working AI has no named origin; it is unsupported, not
+      assigned to a named leaf.
+    accounting:
+      unique_gross_usd: 1000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts: {}
+- id: unestimated_other_process
+  prompt:
+    history: A person who could not otherwise have defeated a warehouse's fire protection uses a model to
+      plan a conventional arson attack on it, causing USD 3 million of damage.
+    subjects:
+    - The USD 3 million of damage.
+  expected:
+    classifications:
+    - subject: The USD 3 million of damage.
+      facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+        loss_process: other
+      terminal_id: n_assisted_other_process
+      scenario_id: null
+      incident_id: arson
+      loss_id: damage
+      gross_amount_usd: 3000000
+      economic_nature: resource_cost
+    admitted:
+      arson: true
+    identity_note: Model-assisted conventional violence is another process under helping the attacker;
+      no scenario estimates it.
+    accounting:
+      unique_gross_usd: 3000000
+      unique_incident_count: 1
+      admitted_scenario_incident_counts: {}
+    unresolved:
+    - facts:
+        origin_regime: deliberate_misuse
+        misuse_role: assisted_attacker
+      missing_fact: loss_process
+      interpretation: If the process is unknown, the history stays unresolved; an unknown fact is uncertainty,
+        not the other process.

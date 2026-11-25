@@ -1,0 +1,133 @@
+{
+  "context_id": "hypothetical_frontier_lab",
+  "period": {
+    "forecast_as_of": "2026-10-29T00:00:00Z",
+    "data_cutoff_utc": "2026-10-29T00:00:00Z",
+    "availability_cutoff_utc": "2026-10-29T00:00:00Z",
+    "information_date_utc": "2026-10-29T00:00:00Z",
+    "policy_period_start_utc": "2027-01-01T00:00:00Z",
+    "policy_period_end_utc": "2028-01-01T00:00:00Z"
+  },
+  "lab": {
+    "entity_id": "hypothetical_frontier_lab",
+    "kind": "lab",
+    "definition": "A hypothetical frontier AI developer stipulated for this study, not an actual company: one consolidated lab/group that trains general-purpose frontier models and deploys them through its own consumer assistant and enterprise API. Its public general capability follows the leading edge of the public frontier, the maximum over the forecast lab roster (target public_frontier), throughout the study year.",
+    "display_name": "Hypothetical Frontier Lab",
+    "status": "hypothetical"
+  },
+  "exposure": "Each deployment's scale is stipulated and linked to this trajectory's capability progress: every scale stated in a deployment binding equals its October 2026 level plus its growth to the 2027 median-path average times this trajectory's frontier ECI gain by the middle of 2027 over the forecast's median gain, up to the median gain; on faster trajectories growth beyond the median path saturates toward a stipulated ceiling, so faster trajectories carry more use and the no-progress trajectory keeps the October 2026 levels. The scales are study-year averages already linked to this trajectory; do not scale use again with the capability path. They are illustrative stipulations for a hypothetical leading lab, not measurements of any actual lab.",
+  "path_linked_exposure": {
+    "max_growth_multiple": 3,
+    "scales": [
+      {"scale_id": "consumer_weekly_users", "unit": "weekly active users of the consumer assistant", "as_of": 500000000, "study_year_median": 600000000},
+      {"scale_id": "paying_business_customers", "unit": "paying business customers", "as_of": 1000000, "study_year_median": 1600000},
+      {"scale_id": "api_tokens_per_day", "unit": "tokens per day processed through the API", "as_of": 40000000000000, "study_year_median": 100000000000000},
+      {"scale_id": "lab_staff", "unit": "lab staff", "as_of": 6000, "study_year_median": 8000}
+    ]
+  },
+  "fixed_controls": "Controls typical of a leading frontier lab, held fixed for the study year: usage policies and terms of service; automated misuse classifiers on inputs and outputs, including for biological, chemical, cyber and fraud misuse; account-level abuse monitoring and enforcement; identity checks for high-volume API customers; staged release after pre-deployment dangerous-capability evaluations under a published safety framework; security controls on model weights; incident response.",
+  "safeguard_levels": {
+    "weaker": {
+      "rationale": "A plausible less careful frontier developer, described generically as the practices that published frontier safety frameworks and standards do not require or that they set out to raise: misuse classifiers only for the most severe abuse and enforcement mainly on reports, below the deployment safeguards those frameworks describe; self-serve API access without identity verification; release after internal evaluations without capability thresholds that bind release, which published frameworks add; model-weight security at about RAND's SL2 (Nevo et al., Securing AI Model Weights, 2024), standard corporate security rather than protection against well-resourced attackers; agents acting with their users' full permissions rather than least privilege (NIST SP 800-53, AC-6); and internal deployment of not-yet-public models with little governance, a gap that published research on internal deployment describes. Independent ratings of frontier developers' risk management, such as the Future of Life Institute's AI Safety Index and SaferAI's ratings, report wide variation in how far developers adopt these practices. The level narrows misuse classifiers, enforcement and identity checks, makes release gates non-binding, and widens agent permissions and internal agents' scope, without changing adoption, open weights, any scale or who reviews an output or action.",
+      "fixed_controls": "Controls of a frontier lab that puts release speed first, held fixed for the study year: usage policies and terms of service; automated classifiers only for the most severe abuse, with other misuse left to refusal training; enforcement mainly after user reports; self-serve API access; release after internal dangerous-capability evaluations without binding thresholds; standard corporate security on model weights; incident response.",
+      "source_statuses": {
+        "public": {
+          "deployment_binding": {
+            "tools_and_permissions": "Consumer assistant: web search and browsing, code execution, file and image analysis, image generation, memory, read-write connectors to users' email, calendars and documents, and agentic actions on websites and connected accounts, with user confirmation before purchases and other consequential actions. Enterprise API: tool and function calling, computer use, code execution with open internet access, retrieval and file search; customers build the model into their own products and agents with the permissions they grant.",
+            "human_oversight": "Consumer users review outputs and confirm consequential agent actions. Enterprise customers set their own oversight, from human review of every output to autonomous pipelines. The lab applies usage policies and account enforcement on both channels, mostly in response to user reports."
+          }
+        },
+        "not_yet_public": {
+          "deployment": {
+            "definition": "Stipulated internal and pre-release use of the hypothetical lab's not-yet-public models: the lab's own research, engineering, safety evaluation and operations, including internal agents that also run its infrastructure, plus early access for many external testers and design partners under agreement."
+          },
+          "deployment_binding": {
+            "use_population": "Stipulated scale on this trajectory, averaged over the study year: about {lab_staff} lab staff, most working with internal agents that run large volumes of research, engineering and operations tasks, and a few hundred external pre-release testers and design partners.",
+            "tools_and_permissions": "Internal agents act with their staff accounts' full permissions: they write code in the lab's repositories, run jobs on its compute, access internal data and change production systems. External testers get the tool integrations they request.",
+            "human_oversight": "Staff review agent work at the granularity each team sets; security teams investigate agent activity and model-weight access after alerts; models get internal evaluations before general release."
+          }
+        }
+      }
+    },
+    "stronger": {
+      "rationale": "The strictest safeguards that the five roster labs' published safety frameworks and safety posts describe for a deployed model and for internal use, applied now. Most are attached there to capability thresholds that have not been reached, and several are stated as recommendations for the industry, not as commitments. Anthropic's Responsible Scaling Policy 3.4 (July 2026) recommends safeguards that even well-resourced, state-backed actors cannot reliably jailbreak, security roughly in line with RAND SL4 (Nevo et al., Securing AI Model Weights, 2024), an internal usage policy that binds employees up to the chief executive, and logs of all critical AI-development activity. OpenAI's Preparedness Framework 2 (April 2025) lists refusal training, usage monitoring with automated blocking, identity verification, access to higher capabilities for trusted actors only, monitors that supervise agent actions and can force human approval, and sandboxing; its posts of 2026 on the Hugging Face incident and on the first model it rated Critical for cybersecurity add monitoring of reasoning and actions that stops unauthorized activity, vetted access to advanced cyber capabilities, round-the-clock jailbreak response and training without live internet access. Google DeepMind's Frontier Safety Framework 3.1 (April 2026) requires a safety case reviewed before deployment, names user verification and recommends security at RAND SL4 for its most capable models. Meta's Superintelligence Scaling Framework 2.1 (October 2026) requires red-teamed sandboxes and monitoring of every high-risk training and evaluation run, with automated shutoff. xAI's Frontier Artificial Intelligence Framework (June 2026) names state-sponsored actors and insiders in its security goal. Incident reporting follows California SB 53 (2025) and the EU General-Purpose AI Code of Practice's Safety and Security chapter (2025). The strongest measure these documents name, holding a model back or pausing its development, is left out: the posture is one across scope, permissions and the lab's own monitoring, without changing adoption, open weights, any scale or who reviews an output or action. The human approval of agent actions that these documents also describe is left out for that reason: the taxonomy assigns an incident to a scenario by whether a person considered the output or action, so a level that changed it would move incidents between scenarios.",
+      "fixed_controls": "Controls of a frontier lab applying the strictest safeguards in leading labs' published safety frameworks, held fixed for the study year: usage policies; refusal training, blocking classifiers and round-the-clock jailbreak response; monitoring that stops unauthorized model actions; verified identity for API access; advanced cyber and biological capabilities for vetted organizations only; release after independent and government testing; weight security against state-backed attackers and insiders; incident reporting to regulators.",
+      "source_statuses": {
+        "public": {
+          "deployment_binding": {
+            "tools_and_permissions": "Consumer assistant: web search and browsing, sandboxed code execution, file and image analysis, image generation, memory, consent-gated connectors to users' email, calendars and documents, and agentic actions in a sandboxed browser, with user confirmation before purchases and other consequential actions. Enterprise API: tool and function calling, sandboxed computer use and code execution, retrieval and file search; verified customers build the model into their own products; only vetted organizations get advanced cyber or biological capabilities.",
+            "human_oversight": "Consumer users review outputs and confirm consequential agent actions. Enterprise customers set their own oversight, from human review of every output to autonomous pipelines. The lab's monitor blocks out-of-scope agent actions on both channels and enforces on accounts continuously."
+          }
+        },
+        "not_yet_public": {
+          "deployment": {
+            "definition": "Stipulated internal and pre-release use of the hypothetical lab's not-yet-public models: its own research, engineering and safety evaluation under a usage policy binding every employee, with internal agents confined to approved tasks, plus access for vetted external evaluators and government testing bodies under agreement."
+          },
+          "deployment_binding": {
+            "use_population": "Stipulated scale on this trajectory, averaged over the study year: about {lab_staff} lab staff, many working with internal agents that run large volumes of approved research and engineering tasks in isolated environments, and a few hundred vetted external evaluators and testers.",
+            "tools_and_permissions": "Internal agents run in red-teamed sandboxes without internet access, under least-privilege identities: they write code only in task repositories, run experiments within quotas, and never write to production or weights. External testers get monitored API access without tools.",
+            "human_oversight": "Staff review agent work at the granularity each team sets; agent runs and reasoning are monitored with automatic shutoff; weight access takes two people; independent evaluations precede internal use."
+          }
+        }
+      }
+    }
+  },
+  "locality_assumption": "Public-study collections condition on one complete public trajectory and use no constant-score locality. In a fixed-anchor what-if, each constant-score annual law applies to the whole study year.",
+  "independent_node_origins_rationale": "The scenario nodes partition qualifying initiating incidents by the taxonomy's classification questions, so each incident and its unique costs belong to exactly one node. Node counts are treated as independent given the shared trajectory, context and respondent; that is an assumption, not evidence.",
+  "source_statuses": {
+    "public": {
+      "model": {
+        "entity_id": "hypothetical_frontier_lab_public_models",
+        "kind": "model",
+        "revision": "study-year-2027",
+        "related_entity_ids": ["hypothetical_frontier_lab"],
+        "definition": "The hypothetical lab's publicly available general-purpose frontier model line during the study year: its leading released model, which tracks the public frontier, and earlier released versions still served. A model is public from its general release.",
+        "display_name": "Hypothetical Frontier Lab public models",
+        "status": "hypothetical"
+      },
+      "deployment": {
+        "entity_id": "hypothetical_frontier_lab_public_deployment",
+        "kind": "deployment",
+        "definition": "Stipulated public deployment of the hypothetical lab's public models: a consumer assistant (web, mobile and desktop apps, with free and paid tiers) and an enterprise API (also behind business and enterprise plans), offered worldwide outside sanctioned jurisdictions.",
+        "display_name": "Hypothetical Frontier Lab consumer assistant and enterprise API",
+        "status": "hypothetical"
+      },
+      "deployment_binding": {
+        "deployment_id": "hypothetical_frontier_lab_public_deployment",
+        "model_id": "hypothetical_frontier_lab_public_models",
+        "use_population": "Stipulated scale on this trajectory, averaged over the study year: about {consumer_weekly_users} weekly active users of the consumer assistant worldwide; about {paying_business_customers} paying business customers, from individual developers to large enterprises and government agencies, using the API or business and enterprise plans; about {api_tokens_per_day} tokens per day processed through the API, a growing share of it by customers' autonomous agents. The lab's own staff also use the released models; incidents from that use belong to this public population.",
+        "tools_and_permissions": "Consumer assistant: web search and browsing, code execution, file and image analysis, image generation, memory, connectors to users' email, calendars and documents, and agentic actions on websites and connected accounts, with user confirmation before purchases and other consequential actions. Enterprise API: tool and function calling, computer use, code execution, retrieval and file search; customers build the model into their own products and agents with the permissions they grant.",
+        "human_oversight": "Consumer users review outputs and confirm consequential agent actions. Enterprise customers set their own oversight, from human review of every output to autonomous pipelines. The lab applies usage policies, automated misuse classifiers and account enforcement on both channels."
+      },
+      "capability_access": "public",
+      "fixed_adoption": "Adoption is fixed at the stipulated scale of this deployment. Products that customers build on the API belong to it. No model weights are released openly; stolen or leaked weights of a released model remain public models of the lab."
+    },
+    "not_yet_public": {
+      "model": {
+        "entity_id": "hypothetical_frontier_lab_unreleased_models",
+        "kind": "model",
+        "revision": "study-year-2027",
+        "related_entity_ids": ["hypothetical_frontier_lab"],
+        "definition": "The hypothetical lab's not-yet-public models during the study year: frontier models in training, evaluation, internal use or limited pre-release testing before general release, including successors to the public model line. A model leaves this population at general release.",
+        "display_name": "Hypothetical Frontier Lab not-yet-public models",
+        "status": "hypothetical"
+      },
+      "deployment": {
+        "entity_id": "hypothetical_frontier_lab_internal_deployment",
+        "kind": "deployment",
+        "definition": "Stipulated internal and pre-release use of the hypothetical lab's not-yet-public models: the lab's own research, engineering, safety evaluation and operations, including internal agents, plus access for a limited set of external pre-release testers, evaluators and government testing bodies under agreement.",
+        "display_name": "Hypothetical Frontier Lab internal and pre-release use",
+        "status": "hypothetical"
+      },
+      "deployment_binding": {
+        "deployment_id": "hypothetical_frontier_lab_internal_deployment",
+        "model_id": "hypothetical_frontier_lab_unreleased_models",
+        "use_population": "Stipulated scale on this trajectory, averaged over the study year: about {lab_staff} lab staff, many working with internal agents that run large volumes of research and engineering tasks, and a few hundred external pre-release testers and evaluation organizations.",
+        "tools_and_permissions": "Internal agents read and write the lab's code repositories, run experiments on its compute and access internal data under staff accounts. External testers get API access without production tool integrations unless an agreement grants them.",
+        "human_oversight": "Staff review agent work at the granularity each team sets; security teams monitor internal agent activity and model-weight access; models pass pre-deployment dangerous-capability evaluations before general release."
+      },
+      "capability_access": "internal",
+      "fixed_adoption": "Use is fixed at the stipulated internal and pre-release scale; no not-yet-public model is offered in a product before its general release. No model weights are released openly; stolen or leaked weights of a not-yet-public model remain not-yet-public models of the lab, classified by their release status when an incident originates."
+    }
+  }
+}

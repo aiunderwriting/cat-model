@@ -1,0 +1,31 @@
+# Scenario lineage register.
+#
+# A generation names one scenario roster and pins it with the digest of its
+# sorted scenario ids. Scenario-library validation refuses a roster whose
+# digest differs from the current generation's, so adding, removing, renaming,
+# splitting or merging a scenario registers a new generation here and makes it
+# current. A transition records how that change moved the populations and how
+# much earlier evidence it makes stale, and a scenario that leaves the roster
+# is listed under retired_scenarios. Editing a scenario without changing the
+# roster needs no entry. The hierarchy contract, not this register, places
+# scenarios in the taxonomy. docs/adding-a-scenario.md shows the entries a
+# roster change adds.
+schema_version: 1
+current_taxonomy_version: "r1"
+
+generations:
+  - version: "r1"
+    established: "2026-11-24"
+    scenario_roster_sha256: "9952514123c648b4f611fe4a512a63a61f3df3d48ed498d907f297ce1bc8b72f"
+    description: >-
+      32 scenarios, one for each estimated leaf of the loss taxonomy. Deliberate misuse has 15:
+      system compromise by the systems attacked, fraud against individuals or organizations,
+      influence, CBRN weapons by hazard with biological programs also by expertise, takeover through
+      inputs or tampering, and the model as a target, by artifacts taken or service attacked. AI
+      failure has 11: agent actions, bounded decisions, physical control, reliance on output by
+      field, harm from engagement, service outage and loss of developer control. Provider conduct
+      has 6: designation, enforcement and private claims by allegation.
+
+transitions: []
+
+retired_scenarios: []

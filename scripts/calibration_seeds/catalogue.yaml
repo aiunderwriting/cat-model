@@ -1,0 +1,947 @@
+# Authored seed catalogue. assemble.py joins it with the resolution scripts' results to write
+# data/calibration/respondent_spread/{seeds,resolutions,sources}.yaml.
+# Evidence text states only what the source is and how it records events, as known before each seed's
+# information date. Each history table is computed by the source's script and covers only periods ending by the
+# information date: git sources are read at the last commit on or before it; sources that post records after the
+# recorded date stop one month before it (two for NHTSA SGO); other sources are dated by their own publication
+# event and read from the current snapshot, so their histories can include later revisions. The snapshot and
+# replacement rules below are copied into the generated seed contract.
+
+retrieval_date: '2026-11-02'
+latest_training_cutoff: '2026-06-30'
+snapshot_rule: >-
+  Each primary, control and secondary seed uses the value the named source records on the catalogue retrieval date.
+  The snapshot SHA-256 identifies the retrieved source state; a later rerun may differ after late postings,
+  rejections, withdrawals, corrections or index changes.
+replacement_rule: >-
+  No seed is replaced after collection starts. If a seed cannot be resolved by its frozen script, it remains
+  unresolved; because resolved_outcomes requires a value for every seed, fitting cannot run until the seed is
+  resolved by that same frozen script.
+# Robustness diagnostics; neither changes the fitted k or its status.
+# Super-blocks group primary blocks that share weaker common drivers across blocks (see the package README,
+# "Known weaknesses"): the fit also reports a bootstrap range that resamples whole super-blocks.
+super_blocks:
+  VULN: [V-KEV, V-CVE, V-ICS, V-GHSA, X-EDB]
+  SUPPLY: [S-MAL, C-DEFI]
+  BREACH: [B-NOTICE, B-SEC]
+  FEDERAL: [G-FR, G-DOJ, G-SECLIT, G-OFAC, F-CFPB, M-FDA]
+  VEHICLE: [D-SGO, D-NHTSA]
+  RESEARCH: [E-ARXIV]
+# Seeds whose counts depend on a curator's later additions or batch postings; the fit also reports k without them.
+curation_sensitive_seed_ids:
+  - defihacklabs-incidents-2026q3
+  - exploitdb-additions-2026q3
+  - osv-mal-npm-2026q3
+  - osv-mal-pypi-2026q3
+  - osv-mal-crates-2026q3
+
+sources:
+  cisa_kev:
+    name: CISA Known Exploited Vulnerabilities catalog (JSON feed)
+    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+    data_url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    history_url: https://github.com/cisagov/kev-data
+    script: cisa_kev.py
+    terms: >-
+      U.S. Government work published as a machine-readable feed; CISA's GitHub mirror (cisagov/kev-data), used for
+      the pre-cutoff history vintage, states that the KEV database is distributed under CC0 1.0.
+    terms_url: https://github.com/cisagov/kev-data/blob/main/LICENSE
+    automated_access: Permitted; the JSON feed is provided for automated download.
+  nvd:
+    name: NIST National Vulnerability Database, CVE API 2.0
+    url: https://nvd.nist.gov/developers/vulnerabilities
+    data_url: https://services.nvd.nist.gov/rest/json/cves/2.0
+    script: nvd.py
+    terms: >-
+      Public domain U.S. Government data. NVD asks API users to display "This product uses data from the NVD
+      API but is not endorsed or certified by the NVD." and to respect rate limits (5 requests per rolling
+      30 seconds without an API key).
+    terms_url: https://nvd.nist.gov/developers/terms-of-use
+    automated_access: Permitted within the published rate limits; the script sleeps 6.5 s between requests.
+  cisa_csaf:
+    name: CISA CSAF advisories repository (cisagov/CSAF)
+    url: https://github.com/cisagov/CSAF
+    data_url: https://github.com/cisagov/CSAF.git
+    script: cisa_csaf.py
+    terms: >-
+      CISA advisories are U.S. Government works; the repository has no LICENSE file and states its purpose as
+      providing machine-readable advisories for automated consumption. Republished vendor CSAFs keep the vendor's dates.
+    terms_url: https://github.com/cisagov/CSAF
+    automated_access: Permitted; public git repository cloned with git.
+  ghsa:
+    name: GitHub Advisory Database (github/advisory-database)
+    url: https://github.com/github/advisory-database
+    data_url: https://github.com/github/advisory-database.git
+    script: ghsa.py
+    terms: Advisory data licensed CC-BY 4.0 (attribution to GitHub required).
+    terms_url: https://github.com/github/advisory-database/blob/main/LICENSE.md
+    automated_access: Permitted; public git repository cloned with git.
+  osv:
+    name: OSV.dev bulk ecosystem exports (npm, PyPI, crates.io, Go)
+    url: https://google.github.io/osv.dev/data/
+    data_url: https://osv-vulnerabilities.storage.googleapis.com/
+    script: osv.py
+    terms: >-
+      OSV.dev data is aggregated from upstream databases under their own licenses: OpenSSF malicious-packages
+      (MAL-) Apache-2.0, Go vulnerability database CC-BY 4.0, RustSec CC0-1.0. The bucket exports are offered
+      for bulk download.
+    terms_url: https://google.github.io/osv.dev/data/
+    automated_access: Permitted; the GCS bucket exports exist for bulk download.
+  exploitdb:
+    name: Exploit Database (exploit-database/exploitdb on GitLab), files_exploits.csv
+    url: https://www.exploit-db.com/
+    data_url: https://gitlab.com/exploit-database/exploitdb/-/raw/main/files_exploits.csv
+    script: exploitdb.py
+    terms: >-
+      Public repository maintained by OffSec; no licence file was found at the repository root (HTTP 404), and
+      exploit code remains under its authors' terms. Only the CSV index is read; no exploit code is downloaded.
+    terms_url: https://gitlab.com/exploit-database/exploitdb
+    automated_access: Permitted; the CSV is offered for download from the public repository.
+  defihacklabs:
+    name: DeFiHackLabs incident list (SunWeb3Sec/DeFiHackLabs)
+    url: https://github.com/SunWeb3Sec/DeFiHackLabs
+    data_url: https://raw.githubusercontent.com/SunWeb3Sec/DeFiHackLabs/
+    script: defihacklabs.py
+    terms: Apache-2.0 licensed public repository.
+    terms_url: https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/LICENSE
+    automated_access: Permitted; README files fetched from raw.githubusercontent.com pinned to a commit.
+  hhs_ocr:
+    name: HHS Office for Civil Rights breach portal (breaches affecting 500 or more individuals)
+    url: https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf
+    data_url: https://ocrportal.hhs.gov/ocr/breach/breach_report_hip.jsf
+    script: hhs_ocr.py
+    terms: >-
+      Public U.S. Government information posted as required by the HITECH Act; no terms restrict reuse. The
+      portal offers CSV export of both lists.
+    terms_url: https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf
+    automated_access: >-
+      No explicit policy; the script uses the portal's own CSV export with a handful of polite requests.
+  ca_ag:
+    name: California Attorney General data security breach list
+    url: https://oag.ca.gov/privacy/databreach/list
+    data_url: https://oag.ca.gov/privacy/databreach/list-export
+    script: ca_ag.py
+    terms: >-
+      Public records posted under Cal. Civ. Code 1798.82; the site's conditions of use state that its content is
+      considered public domain. The list page offers the CSV export link.
+    terms_url: https://oag.ca.gov/conditions
+    automated_access: Permitted by robots.txt for this path (crawl-delay 10); one request.
+  wa_ag:
+    name: Washington Attorney General data breach notifications (data.wa.gov dataset sb4j-ca4h)
+    url: https://data.wa.gov/Consumer-Protection/Data-Breach-Notifications-Affecting-Washington-Res/sb4j-ca4h
+    data_url: https://data.wa.gov/api/views/sb4j-ca4h/rows.csv?accessType=DOWNLOAD
+    script: wa_ag.py
+    terms: >-
+      Washington State open data portal (Socrata); the dataset metadata states no licence. Public records of the
+      Attorney General's office, offered through the portal's public export API without a key.
+    terms_url: https://data.wa.gov/Consumer-Protection/Data-Breach-Notifications-Affecting-Washington-Res/sb4j-ca4h
+    automated_access: Permitted; Socrata export API.
+  sec_edgar:
+    name: SEC EDGAR full-text search (Form 8-K Item 1.05)
+    url: https://efts.sec.gov/LATEST/search-index
+    data_url: https://efts.sec.gov/LATEST/search-index
+    script: sec_edgar.py
+    terms: >-
+      Public SEC filings. SEC fair-access policy: at most 10 requests per second and a User-Agent that
+      identifies the requester with contact information (read from SEC_EDGAR_USER_AGENT).
+    terms_url: https://www.sec.gov/os/accessing-edgar-data
+    automated_access: Permitted under the fair-access policy.
+  cfpb:
+    name: CFPB Consumer Complaint Database search API
+    url: https://www.consumerfinance.gov/data-research/consumer-complaints/
+    data_url: https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/
+    script: cfpb.py
+    terms: Data released under CC0 (the API reports license CC0); the API is public.
+    terms_url: https://cfpb.github.io/api/ccdb/
+    automated_access: Permitted; public API.
+  doj:
+    name: U.S. Department of Justice press releases API
+    url: https://www.justice.gov/news
+    data_url: https://www.justice.gov/api/v1/press_releases.json
+    script: doj.py
+    terms: Public domain U.S. Government content offered through a public API.
+    terms_url: https://www.justice.gov/developer
+    automated_access: Permitted; public API (the script throttles to 1 request per second).
+  federal_register:
+    name: Federal Register API v1
+    url: https://www.federalregister.gov/developers/documentation/api/v1
+    data_url: https://www.federalregister.gov/api/v1/documents.json
+    script: federal_register.py
+    terms: Public domain; the API needs no key.
+    terms_url: https://www.federalregister.gov/reader-aids/developer-resources/rest-api
+    automated_access: Permitted; public API.
+  nhtsa_sgo:
+    name: NHTSA Standing General Order 2021-01 crash reporting data
+    url: https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting
+    data_url: https://static.nhtsa.gov/odi/ffdd/sgo-2021-01/
+    script: nhtsa_sgo.py
+    terms: Public domain U.S. Government data offered as downloadable CSV files.
+    terms_url: https://www.nhtsa.gov/about-nhtsa/website-policies
+    automated_access: Permitted; static downloads.
+  nhtsa_defects:
+    name: NHTSA recall and defect-investigation flat files
+    url: https://www.nhtsa.gov/nhtsa-datasets-and-apis
+    data_url: https://static.nhtsa.gov/odi/ffdd/
+    script: nhtsa_defects.py
+    terms: Public domain U.S. Government data offered as downloadable flat files.
+    terms_url: https://www.nhtsa.gov/about-nhtsa/website-policies
+    automated_access: Permitted; static downloads.
+  openfda:
+    name: openFDA device recall enforcement reports API
+    url: https://open.fda.gov/apis/device/enforcement/
+    data_url: https://api.fda.gov/device/enforcement.json
+    script: openfda.py
+    terms: CC0 public domain dedication; API without key limited to 240 requests per minute and 1,000 per day.
+    terms_url: https://open.fda.gov/terms/
+    automated_access: Permitted within rate limits.
+  arxiv:
+    name: arXiv monthly listing pages
+    url: https://arxiv.org/
+    data_url: https://arxiv.org/list/
+    script: arxiv.py
+    terms: >-
+      arXiv metadata is CC0. robots.txt allows /list with Crawl-delay 15 and forbids indiscriminate bulk
+      downloads; the script reads one listing page per category-month, 15 s apart.
+    terms_url: https://info.arxiv.org/help/robots.html
+    automated_access: Permitted for /list at the stated crawl delay; the script reads listing pages, not arXiv's export API.
+  sec_litigation:
+    name: SEC litigation releases
+    url: https://www.sec.gov/enforcement-litigation/litigation-releases
+    data_url: https://www.sec.gov/enforcement-litigation/litigation-releases
+    script: sec_litigation.py
+    terms: >-
+      Public SEC releases. SEC fair-access policy: at most 10 requests per second and a User-Agent that
+      identifies the requester with contact information (read from SEC_EDGAR_USER_AGENT).
+    terms_url: https://www.sec.gov/os/accessing-edgar-data
+    automated_access: Permitted under the fair-access policy.
+  ofac:
+    name: OFAC Sanctions List Service (publication history and delta files)
+    url: https://sanctionslistservice.ofac.treas.gov/
+    data_url: https://sanctionslistservice.ofac.treas.gov/changes/history/
+    script: ofac.py
+    terms: Public U.S. Government information published by the Treasury's Office of Foreign Assets Control.
+    terms_url: https://ofac.treasury.gov/
+    automated_access: >-
+      Permitted; public service for automated download of list changes. It answered HTTP 429 at 2 requests per
+      second, so the script sends one request every 3 seconds and honours Retry-After.
+
+seeds:
+# ================= V-KEV: CISA KEV additions =================
+- seed_id: kev-additions-2026q3
+  role: primary
+  block_id: V-KEV
+  source: cisa_kev
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct CVE IDs in CISA's Known Exploited Vulnerabilities (KEV) catalog with a dateAdded from
+    2026-07-01 through 2026-09-30, as the catalog's JSON feed records them on 2026-11-02.
+  evidence: &kev_evidence >-
+    CISA's KEV catalog lists vulnerabilities for which CISA has reliable evidence of exploitation in the wild;
+    each entry records the date CISA added it (dateAdded). CISA often adds several entries on one day. An addition
+    is not an attack or a loss, and the addition date need not be the first-exploitation date. The table counts
+    entries by dateAdded in the catalog as it stood before the information date.
+- seed_id: kev-microsoft-additions-2026q3
+  role: primary
+  block_id: V-KEV
+  source: cisa_kev
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct CVE IDs in CISA's KEV catalog whose vendorProject is "Microsoft" with a dateAdded from
+    2026-07-01 through 2026-09-30, as the catalog's JSON feed records them on 2026-11-02.
+  evidence: >-
+    CISA's KEV catalog lists vulnerabilities with reliable evidence of exploitation in the wild and records the
+    vendor of the affected product (vendorProject). Microsoft entries are often added on or soon after Microsoft's
+    monthly security updates (the second Tuesday of each month) when exploitation is reported, sometimes for older
+    products and older CVEs. The table counts entries by dateAdded in the catalog as it stood before the
+    information date.
+- seed_id: kev-additions-2026-10
+  role: primary
+  block_id: V-KEV
+  source: cisa_kev
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct CVE IDs in CISA's KEV catalog with a dateAdded from 2026-10-01 through 2026-10-31, as the
+    catalog's JSON feed records them on 2026-11-02.
+  evidence: *kev_evidence
+# ================= V-CVE: NVD publication volume and AI-related CVEs =================
+- seed_id: nvd-cves-published-2026q3
+  role: primary
+  block_id: V-CVE
+  source: nvd
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of CVE records in the NIST National Vulnerability Database with a published date from
+    2026-07-01T00:00:00.000Z through 2026-09-30T23:59:59.999Z, excluding records with REJECTED status, as
+    reported by the NVD CVE API 2.0 (totalResults with the noRejected filter) on 2026-11-02.
+  evidence: &nvd_evidence >-
+    NVD republishes every CVE record that a CVE Numbering Authority (CNA) publishes; the published date is when
+    the record first appeared. Records later rejected (for example duplicates or withdrawn reports) are excluded.
+    Volume reflects disclosure and CNA publication activity, including occasional bulk publications by single
+    CNAs, not exploitation.
+- seed_id: nvd-cves-published-2026-10
+  role: primary
+  block_id: V-CVE
+  source: nvd
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of CVE records in the NIST National Vulnerability Database with a published date from
+    2026-10-01T00:00:00.000Z through 2026-10-31T23:59:59.999Z, excluding records with REJECTED status, as
+    reported by the NVD CVE API 2.0 (totalResults with the noRejected filter) on 2026-11-02.
+  evidence: *nvd_evidence
+- seed_id: nvd-prompt-injection-cves-2026q3
+  role: primary
+  block_id: V-CVE
+  source: nvd
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of non-rejected CVE records in the NVD with a published date from 2026-07-01T00:00:00.000Z through
+    2026-09-30T23:59:59.999Z whose description contains the exact phrase "prompt injection", as returned by the
+    NVD CVE API 2.0 keyword search (keywordSearch with keywordExactMatch and noRejected) on 2026-11-02.
+  evidence: >-
+    These CVE records describe vulnerabilities in which crafted text supplied to an application built on a
+    language model makes it deviate from its intended instructions, for example to exfiltrate data through agent
+    tools. The count measures disclosed, CVE-assigned vulnerabilities in software that integrates language models,
+    not attacks or incidents. The CNA writes the description, so a phrase search misses records that use other
+    wording.
+# ================= V-ICS: CISA ICS advisories =================
+- seed_id: cisa-ics-advisories-2026q3
+  role: primary
+  block_id: V-ICS
+  source: cisa_csaf
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct CISA industrial control system advisories (base IDs ICSA-YY-DDD-NN, excluding "ICSMA-"
+    medical advisories) in the cisagov/CSAF repository whose CISA release date encoded in the ID (year YY, day of
+    year DDD) falls from 2026-07-01 through 2026-09-30, as of the repository state on 2026-11-02.
+  evidence: >-
+    CISA publishes advisories on vulnerabilities in industrial control system and operational-technology
+    products, often several per day, with IDs of the form ICSA-YY-DDD-NN, where DDD is the day of year of CISA's
+    release. Each advisory is mirrored in machine-readable CSAF format in the cisagov/CSAF repository; updates keep
+    the ID. Some advisories republish a vendor's own advisory, sometimes weeks after the vendor's release; the
+    count uses CISA's release date from the ID. The table is computed from the repository as it stood before the
+    information date.
+- seed_id: cisa-ics-medical-advisories-2026q3
+  role: primary
+  block_id: V-ICS
+  source: cisa_csaf
+  unit: count
+  can_resolve_to_zero: true
+  quantity: >-
+    Number of distinct CISA ICS medical advisories (base IDs ICSMA-YY-DDD-NN) in the cisagov/CSAF repository whose
+    CISA release date encoded in the ID (year YY, day of year DDD) falls from 2026-07-01 through 2026-09-30, as of
+    the repository state on 2026-11-02.
+  evidence: >-
+    CISA issues ICS medical advisories (ICSMA) for vulnerabilities in medical devices and healthcare operational
+    technology, mirrored in CSAF format in the cisagov/CSAF repository. They are far less frequent than general ICS
+    advisories. The table is computed from the repository as it stood before the information date.
+# ================= V-GHSA: open-source advisory databases (shared records) =================
+- seed_id: ghsa-reviewed-2026q3
+  role: primary
+  block_id: V-GHSA
+  source: ghsa
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of GitHub-reviewed advisories in the GitHub Advisory Database (github/advisory-database repository)
+    whose github_reviewed_at timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding withdrawn
+    advisories, as of the repository state on 2026-11-02.
+  evidence: >-
+    The GitHub Advisory Database records vulnerabilities in open-source packages (npm, PyPI, Maven, Go, crates.io
+    and others). GitHub's curation team reviews advisories that come from maintainers' repository security
+    advisories, CVE feeds and community contributions, and records when each was marked GitHub-reviewed. Malware
+    advisories are not in this repository. Volume depends on maintainer and researcher disclosure and on curation
+    capacity. The table is computed from the repository as it stood before the information date.
+- seed_id: go-vulndb-reports-2026q3
+  role: primary
+  block_id: V-GHSA
+  source: osv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of Go vulnerability database reports (IDs beginning "GO-") in OSV.dev's Go ecosystem export, as
+    retrieved on 2026-11-02, whose published timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding
+    withdrawn reports.
+  evidence: >-
+    The Go vulnerability database, maintained by the Go security team, publishes reports on vulnerabilities in Go
+    modules, many triaged from GitHub advisories and CVEs that affect Go code, and exports them to OSV.dev with a
+    published timestamp. Reports are sometimes published in batches when a backlog is processed.
+- seed_id: rustsec-advisories-2026q3
+  role: primary
+  block_id: V-GHSA
+  source: osv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of RustSec advisories (IDs beginning "RUSTSEC-") in OSV.dev's crates.io ecosystem export, as retrieved
+    on 2026-11-02, whose published timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding withdrawn
+    advisories.
+  evidence: >-
+    The RustSec Advisory Database, maintained by the Rust Secure Code working group, records vulnerabilities,
+    memory-safety unsoundness and unmaintained-crate notices for Rust crates, and exports them to OSV.dev with a
+    published timestamp taken from the advisory's date, which can precede the advisory's addition to the database.
+    Many RustSec advisories are mirrored in the GitHub Advisory Database. Months after May 2026 are omitted from the
+    table because advisories dated then may not have been added by the information date.
+# ================= S-MAL: malicious packages (OpenSSF via OSV) =================
+- seed_id: osv-mal-npm-2026q3
+  role: primary
+  block_id: S-MAL
+  source: osv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of malicious-package records (IDs beginning "MAL-") in OSV.dev's npm ecosystem export, as retrieved on
+    2026-11-02, whose published timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding withdrawn
+    records.
+  evidence: &mal_evidence >-
+    OpenSSF's malicious-packages project publishes OSV records (MAL- IDs) for open-source packages found to contain
+    malware, such as credential stealers and typosquats, fed by automated scanners and security vendors; the
+    records appear in OSV.dev's per-ecosystem exports. A single campaign can produce hundreds or thousands of
+    records in a day, so counts are lumpy and track detection and reporting pipelines as well as attacker activity.
+- seed_id: osv-mal-pypi-2026q3
+  role: primary
+  block_id: S-MAL
+  source: osv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of malicious-package records (IDs beginning "MAL-") in OSV.dev's PyPI ecosystem export, as retrieved on
+    2026-11-02, whose published timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding withdrawn
+    records.
+  evidence: *mal_evidence
+- seed_id: osv-mal-crates-2026q3
+  role: primary
+  block_id: S-MAL
+  source: osv
+  unit: count
+  can_resolve_to_zero: true
+  quantity: >-
+    Number of malicious-package records (IDs beginning "MAL-") in OSV.dev's crates.io (Rust) ecosystem export, as
+    retrieved on 2026-11-02, whose published timestamp falls from 2026-07-01 through 2026-09-30 (UTC), excluding
+    withdrawn records.
+  evidence: >-
+    OpenSSF's malicious-packages project publishes OSV records (MAL- IDs) for packages found to contain malware.
+    Malicious Rust crates on crates.io have been reported far less often than malicious npm or PyPI packages;
+    several quarters have none.
+# ================= X-EDB: public exploit code =================
+- seed_id: exploitdb-additions-2026q3
+  role: primary
+  block_id: X-EDB
+  source: exploitdb
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct entry IDs in the Exploit Database index files_exploits.csv (GitLab
+    exploit-database/exploitdb, main branch, as retrieved on 2026-11-02) whose date_added falls from 2026-07-01
+    through 2026-09-30.
+  evidence: >-
+    Exploit Database, maintained by OffSec, archives public exploit code and proof-of-concept submissions and
+    records when each entry was added (date_added). Additions are made in irregular batches as submissions are
+    processed, so quarterly counts swing widely.
+# ================= B-NOTICE: breach notifications (shared incidents across HHS and state lists) =================
+- seed_id: hhs-ocr-breaches-2026q3
+  role: primary
+  block_id: B-NOTICE
+  source: hhs_ocr
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of breaches of unsecured protected health information affecting 500 or more individuals listed on the
+    HHS Office for Civil Rights breach portal (under-investigation and archive lists combined) with a Breach
+    Submission Date from 2026-07-01 through 2026-09-30, as the portal lists them on 2026-11-02.
+  evidence: >-
+    HIPAA covered entities must report breaches of unsecured protected health information affecting 500 or more
+    individuals to HHS within 60 days of discovery; business associates notify the covered entity, which reports.
+    The HHS Office for Civil Rights lists the reports on a public portal and moves closed investigations to an
+    archive list. The submission date is when the report reached OCR, often weeks or months after the breach. One
+    vendor incident can generate many separate reports from affected covered entities. Months after May 2026 are
+    omitted from the table because reports submitted then may not have been posted by the information date.
+- seed_id: ca-ag-breach-notices-2026q3
+  role: primary
+  block_id: B-NOTICE
+  source: ca_ag
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of rows in the California Attorney General's data security breach list (CSV export of
+    oag.ca.gov/privacy/databreach/list, as retrieved on 2026-11-02) with a Reported Date from 2026-07-01 through
+    2026-09-30.
+  evidence: >-
+    California law requires businesses and agencies to submit a sample consumer notice to the Attorney General when
+    a breach affects more than 500 California residents; the Attorney General posts each submission with the date
+    reported. One incident can yield more than one posted notice (for example separate entities or supplemental
+    notices), and large multi-state incidents also appear in other states' lists and in HHS reports. Months after
+    May 2026 are omitted from the table because notices reported then may not have been posted by the information
+    date.
+- seed_id: wa-ag-ransomware-notices-2026q3
+  role: primary
+  block_id: B-NOTICE
+  source: wa_ag
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of records in the Washington Attorney General's "Data Breach Notifications Affecting Washington
+    Residents" dataset (data.wa.gov dataset sb4j-ca4h, as retrieved on 2026-11-02) with a date submitted from
+    2026-07-01 through 2026-09-30 and a cyberattack type of "Ransomware".
+  evidence: >-
+    Washington law requires notice to the Attorney General when a breach affects more than 500 Washington
+    residents. The Attorney General publishes each notice with the submission date, the number of Washington
+    residents affected, the breach cause and, for cyberattacks, the attack type (for example ransomware, malware or
+    phishing). Months after May 2026 are omitted from the table because notices submitted then may not have been
+    posted by the information date.
+# ================= B-SEC: public-company cyber incident disclosures =================
+- seed_id: sec-8k-item105-2026q3
+  role: primary
+  block_id: B-SEC
+  source: sec_edgar
+  unit: count
+  can_resolve_to_zero: true
+  quantity: >-
+    Number of original Form 8-K filings (excluding 8-K/A amendments) filed on SEC EDGAR from 2026-07-01 through
+    2026-09-30 whose EDGAR item metadata includes Item 1.05 (Material Cybersecurity Incidents), among the filings
+    returned by EDGAR full-text search for "Item 1.05" or "Material Cybersecurity Incidents" on 2026-11-02.
+  evidence: &sec_evidence >-
+    Since 2023-12-18 (2024-06-15 for smaller reporting companies), domestic SEC registrants must disclose
+    cybersecurity incidents they determine to be material under Item 1.05 of Form 8-K, generally within four
+    business days of that determination; foreign private issuers report on Form 6-K instead. In May 2024 SEC staff
+    said that incidents not yet determined to be material should be disclosed under other items, such as Item
+    8.01, rather than Item 1.05. Amendments (8-K/A) that update an earlier filing are not counted.
+- seed_id: sec-8k-item105-2026-10
+  role: primary
+  block_id: B-SEC
+  source: sec_edgar
+  unit: count
+  can_resolve_to_zero: true
+  quantity: >-
+    Number of original Form 8-K filings (excluding 8-K/A amendments) filed on SEC EDGAR from 2026-10-01 through
+    2026-10-31 whose EDGAR item metadata includes Item 1.05 (Material Cybersecurity Incidents), among the filings
+    returned by EDGAR full-text search for "Item 1.05" or "Material Cybersecurity Incidents" on 2026-11-02.
+  evidence: *sec_evidence
+- seed_id: sec-8k-cybersecurity-incident-2026q3
+  role: primary
+  block_id: B-SEC
+  source: sec_edgar
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of original Form 8-K filings (excluding 8-K/A amendments) filed on SEC EDGAR from 2026-07-01 through
+    2026-09-30 whose text contains the exact phrase "cybersecurity incident", as returned by EDGAR full-text search
+    on 2026-11-02.
+  evidence: >-
+    Companies mention a "cybersecurity incident" in Form 8-K filings when they disclose an incident under Item 1.05,
+    when they disclose one voluntarily under other items such as Item 8.01 or 7.01 (as SEC staff encouraged in May
+    2024 for incidents not yet determined to be material), when they update an earlier disclosure, and sometimes in
+    unrelated contexts such as financing agreements. Full-text search matches the phrase anywhere in a filing's
+    documents.
+# ================= F-CFPB: consumer fraud complaints =================
+- seed_id: cfpb-fraud-scam-complaints-2026q3
+  role: primary
+  block_id: F-CFPB
+  source: cfpb
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of complaints in the CFPB Consumer Complaint Database with issue "Fraud or scam" and a date received
+    from 2026-07-01 through 2026-09-30, as returned by the CFPB public search API on 2026-11-02.
+  evidence: >-
+    The CFPB publishes consumer complaints about financial products after the company responds or after 15 days,
+    labelled with the product and issue the consumer selected. The issue "Fraud or scam" is used mainly for money
+    transfer, virtual currency and money service complaints, such as payment-app and transfer scams. The database
+    is not a statistical sample; volume depends on consumer awareness and CFPB operations. Months after May 2026
+    are omitted from the table because complaints received then were not fully published by the information date.
+- seed_id: cfpb-money-transfer-complaints-2026q3
+  role: primary
+  block_id: F-CFPB
+  source: cfpb
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of complaints in the CFPB Consumer Complaint Database with product "Money transfer, virtual currency,
+    or money service" and a date received from 2026-07-01 through 2026-09-30, as returned by the CFPB public search
+    API on 2026-11-02.
+  evidence: >-
+    The CFPB publishes consumer complaints after the company responds or after 15 days. The product "Money
+    transfer, virtual currency, or money service" covers payment apps, wire and international transfers, virtual
+    currency and check cashing; common issues include fraud or scams and problems with transactions. The database
+    is not a statistical sample; volume depends on consumer awareness and CFPB operations, and single campaigns of
+    similar complaints can produce spikes. Months after May 2026 are omitted from the table because complaints
+    received then were not fully published by the information date.
+- seed_id: cfpb-fraud-alert-complaints-2026q3
+  role: primary
+  block_id: F-CFPB
+  source: cfpb
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of complaints in the CFPB Consumer Complaint Database with issue "Problem with fraud alerts or security
+    freezes" and a date received from 2026-07-01 through 2026-09-30, as returned by the CFPB public search API on
+    2026-11-02.
+  evidence: >-
+    Consumers choose this issue, mainly in complaints about the nationwide credit reporting companies, when placing,
+    lifting or honouring a fraud alert or security freeze goes wrong, often after identity theft or a data breach.
+    The CFPB publishes complaints after the company responds or after 15 days; the database is not a statistical
+    sample. Months after May 2026 are omitted from the table because complaints received then were not fully
+    published by the information date.
+# ================= C-DEFI: DeFi exploits =================
+- seed_id: defihacklabs-incidents-2026q3
+  role: primary
+  block_id: C-DEFI
+  source: defihacklabs
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of incident headings of the form "### YYYYMMDD Name" (each such heading line counted once) in the
+    DeFiHackLabs repository's incident lists (README.md and the past-year README files at the repository's HEAD
+    commit on 2026-11-02) dated from 20260701 through 20260930.
+  evidence: >-
+    DeFiHackLabs is a community repository that reproduces decentralized-finance exploits as proof-of-concept tests
+    and lists each incident with its date, protocol, root cause and reported loss. An incident is listed only after
+    a contributor adds a reproduction, so entries can lag the exploit by days to months, and monthly counts reflect
+    contributor activity as well as how often exploits occur. The table is computed from the repository as it stood
+    before the information date.
+# ================= D-SGO: automated driving crash reports =================
+- seed_id: nhtsa-sgo-ads-reports-2026-07-08
+  role: primary
+  block_id: D-SGO
+  source: nhtsa_sgo
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct crash reports (Report IDs with at least one non-update report) in NHTSA's Standing General
+    Order 2021-01 Automated Driving System (ADS) incident report file whose earliest non-update report was submitted
+    in July or August 2026 (Report Submission Date JUL-2026 or AUG-2026), as published in the file retrieved on
+    2026-11-02.
+  evidence: >-
+    Under NHTSA's Standing General Order 2021-01, as amended in 2025, manufacturers and operators of vehicles with
+    automated driving systems must report crashes that meet the order's criteria, within days for the most serious
+    crashes and in monthly reports otherwise. NHTSA publishes the reports in monthly data releases with a lag of
+    about one to two months. A report is a reported crash, not a finding of fault, and counts scale with
+    automated-driving mileage such as robotaxi deployments. The table counts reports by initial submission month
+    under the amended order, from July 2025 through April 2026, the last month published by the information date.
+- seed_id: nhtsa-sgo-adas-reports-2026-07-08
+  role: primary
+  block_id: D-SGO
+  source: nhtsa_sgo
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct crash reports (Report IDs with at least one non-update report) in NHTSA's Standing General
+    Order 2021-01 Level 2 advanced driver assistance system (ADAS) incident report file whose earliest non-update
+    report was submitted in July or August 2026 (Report Submission Date JUL-2026 or AUG-2026), as published in the
+    file retrieved on 2026-11-02.
+  evidence: >-
+    Under NHTSA's Standing General Order 2021-01, as amended in 2025, manufacturers must report crashes of vehicles
+    with Level 2 driver assistance engaged when the crash meets the order's severity criteria. NHTSA publishes the
+    reports in monthly data releases with a lag of about one to two months. Counts depend on the size of the Level 2
+    fleet and on manufacturers' crash-detection capability; a report is not a finding of fault. The table counts
+    reports by initial submission month under the amended order, from July 2025 through April 2026, the last month
+    published by the information date.
+# ================= D-NHTSA: vehicle defects =================
+- seed_id: nhtsa-vehicle-recalls-2026q3
+  role: primary
+  block_id: D-NHTSA
+  source: nhtsa_defects
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct NHTSA vehicle recall campaigns (campaign numbers with recall type "V") whose Part 573 report
+    received date falls from 2026-07-01 through 2026-09-30, in NHTSA's recall flat file (FLAT_RCL_POST_2010) as
+    retrieved on 2026-11-02.
+  evidence: >-
+    Vehicle manufacturers must file a Part 573 Safety Recall Report with NHTSA within five business days of
+    determining that a safety defect or noncompliance exists, and NHTSA posts each campaign in its recall database.
+    Equipment, tire and child-seat recalls are excluded. One campaign can cover many models and millions of
+    vehicles.
+- seed_id: nhtsa-software-recalls-2026q3
+  role: primary
+  block_id: D-NHTSA
+  source: nhtsa_defects
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct NHTSA vehicle recall campaigns (recall type "V") whose Part 573 report received date falls
+    from 2026-07-01 through 2026-09-30 and for which at least one record's component description contains
+    "SOFTWARE", in NHTSA's recall flat file (FLAT_RCL_POST_2010) as retrieved on 2026-11-02.
+  evidence: >-
+    NHTSA codes the recalled component of each campaign record. Defects in vehicle software (for example
+    control-module, camera or display software) are often coded under component descriptions containing
+    "SOFTWARE"; the coding is NHTSA's and is not a complete measure of software-caused recalls, many of which are
+    remedied by over-the-air updates.
+- seed_id: nhtsa-odi-investigations-2026-07-10
+  role: primary
+  block_id: D-NHTSA
+  source: nhtsa_defects
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct NHTSA Office of Defects Investigation actions (preliminary evaluations, engineering analyses,
+    recall queries, defect petitions and audit queries) with an open date from 2026-07-01 through 2026-10-31, in
+    NHTSA's investigation flat file (FLAT_INV) as retrieved on 2026-11-02.
+  evidence: >-
+    NHTSA's Office of Defects Investigation opens investigations into possible vehicle safety defects (preliminary
+    evaluations and engineering analyses), into the adequacy of recall remedies (recall queries and audit queries),
+    and in response to defect petitions. Openings are few per month and vary with agency priorities and staffing.
+# ================= M-FDA: FDA enforcement reports =================
+- seed_id: fda-device-recall-events-2026q3
+  role: primary
+  block_id: M-FDA
+  source: openfda
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct recall events (event_id) among medical-device recall records in the openFDA device
+    enforcement endpoint whose report_date (FDA weekly Enforcement Report date) falls from 2026-07-01 through
+    2026-09-30, as returned on 2026-11-02.
+  evidence: >-
+    FDA's weekly Enforcement Report lists classified medical-device recalls (Class I to III); openFDA republishes
+    each recalled product as a record linked to its recall event. One event can cover many products. The report
+    date follows FDA's classification of the recall, often weeks to months after the firm initiated it.
+- seed_id: fda-device-software-recall-events-2026q3
+  role: primary
+  block_id: M-FDA
+  source: openfda
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct recall events (event_id) among medical-device recall records in the openFDA device
+    enforcement endpoint whose report_date falls from 2026-07-01 through 2026-09-30 and whose reason_for_recall
+    contains the text "software" (case-insensitive substring), as returned on 2026-11-02.
+  evidence: >-
+    FDA's weekly Enforcement Report gives a free-text reason for each medical-device recall; software errors (for
+    example in infusion pumps, imaging systems, laboratory analyzers and clinical software) are a recurring cause.
+    The text match counts events whose stated reason mentions software, including recalls where software is the
+    remedy rather than the defect.
+- seed_id: fda-drug-recall-events-2026q3
+  role: primary
+  block_id: M-FDA
+  source: openfda
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct recall events (event_id) among drug recall records in the openFDA drug enforcement endpoint
+    whose report_date (FDA weekly Enforcement Report date) falls from 2026-07-01 through 2026-09-30, as returned on
+    2026-11-02.
+  evidence: >-
+    FDA's weekly Enforcement Report also lists classified drug recalls (for example for contamination, potency,
+    impurities or labelling problems); openFDA republishes each recalled product as a record linked to its recall
+    event. A single event, such as a recall by a compounding pharmacy, can cover hundreds of products.
+# ================= G-FR: Federal Register =================
+- seed_id: fedreg-ai-documents-2026q3
+  role: primary
+  block_id: G-FR
+  source: federal_register
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of Federal Register documents of all types published from 2026-07-01 through 2026-09-30 that the Federal
+    Register API full-text search for the phrase "artificial intelligence" returns on 2026-11-02.
+  evidence: &fr_evidence >-
+    The Federal Register publishes U.S. federal rules, proposed rules, notices and presidential documents each
+    business day. The API's full-text search counts documents that mention a term anywhere, including passing
+    mentions in notices and information collections, so counts follow agency rulemaking and notice activity as well
+    as policy attention to the topic.
+- seed_id: fedreg-cybersecurity-documents-2026q3
+  role: primary
+  block_id: G-FR
+  source: federal_register
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of Federal Register documents of all types published from 2026-07-01 through 2026-09-30 that the Federal
+    Register API full-text search for "cybersecurity" returns on 2026-11-02.
+  evidence: *fr_evidence
+# ================= E-ARXIV: research output =================
+- seed_id: arxiv-cs-ai-2026q3
+  role: primary
+  block_id: E-ARXIV
+  source: arxiv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Sum of the entry totals shown on arXiv's monthly listing pages for the cs.AI (Artificial Intelligence) category
+    for July, August and September 2026 (https://arxiv.org/list/cs.AI/YYYY-MM), as displayed on 2026-11-02.
+  evidence: &arxiv_evidence >-
+    arXiv's monthly listing page for a category shows the total number of papers with that month's identifier whose
+    primary category is the category or that were cross-listed to it; later revisions of a paper do not add
+    entries. The count measures research output posted to arXiv, not incidents or deployments.
+- seed_id: arxiv-cs-cr-2026q3
+  role: primary
+  block_id: E-ARXIV
+  source: arxiv
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Sum of the entry totals shown on arXiv's monthly listing pages for the cs.CR (Cryptography and Security)
+    category for July, August and September 2026 (https://arxiv.org/list/cs.CR/YYYY-MM), as displayed on 2026-11-02.
+  evidence: *arxiv_evidence
+# ================= G-DOJ: DOJ press releases =================
+- seed_id: doj-cyber-press-releases-2026q3
+  role: primary
+  block_id: G-DOJ
+  source: doj
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct U.S. Department of Justice press releases with a release date (Eastern Time) from 2026-07-01
+    through 2026-09-30 whose topic list includes the topic "Cybercrime", as returned by the DOJ press releases API
+    (justice.gov/api/v1/press_releases.json) on 2026-11-02.
+  evidence: &doj_evidence >-
+    The Department of Justice publishes press releases from its Office of Public Affairs and U.S. Attorneys' offices
+    on charges, pleas, sentences, settlements and other actions, most tagged by DOJ with one or more topics (some
+    carry none). A single case can generate several releases (charge, plea, sentence), and volume depends on DOJ
+    priorities and staffing as well as on crime.
+- seed_id: doj-fraud-press-releases-2026q3
+  role: primary
+  block_id: G-DOJ
+  source: doj
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct U.S. Department of Justice press releases with a release date (Eastern Time) from 2026-07-01
+    through 2026-09-30 whose topic list includes the topic "Financial Fraud", as returned by the DOJ press releases
+    API (justice.gov/api/v1/press_releases.json) on 2026-11-02.
+  evidence: *doj_evidence
+# ================= G-SECLIT: SEC litigation releases =================
+- seed_id: sec-litigation-releases-2026q3
+  role: primary
+  block_id: G-SECLIT
+  source: sec_litigation
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct SEC litigation releases (numbered LR-NNNNN) with a release date from 2026-07-01 through
+    2026-09-30, as listed on the SEC's litigation releases pages on 2026-11-02.
+  evidence: &seclit_evidence >-
+    The SEC issues a numbered litigation release when it files a civil action in federal court and for significant
+    developments in such actions, such as judgments and settlements; many concern securities fraud, offering frauds
+    and crypto-asset schemes. Volume reflects the SEC's enforcement priorities, staffing and court calendars as well
+    as misconduct.
+- seed_id: sec-litigation-releases-2026-10
+  role: primary
+  block_id: G-SECLIT
+  source: sec_litigation
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct SEC litigation releases (numbered LR-NNNNN) with a release date from 2026-10-01 through
+    2026-10-31, as listed on the SEC's litigation releases pages on 2026-11-02.
+  evidence: *seclit_evidence
+# ================= G-OFAC: sanctions designations =================
+- seed_id: ofac-sdn-additions-2026q3
+  role: primary
+  block_id: G-OFAC
+  source: ofac
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct entity IDs added to OFAC's Specially Designated Nationals and Blocked Persons (SDN) list
+    (entities with action "add" and SDN list membership in the delta files) in Sanctions List Service publications
+    whose datePublished (Eastern Time) falls from 2026-07-01 through 2026-09-30, as the service's publication history and delta
+    files record them on 2026-11-02.
+  evidence: &ofac_evidence >-
+    OFAC publishes each change to its sanctions lists as a numbered publication, often several per week; each
+    publication's delta file lists the individuals, entities, vessels and aircraft added, updated or removed.
+    Additions to the SDN list follow designation actions under sanctions programs (for example counter-terrorism,
+    Iran-related, narcotics-related and cyber-related programs); one action can add dozens or hundreds of entries,
+    so counts are lumpy and follow foreign-policy priorities.
+- seed_id: ofac-sdn-additions-2026-10
+  role: primary
+  block_id: G-OFAC
+  source: ofac
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct entity IDs added to OFAC's Specially Designated Nationals and Blocked Persons (SDN) list
+    (entities with action "add" and SDN list membership in the delta files) in Sanctions List Service publications
+    whose datePublished (Eastern Time) falls from 2026-10-01 through 2026-10-31, as the service's publication history and delta
+    files record them on 2026-11-02.
+  evidence: *ofac_evidence
+
+# ================= Controls (windows before respondents' training cutoffs; not fitted) =================
+- seed_id: kev-additions-2026q1
+  role: control
+  block_id: V-KEV
+  source: cisa_kev
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of distinct CVE IDs in CISA's KEV catalog with a dateAdded from 2026-01-01 through 2026-03-31, as the
+    catalog's JSON feed records them on 2026-11-02.
+  evidence: *kev_evidence
+- seed_id: nvd-cves-published-2026q1
+  role: control
+  block_id: V-CVE
+  source: nvd
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of CVE records in the NIST National Vulnerability Database with a published date from
+    2026-01-01T00:00:00.000Z through 2026-03-31T23:59:59.999Z, excluding records with REJECTED status, as reported
+    by the NVD CVE API 2.0 (totalResults with the noRejected filter) on 2026-11-02.
+  evidence: *nvd_evidence
+- seed_id: hhs-ocr-breaches-2026q1
+  role: control
+  block_id: B-NOTICE
+  source: hhs_ocr
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Number of breaches affecting 500 or more individuals listed on the HHS Office for Civil Rights breach portal
+    (under-investigation and archive lists combined) with a Breach Submission Date from 2026-01-01 through
+    2026-03-31, as the portal lists them on 2026-11-02.
+  evidence: >-
+    HIPAA covered entities must report breaches of unsecured protected health information affecting 500 or more
+    individuals to HHS within 60 days of discovery; business associates notify the covered entity, which reports.
+    The HHS Office for Civil Rights lists the reports on a public portal and moves closed investigations to an
+    archive list. One vendor incident can generate many separate reports. December 2025 is omitted from the table
+    because reports submitted then may not have been posted by the information date.
+
+# ================= Secondary (maxima; reported, not fitted) =================
+- seed_id: hhs-ocr-largest-breach-2026q3
+  role: secondary
+  block_id: B-NOTICE
+  source: hhs_ocr
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Largest Individuals Affected value among breaches listed on the HHS Office for Civil Rights breach portal
+    (under-investigation and archive lists combined) with a Breach Submission Date from 2026-07-01 through
+    2026-09-30, as the portal lists them on 2026-11-02.
+  evidence: >-
+    The HHS OCR portal lists each reported HIPAA breach affecting 500 or more individuals with the number of
+    individuals affected as reported, which is sometimes revised later. A few very large incidents, often at health
+    plans, clearinghouses or vendors, dominate the total in most years. The table gives the largest single posting
+    per quarter through 2026-Q1.
+- seed_id: wa-ag-largest-notice-2026q3
+  role: secondary
+  block_id: B-NOTICE
+  source: wa_ag
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Largest number of Washington residents affected in a single record of the Washington Attorney General's data
+    breach notification dataset (data.wa.gov sb4j-ca4h, as retrieved on 2026-11-02) with a date submitted from
+    2026-07-01 through 2026-09-30.
+  evidence: >-
+    Washington's breach notification dataset records the number of Washington residents affected by each notified
+    breach. The table gives the largest single notice per quarter through 2026-Q1.
+- seed_id: nhtsa-largest-vehicle-recall-2026q3
+  role: secondary
+  block_id: D-NHTSA
+  source: nhtsa_defects
+  unit: count
+  can_resolve_to_zero: false
+  quantity: >-
+    Largest number of potentially affected vehicles in a single NHTSA vehicle recall campaign (recall type "V")
+    whose Part 573 report received date falls from 2026-07-01 through 2026-09-30, in NHTSA's recall flat file
+    (FLAT_RCL_POST_2010) as retrieved on 2026-11-02.
+  evidence: >-
+    Each Part 573 recall report states the number of vehicles potentially affected. Most campaigns cover hundreds to
+    tens of thousands of vehicles; a few cover more than a million. The table gives the largest campaign per
+    quarter.

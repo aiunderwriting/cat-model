@@ -1,0 +1,14 @@
+{
+  "plan_id": "golden-poisson",
+  "required_arms": [
+    "reference"
+  ],
+  "simulations": 20000,
+  "seed": 20261029,
+  "requested_views": [
+    "gross",
+    "oep_gross",
+    "financial",
+    "oep_financial"
+  ]
+}

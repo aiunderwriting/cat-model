@@ -1,0 +1,227 @@
+id: "enforcement_matter"
+name: "Government Enforcement Matter Against the Provider"
+node_ids: ["n_conduct_enforcement"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  A government authority, including an attorney general or a data-protection, consumer-protection or
+  AI-specific regulator, pursues an enforcement matter over the provider's own conduct. The whole
+  matter counts: every civil fine by every authority in it, injunctions, consent decrees, mandated
+  audits and operating restrictions, distinct noncivil penalties, and the provider's investigation,
+  defense and remediation costs, restitution, disgorgement and lost profit from bans or operating
+  restrictions, and customers' forced migration and switching costs when a ban or operating
+  restriction makes them move. Every action by any authority over the same conduct is one matter.
+  Statutory maxima, such as the EU AI Act's turnover-based ceilings, bound the fines of their
+  regimes and so shape the matter's severity; they are not a split. Enforcement that responds to an
+  AI incident follows that incident. A practice extended to new models keeps its original start
+  year, so a long-running practice never enters a later study year; the provider-conduct leaves
+  therefore mix dating rules, enforcement by conduct start and claims and designations by first
+  loss.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "liability_enforcement"
+  tail_class_rationale: >-
+    One matter's fines and costs are bounded by statutory maxima, one firm's balance sheet and its
+    customers' migration costs.
+  cap_posture: "uncapped"
+  uncapped_endpoint_stress: 50000000000
+  severity_cap_basis: >-
+    USD 50 billion is about the EU AI Act Article 99(3) maximum, 7% of the largest roster lab's
+    projected turnover of about USD 714 billion, and close to the combined GDPR 4% and Article 101
+    3% maxima on the same turnover. It is a stress, not a cap: one matter can combine several
+    regimes and authorities, US civil penalties accrue per violation, and Article 99(7) does not bar
+    a further fine for the same infringement, so the base severity is uncapped.
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One matter is one unit: one underlying course of the provider's conduct, with every action by
+    any authority on that conduct, its instruments, appeals and follow-on compliance obligations. A
+    distinct course of conduct is a separate matter, even when the same authority pursues both.
+    Extending a practice to a new model, product or release continues the same course of conduct. A
+    decision that fines several distinct courses of conduct is split by course, each dated by its
+    own start; a single unitemized fine covering several courses makes them one matter, dated by the
+    earliest course's start.
+  terminal_event_unit: >-
+    One admitted enforcement matter: a government enforcement process against the selected provider
+    as respondent over one course of its own AI-related conduct, other than a designation matter,
+    and {{admission}} over the matter's life, counting every civil fine at its final amount after
+    any appeal. The process may arise under any law, such as data-protection, consumer-protection,
+    competition, online-platform or AI-specific law. An information request, a study or sector
+    inquiry or a warning letter that opens no investigation or proceeding against the provider is
+    not such a process, whatever it costs to answer. The whole matter, with every authority's fines,
+    remedies and costs, belongs here. Where one government matter both bars or limits the supply of
+    the provider's models or services and imposes fines or other remedies, it is a designation
+    matter when that bar or limit causes the largest share of its gross loss, and an enforcement
+    matter otherwise. A matter over a product or line of business that does not involve the
+    provider's AI models is outside this scenario. Exclude enforcement that responds to an AI
+    incident, which follows that incident. Enforcement that responds to a reported weakness or risk,
+    and not to a misuse or failure incident, belongs here. So does enforcement over an attack or
+    fraud that used the provider's model without material assistance, where that attack is no
+    scenario's incident, even when the action alleges injury or death of identified persons, because
+    no counted incident injured them. Assistance is material when it gives the attacker capability,
+    scale or speed that the attacker would not have had without any AI model, and the loss, or more
+    than half of it, would not have occurred without that gain. A claim or enforcement action
+    alleging bodily or psychological injury or death of identified persons from the model's outputs
+    follows the incident that injured them, whatever theory is pleaded; product and consumer claims,
+    and enforcement, cover matters without such injury incidents. One enforcement action over a
+    practice that cites such injuries from several separately counted incidents is an enforcement
+    matter, and its fines and costs are part of none of those incidents. An incident below the
+    admission threshold is the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    A matter is assigned to the year in which the course of conduct it concerns first occurs, and
+    carries every fine, remedy and cost it eventually draws, whatever year they are imposed or paid;
+    a matter whose conduct began in an earlier year belongs to that year even when it is
+    investigated or fined in the study year.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted enforcement matter over its life. Include these five
+  components: (1) {{loss_component:provider_civil_fine}}; (2)
+  {{loss_component:provider_resource_cost}}; (3) {{loss_component:provider_noncivil_penalty}}; (4)
+  the provider's restitution and disgorgement payments and lost profit from bans or operating
+  restrictions the matter imposes, which are ordinary transfers; (5) customers' and
+  customer-deployers' forced migration and switching resources when those bans or operating
+  restrictions make them move, which the provider does not bear. Each civil fine counts at its final
+  amount after any appeal: a re-imposed fine replaces the fine it supersedes, an annulled fine
+  counts as zero, and a fine reduced on appeal keeps the exchange rate of its original imposition
+  date. Each component's exclusions apply only to that component. Costs are incremental relative to
+  the same conduct without the matter.
+# A government enforcement matter imposes fines, remedies and costs on the provider, and a ban can force its customers to migrate.
+facets:
+  peril_mechanism: ["enforcement_process"]
+  deployment_control_mode: "api"
+  harm_types: ["regulatory_sanction", "economic_loss"]
+  bearers: ["provider", "deployer_or_customer", "third_party_organizations"]
+  party_basis: "first_party"
+occurrence_unit_id: "enforcement_matter"
+attribution_nexus:
+  kind: "regulatory_respondent"
+  terminal_qualification: >-
+    The assigned provider is the respondent in the enforcement matter over its own conduct.
+estimand_composition:
+  status: "INITIAL_ESTIMATE"
+  rationale: >-
+    One enforcement matter can incur civil fines, noncivil penalties, the provider's incremental
+    compliance, defense and remediation resources, and ordinary transfers such as restitution,
+    disgorgement and profit lost to bans or operating restrictions, and customers' and
+    customer-deployers' forced migration and switching resources when a ban or operating restriction
+    makes them move. These are distinct forms, not a fixed fine share and a presumed resource
+    remainder. Their joint shares are uncollected elicitation targets; a zero share is valid.
+    Compensation of already-recorded victim harm is not additional gross loss.
+  evidence: >-
+    No matched data identify the joint shares of fines, penalties and resources in one matter.
+  cells:
+    - cell_id: "provider_civil_fine"
+      loss_form: >-
+        civil fines imposed on the selected provider in the matter, each at its final amount after
+        any appeal
+      nature: "transfer"
+      subject: "provider"
+      loss_type: "civil_fines"
+      attachment_basis: "regulatory_scenario"
+    - cell_id: "provider_resource_cost"
+      loss_form: >-
+        The selected provider's own incremental investigation, defense, remediation, restoration,
+        productive-asset impairment and lost productive output after avoided costs and replacement
+        supply, without capitalizing already-counted cash flows a second time; exclude civil fines,
+        other transfers, reimbursement and resources borne by anyone else. Exclude displaced profit
+        or market share gained by other standing parties; that is an ordinary transfer, not resource
+        destruction.
+      nature: "resource_cost"
+      subject: "provider"
+      loss_type: "remediation"
+      attachment_basis: "regulatory_scenario"
+    - cell_id: "provider_noncivil_penalty"
+      loss_form: >-
+        distinct noncivil penalties imposed on the selected provider, excluding civil fines,
+        response resources and restitution of already-recorded victim loss
+      nature: "transfer"
+      subject: "provider"
+      loss_type: "noncivil_penalties"
+      attachment_basis: "regulatory_scenario"
+    - cell_id: "provider_ordinary_transfer"
+      loss_form: >-
+        The selected provider's restitution and disgorgement payments in the matter, and its lost
+        profit from bans or operating restrictions the matter imposes to the extent other standing
+        parties gain that business. These ordinary transfers are the lab's loss with zero welfare
+        weight. Exclude civil fines, noncivil penalties, resource costs and compensation of an
+        already-recorded victim loss.
+      nature: "transfer"
+      subject: "provider"
+    - cell_id: "customer_migration_and_switching"
+      loss_form: >-
+        External customers' incremental forced migration, switching, requalification and
+        interruption resources caused by bans or operating restrictions the enforcement matter
+        imposes, including lost productive output after avoided costs and replacement supply. Here
+        external means the customer is neither the frontier provider nor a non-provider system
+        deployer; put a customer-deployer's own cost in the deployer cell. Exclude price differences
+        paid to a replacement supplier, which are ordinary transfers, and the provider's own costs.
+        Exclude displaced profit or market share gained by other standing parties; that is an
+        ordinary transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "third_party"
+    - cell_id: "deployer_migration_and_switching"
+      loss_form: >-
+        Non-provider customer-deployers' own incremental forced migration, re-engineering,
+        requalification and interruption resources caused by bans or operating restrictions the
+        enforcement matter imposes, including lost productive output after avoided costs and
+        replacement supply. Exclude external customers' costs, price differences paid to a
+        replacement supplier, which are ordinary transfers, and the provider's own costs. Exclude
+        displaced profit or market share gained by other standing parties; that is an ordinary
+        transfer, not resource destruction.
+      nature: "resource_cost"
+      subject: "other"
+event_chain:
+  opportunity:
+    unit: >-
+      One distinct course of the named lab's AI-related conduct that first occurs in the study year
+      and falls under at least one enforcement regime, such as a data-protection, AI-specific or
+      consumer-protection law: for example a new data-processing, deployment, documentation or
+      disclosure practice. Extending a practice to a new model, product or release continues that
+      course of conduct.
+    counting_rule: >-
+      Count one opportunity per course of conduct or grievance; each yields at most one qualified
+      matter.
+    cohort: >-
+      Courses of conduct that first occur in the study year; membership does not depend on later
+      enforcement.
+  exposure:
+    public:
+      unit: "1 million weekly active users of the consumer assistant"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0e-6
+        rationale: >-
+          Data-protection, AI-specific and consumer-protection regimes act mainly on the lab's
+          consumer footprint, which weekly users measure. New courses of conduct are few, so the
+          driver is a normalisation.
+        source: >-
+          INITIAL_ESTIMATE: no census of AI-related enforcement exists; public GDPR enforcement data
+          show enforcement concentrated on large consumer platforms.
+      derivation: >-
+        The stipulated number of weekly active users of the consumer assistant divided by 1 million.
+    internal:
+      unit: "1,000 lab staff"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          Internal and pre-release use has one stipulated scale, lab staff, so the internal rate is
+          per 1,000 lab staff, a normalisation: matters over not-yet-public models arise from the
+          lab's own conduct, which no stipulated scale measures.
+        source: >-
+          INITIAL_ESTIMATE: normalisation only; no stipulated scale measures the lab's own conduct.
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "authority_raises_conduct"
+      event: >-
+        An authority raises the conduct with the lab at any later time: it sends an inquiry or
+        information request, acts on a complaint referred to it, or opens an investigation or audit.
+empirical_grounding: >-
+  No governed dataset supports this population. Public records exist of regulators' decisions and
+  inquiries and of government suits against AI providers, and of fines and settlements imposed on
+  large technology companies, which are a severity analog. They are not a census of matters and do
+  not establish an AI provider's matter frequency or its defense, remediation and other non-fine
+  costs.

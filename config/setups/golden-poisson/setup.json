@@ -1,0 +1,198 @@
+{
+  "scope_id": "golden-poisson",
+  "title": "Hand-checkable compound Poisson golden example",
+  "period_start": "2027-01-01T00:00:00Z",
+  "period_end": "2028-01-01T00:00:00Z",
+  "forecast_as_of": "2027-01-01T00:00:00Z",
+  "data_cutoff": "2027-01-01T00:00:00Z",
+  "availability_cutoff": "2027-01-01T00:00:00Z",
+  "information_date": "2027-01-01T00:00:00Z",
+  "capability_scales": [
+    {
+      "scale_id": "fixed_score",
+      "quantity_definition": "Stipulated constant capability coordinate",
+      "unit": "stipulated index points",
+      "reference_definition": "Zero is the rate reference",
+      "measurement_protocol": "Openly stipulated example, not measurement."
+    }
+  ],
+  "entities": [
+    {
+      "entity_id": "model",
+      "kind": "model",
+      "revision": "r1",
+      "definition": "One fixed hypothetical model revision",
+      "display_name": "Example model",
+      "status": "hypothetical"
+    }
+  ],
+  "populations": [
+    {
+      "scenario_id": "golden",
+      "definition": "Every loss from the stipulated incident origin",
+      "causal_qualification": "Every counted incident qualifies",
+      "initiating_unit": "incident",
+      "terminal_unit": "incident",
+      "severity_unit": "incident ground-up loss",
+      "monetary_basis": "USD at study start before recovery",
+      "currency": "USD",
+      "accounting_standing": "Ground-up victim loss"
+    }
+  ],
+  "contracts": [
+    {
+      "contract_id": "policy",
+      "contract_year": "2027",
+      "entity_id": "model",
+      "occurrence_retention": 20,
+      "occurrence_limit": 50
+    }
+  ],
+  "joint_states": [
+    {
+      "state_id": "fixed",
+      "epistemic_group_id": "fixed",
+      "weight": 1,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "fixed_score",
+          "history_status": "stipulated",
+          "history_rationale": "Constant path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0,
+              "value": 0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1,
+              "value": 0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "incident",
+          "scenario_id": "golden",
+          "entity_id": "model",
+          "reference_annual_rate": 0.5,
+          "count_family": "poisson",
+          "response": {
+            "interpolation": "linear",
+            "extrapolation": "flat",
+            "points": [
+              {
+                "value": 0,
+                "multiplier": 1
+              }
+            ],
+            "held_fixed": "Constant rate; no capability response."
+          },
+          "segments": [
+            {
+              "start": 0,
+              "end": 1,
+              "reference_exposure_share": 1,
+              "initiation_probability": 1,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1
+                    }
+                  ]
+                },
+                "shared_probability": 1,
+                "unit_probability": 1,
+                "member_outcomes": [
+                  {
+                    "probability": 1,
+                    "components": [
+                      {
+                        "component_id": "victim_loss",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "scenario_ids": [
+                          "golden"
+                        ],
+                        "severity": {
+                          "kind": "native_severity",
+                          "schema_version": 1,
+                          "representation": "mixture",
+                          "components": [
+                            {
+                              "p5": 10,
+                              "p25": 10,
+                              "p50": 10,
+                              "p75": 10,
+                              "p95": 10
+                            },
+                            {
+                              "p5": 100,
+                              "p25": 100,
+                              "p50": 100,
+                              "p75": 100,
+                              "p95": 100
+                            }
+                          ],
+                          "weights": [
+                            0.8,
+                            0.2
+                          ]
+                        },
+                        "rank_group_id": "incident_loss"
+                      }
+                    ],
+                    "financial_mapping_complete": true,
+                    "obligations": [
+                      {
+                        "component_id": "victim_loss",
+                        "entity_id": "model",
+                        "fraction": 1
+                      }
+                    ],
+                    "payments": [
+                      {
+                        "component_id": "victim_loss",
+                        "entity_id": "model",
+                        "fraction": 1
+                      }
+                    ],
+                    "memberships": [
+                      {
+                        "component_id": "victim_loss",
+                        "contract_id": "policy",
+                        "obligated_entity_id": "model",
+                        "eligible": true
+                      }
+                    ]
+                  }
+                ],
+                "gate_meaning": "No qualification gate: every counted incident is a loss.",
+                "selection_assumption": "Two-point severity independent of the count.",
+                "displacement_assumption": "No displacement."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Every counted incident is a qualifying loss."
+        }
+      ]
+    }
+  ],
+  "independence_assumptions": [
+    "Incident severities are independent of each other and of the annual count."
+  ],
+  "limitations": [
+    "Hand-checkable software example; every number is stipulated, none is an empirical estimate."
+  ]
+}

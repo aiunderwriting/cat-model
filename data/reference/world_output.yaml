@@ -1,0 +1,25 @@
+# Reference for the report-only plausibility table (assumptions.md
+# NUM-PLAUSIBILITY), which divides each leaf's welfare EAL, and the total, by
+# world output for the study year and flags large shares.
+world_output:
+  measure: World gross domestic product, nominal
+  year: 2027
+  currency: USD
+  value: 135093000000000
+  basis: Current US dollars at market exchange rates.
+  status: OK
+  citation: >-
+    IMF World Economic Outlook database, October 2026 edition (GDP at current
+    prices in US dollars, World), read from the database on 2026-11-11: USD
+    111.906 trillion in 2024, 118.485 trillion in 2025, 128.004 trillion in
+    2026 and 135.093 trillion in 2027. The 2027 value is the IMF's projection,
+    not an outturn. USD 130 to 140 trillion is a reporting sensitivity, not a
+    forecast interval.
+# Chosen review triggers, not calibrated: a leaf's welfare EAL above 0.1%
+# of world output, or a total above 1%, is flagged for review. The same register
+# entry's thresholds on expected annual numbers of large incidents are
+# LARGE_INCIDENT_FLAGS in src/catmodel/results/plausibility.py.
+flags:
+  leaf_share: 0.001
+  total_share: 0.01
+  status: INITIAL_ESTIMATE

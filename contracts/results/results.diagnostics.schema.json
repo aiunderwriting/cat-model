@@ -1,0 +1,5075 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "results.diagnostics.json",
+  "description": "The rest of the report whose headline is in the results file beside it, tied to it by their analysis identity: the exhibits (catmodel.contracts.results.ResultsExhibits) and, under `arms`, each arm's view diagnostics (catmodel.contracts.results.ResultsDiagnostics). Every reason is stored as a code that the `reasons` table resolves.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "description": "The layout of results.json and of its diagnostics file; readers accept only the current version.",
+      "const": 1
+    },
+    "analysis_sha256": {
+      "description": "The analysis_sha256 of the results file beside it.",
+      "type": "string"
+    },
+    "sensitivity_summary": {
+      "$ref": "#/$defs/SensitivitySummary"
+    },
+    "workload": {
+      "$ref": "#/$defs/Workload"
+    },
+    "small_event_aggregation": {
+      "$ref": "#/$defs/SmallEventAggregation"
+    },
+    "capability_scenarios": {
+      "$ref": "#/$defs/CapabilityScenarios"
+    },
+    "tail_gate": {
+      "$ref": "#/$defs/TailGateResults"
+    },
+    "scenario_groups": {
+      "$ref": "#/$defs/ScenarioGroups"
+    },
+    "arms": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ArmDiagnostics"
+      }
+    },
+    "reasons": {
+      "description": "Each reason code in the file and its text. Every code has an entry, every entry is used, and each entry's code is its text's code.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/ReasonCode"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "analysis_sha256",
+    "sensitivity_summary",
+    "workload",
+    "small_event_aggregation",
+    "capability_scenarios",
+    "tail_gate",
+    "scenario_groups",
+    "arms",
+    "reasons"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "AnsweringModelShare": {
+      "type": "object",
+      "properties": {
+        "realized_share": {
+          "type": "number"
+        },
+        "equal_share": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "realized_share",
+        "equal_share"
+      ],
+      "additionalProperties": false
+    },
+    "ArmDiagnostics": {
+      "type": "object",
+      "properties": {
+        "limitations": {
+          "$ref": "#/$defs/DiagnosticLimitations"
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewDiagnostics"
+          }
+        }
+      },
+      "required": [
+        "limitations",
+        "views"
+      ],
+      "additionalProperties": false
+    },
+    "ArmTailGate": {
+      "type": "object",
+      "properties": {
+        "controls": {
+          "$ref": "#/$defs/TailGateControlsRecord"
+        },
+        "driver_views": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "follows_arm": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "states": {
+          "type": "integer"
+        },
+        "years_per_state": {
+          "type": "integer"
+        },
+        "max_years_per_state": {
+          "type": "integer"
+        },
+        "drivers_converged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "withheld_statistics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "controls",
+        "driver_views",
+        "follows_arm",
+        "states",
+        "years_per_state",
+        "max_years_per_state",
+        "drivers_converged",
+        "withheld_statistics"
+      ],
+      "additionalProperties": false
+    },
+    "ArmWorkload": {
+      "type": "object",
+      "properties": {
+        "conditional_states": {
+          "type": "integer"
+        },
+        "years_per_state": {
+          "type": "integer"
+        },
+        "conditional_years": {
+          "type": "integer"
+        },
+        "simulated_conditional_years": {
+          "type": "integer"
+        },
+        "follows_arm": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_years_per_state": {
+          "type": "integer"
+        },
+        "max_conditional_years": {
+          "type": "integer"
+        },
+        "max_work_per_state": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "conditional_states",
+        "years_per_state",
+        "conditional_years",
+        "simulated_conditional_years",
+        "follows_arm",
+        "max_years_per_state",
+        "max_conditional_years",
+        "max_work_per_state"
+      ],
+      "additionalProperties": false
+    },
+    "Availability": {
+      "enum": [
+        "available",
+        "unavailable"
+      ]
+    },
+    "AvailableBracketReference": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "normalized_empirical_mean": {
+          "type": "number"
+        },
+        "tail": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/BracketTail"
+          }
+        },
+        "mean_changing": {
+          "type": "boolean"
+        },
+        "coupling": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "expected_annual_loss",
+        "normalized_empirical_mean",
+        "tail",
+        "mean_changing",
+        "coupling"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableDependenceBracket": {
+      "description": "The executed and within-state comonotone scenario loss sums\n(`catmodel.results.dependence_bracket.dependence_bracket`).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "view": {
+          "type": "string"
+        },
+        "conditioning": {
+          "type": "string"
+        },
+        "scenario_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "references": {
+          "$ref": "#/$defs/BracketReferences"
+        },
+        "eal_estimator": {
+          "enum": [
+            "reference_native_mean",
+            "reference_weighted_empirical_mean"
+          ]
+        },
+        "tvar_estimators": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/TvarEstimator"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mean_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "precision": {
+          "$ref": "#/$defs/BracketPrecision"
+        },
+        "limitations": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "view",
+        "conditioning",
+        "scenario_views",
+        "references",
+        "eal_estimator",
+        "tvar_estimators",
+        "mean_unavailable_reason",
+        "precision",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableLargeLossScenario": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "stated_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pooled_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "extrapolated_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "modelled_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stated_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pooled_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "modelled_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "probability_at_least_one_large": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "probability_withheld_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          }
+        },
+        "gross_eal_share_at_or_above_large": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gross_eal_share_withheld_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          }
+        },
+        "severity_unresolved_gross_eal_share": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tail_shape_alternatives": {
+          "$ref": "#/$defs/LargeLossShapeAlternatives"
+        },
+        "two_anchor_tail": {
+          "$ref": "#/$defs/LargeLossTailAlternative"
+        },
+        "eal_alternatives": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/LargeLossViewEal"
+          }
+        },
+        "case_statuses": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "very_large_law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "stated_large_count",
+        "pooled_large_count",
+        "extrapolated_large_count",
+        "modelled_large_count",
+        "stated_very_large_count",
+        "pooled_very_large_count",
+        "modelled_very_large_count",
+        "probability_at_least_one_large",
+        "probability_withheld_reasons",
+        "gross_eal_share_at_or_above_large",
+        "gross_eal_share_withheld_reasons",
+        "severity_unresolved_gross_eal_share",
+        "tail_shape_alternatives",
+        "two_anchor_tail",
+        "eal_alternatives",
+        "case_statuses",
+        "law_roles",
+        "very_large_law_roles"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableLargeLossTotal": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "stated_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pooled_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "extrapolated_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "modelled_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stated_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pooled_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "modelled_very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "probability_at_least_one_large": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "probability_withheld_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          }
+        },
+        "gross_eal_share_at_or_above_large": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gross_eal_share_withheld_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReasonCode"
+          }
+        },
+        "severity_unresolved_gross_eal_share": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tail_shape_alternatives": {
+          "$ref": "#/$defs/LargeLossShapeAlternatives"
+        },
+        "two_anchor_tail": {
+          "$ref": "#/$defs/LargeLossTailAlternative"
+        },
+        "eal_alternatives": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/LargeLossViewEal"
+          }
+        },
+        "case_statuses": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "very_large_law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "severity_unresolved_cases": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "status",
+        "stated_large_count",
+        "pooled_large_count",
+        "extrapolated_large_count",
+        "modelled_large_count",
+        "stated_very_large_count",
+        "pooled_very_large_count",
+        "modelled_very_large_count",
+        "probability_at_least_one_large",
+        "probability_withheld_reasons",
+        "gross_eal_share_at_or_above_large",
+        "gross_eal_share_withheld_reasons",
+        "severity_unresolved_gross_eal_share",
+        "tail_shape_alternatives",
+        "two_anchor_tail",
+        "eal_alternatives",
+        "case_statuses",
+        "law_roles",
+        "very_large_law_roles",
+        "severity_unresolved_cases"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableParameterBand": {
+      "description": "The EAL parameter band of the welfare, gross and lab-loss views\n(`catmodel.results.eal_parameter_band.reported_parameter_band`).",
+      "type": "object",
+      "properties": {
+        "interpretation": {
+          "type": "string"
+        },
+        "method": {
+          "$ref": "#/$defs/BandMethod"
+        },
+        "incomplete_epistemic_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "incomplete_epistemic_groups_note": {
+          "type": "string"
+        },
+        "epistemic_groups": {
+          "type": "integer"
+        },
+        "states": {
+          "type": "integer"
+        },
+        "rank_groups": {
+          "type": "integer"
+        },
+        "ranked_laws": {
+          "type": "integer"
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewBand"
+          }
+        },
+        "status": {
+          "const": "available"
+        }
+      },
+      "required": [
+        "interpretation",
+        "method",
+        "views",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "AvailablePlausibility": {
+      "description": "Each scenario's welfare EAL, and the total, as a share of world output\n(`catmodel.results.plausibility`).",
+      "type": "object",
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/WorldOutputRecord"
+        },
+        "flags": {
+          "$ref": "#/$defs/PlausibilityFlagsRecord"
+        },
+        "view": {
+          "const": "welfare"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "status": {
+          "const": "available"
+        },
+        "study_year": {
+          "type": "integer"
+        },
+        "reference_year_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "total": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlausibilityRow"
+            },
+            {
+              "$ref": "#/$defs/Unavailable"
+            }
+          ]
+        },
+        "by_scenario": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/PlausibilityRow"
+              },
+              {
+                "$ref": "#/$defs/Unavailable"
+              }
+            ]
+          }
+        },
+        "flagged_scenarios": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "reference",
+        "flags",
+        "view",
+        "interpretation",
+        "status",
+        "study_year",
+        "reference_year_note",
+        "total",
+        "by_scenario",
+        "flagged_scenarios"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableRespondentSampling": {
+      "description": "Each sampling view's reference EAL with its respondent-sampling\nstandard error, and each arm's change against its control with the\nchange's standard error and z\n(`catmodel.results.respondent_sampling.respondent_sampling`).",
+      "type": "object",
+      "properties": {
+        "register_id": {
+          "const": "NUM-RESPONDENT-SAMPLING"
+        },
+        "status": {
+          "const": "available"
+        },
+        "groups": {
+          "type": "integer"
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "smallest_group": {
+          "type": "integer"
+        },
+        "noise_z": {
+          "type": "number"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SamplingLevel"
+              },
+              {
+                "$ref": "#/$defs/Unavailable"
+              }
+            ]
+          }
+        },
+        "comparisons": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SamplingComparison"
+                },
+                {
+                  "$ref": "#/$defs/UnavailableSamplingComparison"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "register_id",
+        "status",
+        "groups",
+        "samples",
+        "smallest_group",
+        "noise_z",
+        "interpretation",
+        "views",
+        "comparisons"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableScenarioGroups": {
+      "description": "The scenario EALs of `scenario_contributions` grouped by reporting\ndomain and by facet (`catmodel.results.scenario_groups`).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "measure": {
+          "enum": [
+            "welfare",
+            "gross",
+            "net_resource_cost"
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "axes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScenarioGroupAxis"
+          }
+        },
+        "unclassified_scenarios": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limitations": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "measure",
+        "expected_annual_loss",
+        "axes",
+        "unclassified_scenarios",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableTrajectoryQuadrature": {
+      "description": "Each integrated arm's EAL under the full and the embedded trajectory\nrule (`catmodel.results.sensitivity_results`).",
+      "type": "object",
+      "properties": {
+        "rule": {
+          "type": "string"
+        },
+        "interior_nodes": {
+          "type": "integer"
+        },
+        "embedded_interior_nodes": {
+          "type": "integer"
+        },
+        "view": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "status": {
+          "const": "available"
+        },
+        "estimator": {
+          "enum": [
+            "native_analytic_mean",
+            "empirical_mean"
+          ]
+        },
+        "by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/QuadratureArm"
+          }
+        }
+      },
+      "required": [
+        "rule",
+        "interior_nodes",
+        "embedded_interior_nodes",
+        "view",
+        "interpretation",
+        "status",
+        "estimator",
+        "by_arm"
+      ],
+      "additionalProperties": false
+    },
+    "AvailableViewBand": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "fixed_rate_expected_annual_loss": {
+          "type": "number"
+        },
+        "independent": {
+          "$ref": "#/$defs/IndependentBand"
+        },
+        "comonotone": {
+          "$ref": "#/$defs/BandQuantiles"
+        },
+        "by_rank_group": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/RankGroupBand"
+          }
+        },
+        "states": {
+          "type": "integer"
+        },
+        "incomplete_epistemic_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "expected_annual_loss",
+        "fixed_rate_expected_annual_loss",
+        "independent",
+        "comonotone",
+        "by_rank_group"
+      ],
+      "additionalProperties": false
+    },
+    "BandComonotoneMethod": {
+      "type": "object",
+      "properties": {
+        "rank_grid_points": {
+          "type": "integer"
+        },
+        "normal_score_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "rank_grid_points",
+        "normal_score_range"
+      ],
+      "additionalProperties": false
+    },
+    "BandIndependentMethod": {
+      "type": "object",
+      "properties": {
+        "seed": {
+          "type": "integer"
+        },
+        "samples_per_epistemic_group": {
+          "type": "integer"
+        },
+        "batches": {
+          "type": "integer"
+        },
+        "tolerance": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "seed",
+        "samples_per_epistemic_group",
+        "batches",
+        "tolerance"
+      ],
+      "additionalProperties": false
+    },
+    "BandMethod": {
+      "type": "object",
+      "properties": {
+        "probabilities": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "mixture": {
+          "type": "string"
+        },
+        "comonotone": {
+          "$ref": "#/$defs/BandComonotoneMethod"
+        },
+        "independent": {
+          "$ref": "#/$defs/BandIndependentMethod"
+        }
+      },
+      "required": [
+        "probabilities",
+        "mixture",
+        "comonotone",
+        "independent"
+      ],
+      "additionalProperties": false
+    },
+    "BandQuantiles": {
+      "type": "object",
+      "properties": {
+        "quantiles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "error_bounds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "quantiles",
+        "error_bounds"
+      ],
+      "additionalProperties": false
+    },
+    "BracketHalfWidth": {
+      "type": "object",
+      "properties": {
+        "var": {
+          "type": "number"
+        },
+        "tvar": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "var"
+      ],
+      "additionalProperties": false
+    },
+    "BracketPrecision": {
+      "type": "object",
+      "properties": {
+        "effective_sample_size": {
+          "type": "number"
+        },
+        "effective_tail_observations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "effective_sample_size",
+        "effective_tail_observations",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "BracketReference": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableBracketReference"
+        },
+        {
+          "$ref": "#/$defs/UnavailableBracketReference"
+        }
+      ]
+    },
+    "BracketReferences": {
+      "type": "object",
+      "properties": {
+        "executed": {
+          "$ref": "#/$defs/BracketReference"
+        },
+        "comonotone": {
+          "$ref": "#/$defs/BracketReference"
+        }
+      },
+      "required": [
+        "executed",
+        "comonotone"
+      ],
+      "additionalProperties": false
+    },
+    "BracketTail": {
+      "type": "object",
+      "properties": {
+        "var": {
+          "type": "number"
+        },
+        "tvar": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "available",
+            "withheld"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "half_width": {
+          "$ref": "#/$defs/BracketHalfWidth"
+        },
+        "minimum_batch_exceedances": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "var",
+        "tvar",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityNode": {
+      "description": "One trajectory node's arm, weight, kept samples and EALs.",
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "progress_cdf": {
+          "type": "number"
+        },
+        "eci_period_start": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_period_end": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "base_weight": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "arm": {
+          "type": "string"
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "by_view": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/NodeView"
+          }
+        }
+      },
+      "required": [
+        "node_id",
+        "progress",
+        "progress_cdf",
+        "eci_period_start",
+        "eci_period_end",
+        "base_weight",
+        "arm",
+        "samples",
+        "by_view"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityPercentiles": {
+      "type": "object",
+      "properties": {
+        "assumption_id": {
+          "const": "NUM-CAPABILITY-SCENARIOS"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "law": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "assumption_id",
+        "values",
+        "law"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityScenario": {
+      "description": "One representative capability path's annual loss laws and EALs.",
+      "type": "object",
+      "properties": {
+        "scenario": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forecast_probability": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "forecast_probability_note": {
+          "type": "string"
+        },
+        "percentile": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "progress": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "progress_cdf": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_period_start": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_period_end": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_by_lab": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/LabEci"
+          }
+        },
+        "arm": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interpolation": {
+          "$ref": "#/$defs/ScenarioInterpolation"
+        },
+        "by_view": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ScenarioView"
+          }
+        }
+      },
+      "required": [
+        "scenario",
+        "label",
+        "description",
+        "status",
+        "reason",
+        "forecast_probability",
+        "forecast_probability_note",
+        "percentile",
+        "progress",
+        "progress_cdf",
+        "eci_period_start",
+        "eci_period_end",
+        "eci_by_lab",
+        "arm",
+        "interpolation",
+        "by_view"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityScenarios": {
+      "description": "Deterministic percentile-path loss scenarios reduced from retained\ntrajectory-conditioned annual draws\n(`catmodel.results.capability_scenarios`).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "disclosures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "respondent_spread": {
+          "$ref": "#/$defs/RespondentSpread"
+        },
+        "percentiles": {
+          "$ref": "#/$defs/CapabilityPercentiles"
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "thresholds": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityScenario"
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityNode"
+          }
+        },
+        "reconciliation": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ScenarioReconciliation"
+          }
+        },
+        "safeguard_grid": {
+          "$ref": "#/$defs/SafeguardGrid"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "interpretation",
+        "disclosures",
+        "respondent_spread",
+        "percentiles",
+        "levels",
+        "thresholds",
+        "scenarios",
+        "nodes",
+        "reconciliation"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonGap": {
+      "description": "A frozen requirement that did not resolve as available or\ninapplicable.",
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string"
+        },
+        "arm_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus"
+        },
+        "outcome_status": {
+          "enum": [
+            "available",
+            "partial",
+            "missing",
+            "unassessed",
+            "unavailable",
+            "inapplicable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "family_id",
+        "arm_id",
+        "scenario_ids",
+        "status",
+        "outcome_status",
+        "reason",
+        "outcome_reason"
+      ],
+      "additionalProperties": false
+    },
+    "DependenceBracket": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableDependenceBracket"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "DiagnosticLimitations": {
+      "description": "What the mean and tail diagnostics of every view of an arm cover.",
+      "type": "object",
+      "properties": {
+        "mean_diagnostics": {
+          "type": "string"
+        },
+        "tail_diagnostics": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "mean_diagnostics",
+        "tail_diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "EalParameterBand": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableParameterBand"
+        },
+        {
+          "$ref": "#/$defs/UnavailableParameterBand"
+        },
+        {
+          "$ref": "#/$defs/WithheldParameterBand"
+        }
+      ]
+    },
+    "ExceedancePoint": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "withheld",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minimum_batch_exceedances": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "loss": {
+          "type": "number"
+        },
+        "probability": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "half_width",
+        "relative_half_width",
+        "minimum_batch_exceedances",
+        "loss",
+        "probability"
+      ],
+      "additionalProperties": false
+    },
+    "ExcludedSample": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "type": "string"
+        },
+        "respondent": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "items": false,
+          "minItems": 3
+        },
+        "unanswered": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UnansweredLeaf"
+          }
+        }
+      },
+      "required": [
+        "node",
+        "respondent",
+        "unanswered"
+      ],
+      "additionalProperties": false
+    },
+    "ExcludedSamples": {
+      "description": "The headline's excluded-sample disclosure, with each context variant\nstudy's by variant.",
+      "type": "object",
+      "properties": {
+        "register_id": {
+          "const": "POOL-EXCLUDED-SAMPLES"
+        },
+        "max_excluded_sample_share": {
+          "type": "number"
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "excluded_samples": {
+          "type": "integer"
+        },
+        "excluded_share": {
+          "type": "number"
+        },
+        "excluded_share_weighted": {
+          "type": "number"
+        },
+        "by_model": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ModelSamples"
+          }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExcludedSample"
+          }
+        },
+        "renormalized_weights": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/RenormalizedWeight"
+            }
+          }
+        },
+        "exhausted_calls": {
+          "$ref": "#/$defs/ExhaustedCalls"
+        },
+        "lab_loss_unavailable": {
+          "$ref": "#/$defs/LabLossUnavailable"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "unanswered_scenarios": {
+          "$ref": "#/$defs/UnansweredScenarios"
+        },
+        "exposure_scale_variants": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ExcludedSamplesRecord"
+          }
+        },
+        "safeguard_level_variants": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ExcludedSamplesRecord"
+          }
+        }
+      },
+      "required": [
+        "register_id",
+        "max_excluded_sample_share",
+        "samples",
+        "excluded_samples",
+        "excluded_share",
+        "excluded_share_weighted",
+        "by_model",
+        "excluded",
+        "renormalized_weights",
+        "exhausted_calls",
+        "lab_loss_unavailable",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "ExcludedSamplesRecord": {
+      "description": "The excluded samples, their shares and the weights they renormalized,\nevery exhausted call, every lab loss declared unavailable and, for a\nstudy with one, the leaves a model does not answer\n(`catmodel.setup.excluded_samples.excluded_samples_record`).",
+      "type": "object",
+      "properties": {
+        "register_id": {
+          "const": "POOL-EXCLUDED-SAMPLES"
+        },
+        "max_excluded_sample_share": {
+          "type": "number"
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "excluded_samples": {
+          "type": "integer"
+        },
+        "excluded_share": {
+          "type": "number"
+        },
+        "excluded_share_weighted": {
+          "type": "number"
+        },
+        "by_model": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ModelSamples"
+          }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExcludedSample"
+          }
+        },
+        "renormalized_weights": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/RenormalizedWeight"
+            }
+          }
+        },
+        "exhausted_calls": {
+          "$ref": "#/$defs/ExhaustedCalls"
+        },
+        "lab_loss_unavailable": {
+          "$ref": "#/$defs/LabLossUnavailable"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "unanswered_scenarios": {
+          "$ref": "#/$defs/UnansweredScenarios"
+        }
+      },
+      "required": [
+        "register_id",
+        "max_excluded_sample_share",
+        "samples",
+        "excluded_samples",
+        "excluded_share",
+        "excluded_share_weighted",
+        "by_model",
+        "excluded",
+        "renormalized_weights",
+        "exhausted_calls",
+        "lab_loss_unavailable",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "ExhaustedCalls": {
+      "type": "object",
+      "properties": {
+        "parse_attempts": {
+          "type": "integer"
+        },
+        "calls": {
+          "type": "integer"
+        },
+        "by_kind": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "propertyNames": {
+            "enum": [
+              "direct",
+              "chain",
+              "direct_severity_retry",
+              "chain_guardrail_retry",
+              "eal_crosscheck",
+              "eal_crosscheck_severity_retry",
+              "parent"
+            ]
+          }
+        },
+        "by_cause": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "by_subject": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/ExhaustedSubjectCalls"
+            },
+            "propertyNames": {
+              "enum": [
+                "direct",
+                "chain",
+                "direct_severity_retry",
+                "chain_guardrail_retry",
+                "eal_crosscheck",
+                "eal_crosscheck_severity_retry",
+                "parent"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "parse_attempts",
+        "calls",
+        "by_kind",
+        "by_cause",
+        "by_subject"
+      ],
+      "additionalProperties": false
+    },
+    "ExhaustedSubjectCalls": {
+      "type": "object",
+      "properties": {
+        "calls": {
+          "type": "integer"
+        },
+        "attempts": {
+          "type": "integer"
+        },
+        "by_cause": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "calls",
+        "attempts",
+        "by_cause"
+      ],
+      "additionalProperties": false
+    },
+    "FollowUpCounts": {
+      "description": "The kept cases a follow-up call was asked of and those whose answer it\nreplaced.",
+      "type": "object",
+      "properties": {
+        "cases_asked": {
+          "type": "integer"
+        },
+        "answers_replaced": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cases_asked",
+        "answers_replaced"
+      ],
+      "additionalProperties": false
+    },
+    "FollowUpEffect": {
+      "description": "One follow-up call's EAL effect in a view: the EAL of the arm that\nundoes it and of the arm it is compared with\n(`catmodel.setup.contextual_compilation.follow_up_effects`).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "inapplicable"
+          ]
+        },
+        "before_arm": {
+          "type": "string"
+        },
+        "after_arm": {
+          "type": "string"
+        },
+        "expected_annual_loss_before": {
+          "type": "number"
+        },
+        "expected_annual_loss_after": {
+          "type": "number"
+        },
+        "relative_change": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "before_arm",
+        "after_arm"
+      ],
+      "additionalProperties": false
+    },
+    "FrequencyArmEstimate": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "inapplicable"
+          ]
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "FrequencyEstimate": {
+      "description": "Reference EAL under each count arm and the dual collection's\nvalidation metrics, from the setup's evidence\n(`catmodel.setup.contextual_compilation.frequency_estimate_record`),\nwith each view's EAL in this run.\n\n`frequency_collection`, `eal_crosscheck` and `hierarchy` are the\ncollection's validation summaries, which setup import computes and the\nsetup's evidence carries; their layout is the collection's\n(`catmodel.calibration`), not the results'.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "const": "analytic_frequency_rescaling"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "tail_statistics": {
+          "type": "string"
+        },
+        "chain_pool_weight": {
+          "type": "number"
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/FrequencyViewEstimate"
+          }
+        },
+        "follow_ups": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/FollowUpCounts"
+          }
+        },
+        "frequency_collection": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "eal_crosscheck": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "hierarchy": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "method",
+        "interpretation",
+        "tail_statistics",
+        "chain_pool_weight",
+        "views",
+        "follow_ups",
+        "frequency_collection",
+        "eal_crosscheck",
+        "hierarchy"
+      ],
+      "additionalProperties": false
+    },
+    "FrequencyViewEstimate": {
+      "type": "object",
+      "properties": {
+        "by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/FrequencyArmEstimate"
+          }
+        },
+        "by_scenario": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "follow_up_effects": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/FollowUpEffect"
+          }
+        },
+        "run_expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_effect": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "by_arm",
+        "by_scenario",
+        "follow_up_effects",
+        "run_expected_annual_loss",
+        "relative_effect"
+      ],
+      "additionalProperties": false
+    },
+    "GateLevel": {
+      "description": "The tail gate's verdict on one level's VaR and TVaR.",
+      "type": "object",
+      "properties": {
+        "var": {
+          "$ref": "#/$defs/GateStatus"
+        },
+        "tvar": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GateStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum_batch_exceedances": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "var",
+        "tvar",
+        "minimum_batch_exceedances"
+      ],
+      "additionalProperties": false
+    },
+    "GateStatus": {
+      "description": "A statistic's batch-means 95% half-width and whether it is within the\ntail gate's tolerance (`catmodel.simulation.tail_gate`). A TVaR's\nhalf-width adds its integration margin: its coefficient times the\ncertified integration error bound of its EAL, over one minus the level.",
+      "type": "object",
+      "properties": {
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "converged",
+            "unconverged"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "half_width",
+        "relative_half_width",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "InapplicableLargeLossTotal": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "inapplicable"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "IndependentBand": {
+      "type": "object",
+      "properties": {
+        "quantiles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "convergence": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/GateStatus"
+          }
+        },
+        "sample_mean": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "quantiles",
+        "convergence",
+        "sample_mean"
+      ],
+      "additionalProperties": false
+    },
+    "LabEci": {
+      "type": "object",
+      "properties": {
+        "period_start": {
+          "type": "number"
+        },
+        "period_end": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "period_start",
+        "period_end"
+      ],
+      "additionalProperties": false
+    },
+    "LabLossCaseRead": {
+      "description": "A case whose direct answer declares the lab's loss unavailable, as a\nleft-out sample's states read it.",
+      "type": "object",
+      "properties": {
+        "context_id": {
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string"
+        },
+        "respondent": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "items": false,
+          "minItems": 3
+        }
+      },
+      "required": [
+        "context_id",
+        "node_id",
+        "respondent"
+      ],
+      "additionalProperties": false
+    },
+    "LabLossLeftOutSample": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "type": "string"
+        },
+        "respondent": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "items": false,
+          "minItems": 3
+        },
+        "reads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LabLossCaseRead"
+          }
+        }
+      },
+      "required": [
+        "node",
+        "respondent",
+        "reads"
+      ],
+      "additionalProperties": false
+    },
+    "LabLossPart": {
+      "enum": [
+        "lab_compensation",
+        "lab_annual_business_loss"
+      ]
+    },
+    "LabLossUnavailable": {
+      "description": "The cases whose direct answer declares a part of the lab's loss\nunavailable, over every capture, and what follows for the views that\ncount the lab's own loss, the lab-loss views and the gross views\n(`POOL-EXCLUDED-SAMPLES`). No such case excludes a sample or changes a\nweight in any other view.",
+      "type": "object",
+      "properties": {
+        "cases": {
+          "type": "integer"
+        },
+        "by_part": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/LabLossPart"
+          }
+        },
+        "by_subject": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/LabLossUnavailableCases"
+          }
+        },
+        "disposition": {
+          "enum": [
+            "none",
+            "samples_left_out",
+            "views_withheld"
+          ]
+        },
+        "left_out_samples": {
+          "type": "integer"
+        },
+        "left_out_by_model": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "left_out": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LabLossLeftOutSample"
+          }
+        },
+        "withheld_because": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cases",
+        "by_part",
+        "by_subject",
+        "disposition"
+      ],
+      "additionalProperties": false
+    },
+    "LabLossUnavailableCases": {
+      "type": "object",
+      "properties": {
+        "cases": {
+          "type": "integer"
+        },
+        "by_part": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/LabLossPart"
+          }
+        }
+      },
+      "required": [
+        "cases",
+        "by_part"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossAlternative": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "relative_effect": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossAnchor": {
+      "description": "Expected annual numbers of incidents at or above the large-loss levels\nand their EAL effects, from the setup's evidence\n(`catmodel.setup.contextual_compilation.large_loss_record`).",
+      "type": "object",
+      "properties": {
+        "method": {
+          "const": "analytic_tail_measures"
+        },
+        "levels": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LargeLossLevels"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "by_scenario": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/AvailableLargeLossScenario"
+              },
+              {
+                "$ref": "#/$defs/UnavailableLargeLossScenario"
+              }
+            ]
+          }
+        },
+        "total": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AvailableLargeLossTotal"
+            },
+            {
+              "$ref": "#/$defs/UnavailableLargeLossTotal"
+            },
+            {
+              "$ref": "#/$defs/InapplicableLargeLossTotal"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "levels",
+        "interpretation",
+        "by_scenario",
+        "total"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossLevels": {
+      "type": "object",
+      "properties": {
+        "large_loss": {
+          "type": "number"
+        },
+        "very_large_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "large_loss",
+        "very_large_loss"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossShapeAlternatives": {
+      "type": "object",
+      "properties": {
+        "shape_lower": {
+          "$ref": "#/$defs/LargeLossTailAlternative"
+        },
+        "shape_higher": {
+          "$ref": "#/$defs/LargeLossTailAlternative"
+        }
+      },
+      "required": [
+        "shape_lower",
+        "shape_higher"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossTailAlternative": {
+      "description": "The modelled counts at both levels and the gross EAL share from\nincidents at or above the large-loss level under an alternative tail.",
+      "type": "object",
+      "properties": {
+        "very_large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "large_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gross_eal_share_at_or_above_large": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "very_large_count",
+        "large_count",
+        "gross_eal_share_at_or_above_large"
+      ],
+      "additionalProperties": false
+    },
+    "LargeLossViewEal": {
+      "description": "A view's EAL under the run's laws and each analytic anchor\nalternative: the anchor ignored, its conditional odds scaled, and the\ntwo-anchor tail through the stated very-large-loss share.",
+      "type": "object",
+      "properties": {
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "anchor_ignored": {
+          "$ref": "#/$defs/LargeLossAlternative"
+        },
+        "anchor_lower": {
+          "$ref": "#/$defs/LargeLossAlternative"
+        },
+        "anchor_higher": {
+          "$ref": "#/$defs/LargeLossAlternative"
+        },
+        "two_anchor": {
+          "$ref": "#/$defs/LargeLossAlternative"
+        }
+      },
+      "required": [
+        "expected_annual_loss",
+        "anchor_ignored",
+        "anchor_lower",
+        "anchor_higher",
+        "two_anchor"
+      ],
+      "additionalProperties": false
+    },
+    "MeanDiagnostics": {
+      "description": "The empirical mean's batch-means standard error\n(`catmodel.results.reduction.mean_diagnostics`).",
+      "type": "object",
+      "properties": {
+        "empirical_mean_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "empirical_mean_standard_error_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "standard_error_basis": {
+          "const": "batch_means"
+        },
+        "empirical_mean_numerical_interval_95": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interval_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "empirical_mean_standard_error",
+        "empirical_mean_standard_error_unavailable_reason",
+        "standard_error_basis",
+        "empirical_mean_numerical_interval_95",
+        "interval_unavailable_reason"
+      ],
+      "additionalProperties": false
+    },
+    "ModelSamples": {
+      "type": "object",
+      "properties": {
+        "samples": {
+          "type": "integer"
+        },
+        "excluded": {
+          "type": "integer"
+        },
+        "excluded_share": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "samples",
+        "excluded",
+        "excluded_share"
+      ],
+      "additionalProperties": false
+    },
+    "NodeReference": {
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "number"
+        },
+        "progress_cdf": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "node_id",
+        "progress",
+        "progress_cdf"
+      ],
+      "additionalProperties": false
+    },
+    "NodeView": {
+      "type": "object",
+      "properties": {
+        "measure": {
+          "type": "string"
+        },
+        "source_status": {
+          "enum": [
+            "total",
+            "public",
+            "not_yet_public"
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sampling_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "measure",
+        "source_status",
+        "expected_annual_loss",
+        "status",
+        "reason",
+        "sampling_standard_error",
+        "sampling_reason"
+      ],
+      "additionalProperties": false
+    },
+    "PlausibilityFlagsRecord": {
+      "type": "object",
+      "properties": {
+        "leaf_share": {
+          "type": "number"
+        },
+        "total_share": {
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "OK",
+            "INITIAL_ESTIMATE",
+            "PLACEHOLDER"
+          ]
+        }
+      },
+      "required": [
+        "leaf_share",
+        "total_share",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "PlausibilityRow": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "eal_estimator": {
+          "type": "string"
+        },
+        "share_of_world_output": {
+          "type": "number"
+        },
+        "flagged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "expected_annual_loss",
+        "eal_estimator",
+        "share_of_world_output",
+        "flagged"
+      ],
+      "additionalProperties": false
+    },
+    "QuadratureArm": {
+      "type": "object",
+      "properties": {
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "embedded_rule_expected_annual_loss": {
+          "type": "number"
+        },
+        "absolute_difference": {
+          "type": "number"
+        },
+        "relative_difference": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_z": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "by_node": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/QuadratureNode"
+          }
+        },
+        "indicator": {
+          "enum": [
+            "exact",
+            "informative",
+            "uninformative"
+          ]
+        },
+        "indicator_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "expected_annual_loss",
+        "embedded_rule_expected_annual_loss",
+        "absolute_difference",
+        "relative_difference",
+        "sampling_standard_error",
+        "sampling_z",
+        "sampling_reason",
+        "by_node",
+        "indicator",
+        "indicator_reason"
+      ],
+      "additionalProperties": false
+    },
+    "QuadratureNode": {
+      "description": "One trajectory node's weights, kept samples and EAL contributions.",
+      "type": "object",
+      "properties": {
+        "progress": {
+          "type": "number"
+        },
+        "full_weight": {
+          "type": "number"
+        },
+        "embedded_weight": {
+          "type": "number"
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "state_eal_mean": {
+          "type": "number"
+        },
+        "state_eal_sd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "state_eal_sd_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "full_contribution": {
+          "type": "number"
+        },
+        "embedded_contribution": {
+          "type": "number"
+        },
+        "difference_contribution": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "progress",
+        "full_weight",
+        "embedded_weight",
+        "samples",
+        "state_eal_mean",
+        "state_eal_sd",
+        "state_eal_sd_reason",
+        "full_contribution",
+        "embedded_contribution",
+        "difference_contribution"
+      ],
+      "additionalProperties": false
+    },
+    "QuantilePoint": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "withheld",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minimum_batch_exceedances": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "non_exceedance_probability": {
+          "type": "number"
+        },
+        "return_period_years": {
+          "type": "number"
+        },
+        "annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "half_width",
+        "relative_half_width",
+        "minimum_batch_exceedances",
+        "non_exceedance_probability",
+        "return_period_years",
+        "annual_loss"
+      ],
+      "additionalProperties": false
+    },
+    "RankGroupBand": {
+      "type": "object",
+      "properties": {
+        "quantiles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "error_bounds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "quantiles",
+        "error_bounds",
+        "scenario_ids",
+        "expected_annual_loss"
+      ],
+      "additionalProperties": false
+    },
+    "RankingStatus": {
+      "enum": [
+        "available",
+        "unavailable",
+        "withheld",
+        "not_requested",
+        "inapplicable"
+      ]
+    },
+    "ReasonCode": {
+      "description": "A reason's code: the first 12 hexadecimal digits of the SHA-256 of its UTF-8 text. A reason is a string under a key named `reason` or ending in `_reason`, or any string in the value of a key ending in `_reasons` or containing `_reasons_`; the file stores each as its code, and its `reasons` table gives the text.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{12}$"
+    },
+    "RenormalizedWeight": {
+      "type": "object",
+      "properties": {
+        "samples": {
+          "type": "integer"
+        },
+        "kept": {
+          "type": "integer"
+        },
+        "model_weight": {
+          "type": "number"
+        },
+        "weight_per_sample": {
+          "type": "number"
+        },
+        "weight_per_kept_sample": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "samples",
+        "kept",
+        "model_weight",
+        "weight_per_sample",
+        "weight_per_kept_sample"
+      ],
+      "additionalProperties": false
+    },
+    "RequirementStatus": {
+      "enum": [
+        "required",
+        "unavailable",
+        "inapplicable"
+      ]
+    },
+    "RespondentSampling": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableRespondentSampling"
+        },
+        {
+          "$ref": "#/$defs/UnavailableRespondentSampling"
+        }
+      ]
+    },
+    "RespondentSpread": {
+      "description": "The respondent spread k and common level bias b the setup's count laws\nuse: both one, the stated laws at face value.",
+      "type": "object",
+      "properties": {
+        "k": {
+          "type": "number"
+        },
+        "basis": {
+          "const": "face_value"
+        },
+        "level_bias": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "k",
+        "basis",
+        "level_bias"
+      ],
+      "additionalProperties": false
+    },
+    "ResultsRanking": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/RankingStatus"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "SafeguardGrid": {
+      "description": "The capability scenarios over each safeguard level's own states.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "disclosures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SafeguardGridLevel"
+          }
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SafeguardGridCell"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "interpretation",
+        "disclosures",
+        "levels",
+        "cells"
+      ],
+      "additionalProperties": false
+    },
+    "SafeguardGridCell": {
+      "type": "object",
+      "properties": {
+        "scenario": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forecast_probability": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "forecast_probability_note": {
+          "type": "string"
+        },
+        "percentile": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "progress": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "progress_cdf": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_period_start": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_period_end": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "eci_by_lab": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/LabEci"
+          }
+        },
+        "arm": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interpolation": {
+          "$ref": "#/$defs/ScenarioInterpolation"
+        },
+        "by_view": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ScenarioView"
+          }
+        },
+        "safeguard_level": {
+          "$ref": "#/$defs/SafeguardLevel"
+        },
+        "safeguard_arm": {
+          "type": "string"
+        },
+        "capability_clamped": {
+          "type": "boolean"
+        },
+        "clamped_node": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NodeReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "clamp_log_progress_gap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "scenario",
+        "label",
+        "description",
+        "status",
+        "reason",
+        "forecast_probability",
+        "forecast_probability_note",
+        "percentile",
+        "progress",
+        "progress_cdf",
+        "eci_period_start",
+        "eci_period_end",
+        "eci_by_lab",
+        "arm",
+        "interpolation",
+        "by_view",
+        "safeguard_level",
+        "safeguard_arm",
+        "capability_clamped",
+        "clamped_node",
+        "clamp_log_progress_gap"
+      ],
+      "additionalProperties": false
+    },
+    "SafeguardGridLevel": {
+      "type": "object",
+      "properties": {
+        "safeguard_level": {
+          "$ref": "#/$defs/SafeguardLevel"
+        },
+        "safeguard_arm": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityNode"
+          }
+        }
+      },
+      "required": [
+        "safeguard_level",
+        "safeguard_arm",
+        "status",
+        "reason",
+        "nodes"
+      ],
+      "additionalProperties": false
+    },
+    "SafeguardLevel": {
+      "enum": [
+        "weaker",
+        "current",
+        "stronger"
+      ]
+    },
+    "SamplingComparison": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "control_arm": {
+          "type": "string"
+        },
+        "control_eal": {
+          "type": "number"
+        },
+        "alternative_eal": {
+          "type": "number"
+        },
+        "absolute_difference": {
+          "type": "number"
+        },
+        "sampling_standard_error": {
+          "type": "number"
+        },
+        "sampling_z": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "control_arm",
+        "control_eal",
+        "alternative_eal",
+        "absolute_difference",
+        "sampling_standard_error",
+        "sampling_z"
+      ],
+      "additionalProperties": false
+    },
+    "SamplingLevel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "expected_annual_loss": {
+          "type": "number"
+        },
+        "sampling_standard_error": {
+          "type": "number"
+        },
+        "relative_sampling_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "expected_annual_loss",
+        "sampling_standard_error",
+        "relative_sampling_standard_error"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioGroup": {
+      "description": "The scenarios with one value on a grouping axis, and their summed EAL.\nA `lower_bound` leaves out the group's scenarios without an EAL.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "available",
+            "lower_bound",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "share_of_total": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "scenario_ids",
+        "status",
+        "reason",
+        "expected_annual_loss",
+        "share_of_total"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioGroupAxis": {
+      "description": "One grouping axis. Each classified scenario is in one of its groups.",
+      "type": "object",
+      "properties": {
+        "axis": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScenarioGroup"
+          }
+        }
+      },
+      "required": [
+        "axis",
+        "groups"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioGroups": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableScenarioGroups"
+        },
+        {
+          "$ref": "#/$defs/UnavailableScenarioGroups"
+        }
+      ]
+    },
+    "ScenarioInterpolation": {
+      "type": "object",
+      "properties": {
+        "lower_node": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NodeReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "upper_node": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NodeReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "weight": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "exact_node": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "lower_node",
+        "upper_node",
+        "weight",
+        "exact_node"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioReconciliation": {
+      "description": "Whether the current-frontier scenario reproduces the no-progress\narm's reported EAL.",
+      "type": "object",
+      "properties": {
+        "scenario": {
+          "const": "current_frontier"
+        },
+        "arm": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_frontier_expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "no_progress_arm_expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "scenario",
+        "arm",
+        "status",
+        "reason",
+        "current_frontier_expected_annual_loss",
+        "no_progress_arm_expected_annual_loss"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioView": {
+      "type": "object",
+      "properties": {
+        "view": {
+          "type": "string"
+        },
+        "measure": {
+          "type": "string"
+        },
+        "source_status": {
+          "enum": [
+            "total",
+            "public",
+            "not_yet_public"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "years_per_state": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "quantiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QuantilePoint"
+          }
+        },
+        "exceedance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExceedancePoint"
+          }
+        }
+      },
+      "required": [
+        "view",
+        "measure",
+        "source_status",
+        "status",
+        "reason",
+        "expected_annual_loss",
+        "sampling_standard_error",
+        "sampling_reason",
+        "years_per_state",
+        "quantiles",
+        "exceedance"
+      ],
+      "additionalProperties": false
+    },
+    "SensitivitySummary": {
+      "description": "EAL effects of the executed assumption challenges, what is missing,\nand the exhibits that rest on the reference capture or the setup's\nevidence (`catmodel.results.sensitivity_results`).",
+      "type": "object",
+      "properties": {
+        "analysis_sha256": {
+          "type": "string"
+        },
+        "reference_arm": {
+          "type": "string"
+        },
+        "comparison_status": {
+          "enum": [
+            "complete",
+            "partial",
+            "not_requested",
+            "inapplicable"
+          ]
+        },
+        "scenario_eal": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/ViewEal"
+            }
+          }
+        },
+        "aggregate_eal": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewEal"
+          }
+        },
+        "comparison_gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComparisonGap"
+          }
+        },
+        "tornado": {
+          "$ref": "#/$defs/Tornado"
+        },
+        "respondent_sampling": {
+          "$ref": "#/$defs/RespondentSampling"
+        },
+        "trajectory_quadrature": {
+          "$ref": "#/$defs/TrajectoryQuadrature"
+        },
+        "frequency_estimate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FrequencyEstimate"
+            },
+            {
+              "$ref": "#/$defs/WithheldExhibit"
+            }
+          ]
+        },
+        "hierarchy_pool": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "large_loss_anchor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LargeLossAnchor"
+            },
+            {
+              "$ref": "#/$defs/WithheldExhibit"
+            }
+          ]
+        },
+        "excluded_samples": {
+          "$ref": "#/$defs/ExcludedSamples"
+        },
+        "plausibility": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AvailablePlausibility"
+            },
+            {
+              "$ref": "#/$defs/UnavailablePlausibility"
+            }
+          ]
+        },
+        "dependence_bracket": {
+          "$ref": "#/$defs/DependenceBracket"
+        },
+        "eal_parameter_band": {
+          "$ref": "#/$defs/EalParameterBand"
+        }
+      },
+      "required": [
+        "analysis_sha256",
+        "reference_arm",
+        "comparison_status",
+        "scenario_eal",
+        "aggregate_eal",
+        "comparison_gaps",
+        "tornado",
+        "respondent_sampling",
+        "plausibility",
+        "dependence_bracket",
+        "eal_parameter_band"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventAggregation": {
+      "description": "Split points, controls and each view's TVaR envelope of the summed\nsmall events (`catmodel.simulation.small_events.small_event_results`).",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "controls": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SmallEventControlsRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "events": {
+          "$ref": "#/$defs/SmallEventCounts"
+        },
+        "split_points_by_origin": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/SmallEventSplitRange"
+          }
+        },
+        "error_envelope": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/SmallEventArmEnvelope"
+          }
+        },
+        "envelope_basis": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "controls",
+        "events",
+        "split_points_by_origin",
+        "error_envelope",
+        "envelope_basis"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventArmEnvelope": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/SmallEventViewEnvelope"
+          }
+        }
+      },
+      "required": [
+        "reason",
+        "views"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventControlsRecord": {
+      "description": "The resolved small-event controls (`SmallEventControls.record`).",
+      "type": "object",
+      "properties": {
+        "target_large_events_per_year": {
+          "type": "number"
+        },
+        "max_body_skewness": {
+          "type": "number"
+        },
+        "body": {
+          "enum": [
+            "normal",
+            "individual"
+          ]
+        },
+        "bucket_rate_ratio": {
+          "type": "number"
+        },
+        "top_rank_score": {
+          "type": "number"
+        },
+        "min_summed_count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "target_large_events_per_year",
+        "max_body_skewness",
+        "body",
+        "bucket_rate_ratio",
+        "top_rank_score",
+        "min_summed_count"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventCounts": {
+      "type": "object",
+      "properties": {
+        "individually_drawn": {
+          "type": "integer"
+        },
+        "summed": {
+          "type": "integer"
+        },
+        "fallback_years": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "individually_drawn",
+        "summed",
+        "fallback_years"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventSplitRange": {
+      "type": "object",
+      "properties": {
+        "states": {
+          "type": "integer"
+        },
+        "min_usd": {
+          "type": "number"
+        },
+        "max_usd": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "states",
+        "min_usd",
+        "max_usd"
+      ],
+      "additionalProperties": false
+    },
+    "SmallEventViewEnvelope": {
+      "type": "object",
+      "properties": {
+        "body_standard_deviation": {
+          "type": "number"
+        },
+        "tvar_bound": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "body_standard_deviation",
+        "tvar_bound"
+      ],
+      "additionalProperties": false
+    },
+    "SourceStatus": {
+      "enum": [
+        "public",
+        "not_yet_public"
+      ]
+    },
+    "StratumDiagnostics": {
+      "type": "object",
+      "properties": {
+        "probability": {
+          "type": "number"
+        },
+        "sample_mass": {
+          "type": "number"
+        },
+        "n_simulations": {
+          "type": "integer"
+        },
+        "positive_loss_samples": {
+          "type": "integer"
+        },
+        "seed": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "probability",
+        "sample_mass",
+        "n_simulations",
+        "positive_loss_samples",
+        "seed"
+      ],
+      "additionalProperties": false
+    },
+    "StratumEalPrecision": {
+      "description": "One state's native EAL estimator precision, as its native mean\nrecords it, or why it has none.",
+      "type": "object",
+      "properties": {
+        "numerical_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "standard_error_upper_bound": {
+          "type": "number"
+        },
+        "precision_basis": {
+          "const": "deterministic_integration"
+        },
+        "integration_error_bound": {
+          "type": "number"
+        },
+        "known_zero_law": {
+          "type": "boolean"
+        },
+        "precision_suppression_reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "numerical_standard_error"
+      ],
+      "additionalProperties": false
+    },
+    "SupportedGateStatus": {
+      "type": "object",
+      "properties": {
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "relative_half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "converged",
+            "unconverged"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "minimum_batch_exceedances": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "half_width",
+        "relative_half_width",
+        "status",
+        "minimum_batch_exceedances"
+      ],
+      "additionalProperties": false
+    },
+    "TailConvergence": {
+      "type": "object",
+      "properties": {
+        "batches": {
+          "type": "integer"
+        },
+        "years_per_state": {
+          "type": "integer"
+        },
+        "unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tolerance": {
+          "type": "number"
+        },
+        "probability_positive": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SupportedGateStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "batches",
+        "years_per_state",
+        "unavailable_reason",
+        "tolerance",
+        "probability_positive"
+      ],
+      "additionalProperties": false
+    },
+    "TailDiagnostic": {
+      "description": "One level's tail support and the method and reasons of its intervals\n(`catmodel.results.reduction.tail_diagnostics`).",
+      "type": "object",
+      "properties": {
+        "tvar_sample_tail_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "strict_exceedance_count": {
+          "type": "integer"
+        },
+        "positive_year_count": {
+          "type": "integer"
+        },
+        "simulated_year_count": {
+          "type": "integer"
+        },
+        "strict_exceedance_probability": {
+          "type": "number"
+        },
+        "tail_weight_effective_sample_size": {
+          "type": "number"
+        },
+        "tail_mass_effective_units": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tail_support_by_stratum": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/TailSupport"
+          }
+        },
+        "convergence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GateLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "var_interval_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "known_zero_law",
+                "batch_means"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tvar_numerical_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "var_interval_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tvar_interval_unavailable_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tvar_sample_tail_mean",
+        "strict_exceedance_count",
+        "positive_year_count",
+        "simulated_year_count",
+        "strict_exceedance_probability",
+        "tail_weight_effective_sample_size",
+        "tail_mass_effective_units",
+        "tail_support_by_stratum",
+        "convergence",
+        "var_interval_method",
+        "tvar_numerical_standard_error",
+        "var_interval_unavailable_reason",
+        "tvar_interval_unavailable_reason"
+      ],
+      "additionalProperties": false
+    },
+    "TailDiagnostics": {
+      "type": "object",
+      "properties": {
+        "tails": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/TailDiagnostic"
+          }
+        },
+        "convergence": {
+          "$ref": "#/$defs/TailConvergence"
+        }
+      },
+      "required": [
+        "tails",
+        "convergence"
+      ],
+      "additionalProperties": false
+    },
+    "TailGateControlsRecord": {
+      "description": "An arm's resolved tail gate (`TailGateControls.record`).",
+      "type": "object",
+      "properties": {
+        "tolerance": {
+          "type": "number"
+        },
+        "batches": {
+          "type": "integer"
+        },
+        "max_reference_state_years": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "max_comparison_state_years": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "views": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "levels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum_batch_exceedances": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "tolerance",
+        "batches",
+        "max_reference_state_years",
+        "max_comparison_state_years",
+        "views",
+        "levels",
+        "minimum_batch_exceedances"
+      ],
+      "additionalProperties": false
+    },
+    "TailGateResults": {
+      "description": "Each arm's tail gate controls, doubling rounds and withheld tail\nstatistics (`catmodel.simulation.tail_gate.tail_gate_results`).",
+      "type": "object",
+      "properties": {
+        "method": {
+          "const": "batch_means_sectioning"
+        },
+        "doublings": {
+          "type": "integer"
+        },
+        "rounds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TailGateRound"
+          }
+        },
+        "by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ArmTailGate"
+          }
+        }
+      },
+      "required": [
+        "method",
+        "doublings",
+        "rounds",
+        "by_arm"
+      ],
+      "additionalProperties": false
+    },
+    "TailGateRound": {
+      "type": "object",
+      "properties": {
+        "doubling": {
+          "type": "integer"
+        },
+        "unconverged_views": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "doubling",
+        "unconverged_views"
+      ],
+      "additionalProperties": false
+    },
+    "TailSupport": {
+      "description": "One state's descriptive support beyond a level's VaR.",
+      "type": "object",
+      "properties": {
+        "independent_unit_count": {
+          "type": "integer"
+        },
+        "tail_bearing_independent_unit_count": {
+          "type": "integer"
+        },
+        "tail_mass_effective_units": {
+          "type": "number"
+        },
+        "tail_excess_effective_units": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "independent_unit_count",
+        "tail_bearing_independent_unit_count",
+        "tail_mass_effective_units",
+        "tail_excess_effective_units"
+      ],
+      "additionalProperties": false
+    },
+    "Tornado": {
+      "description": "Executed EAL effects of assumption challenges in the headline view\n(`catmodel.results.sensitivity_summary.sensitivity_summary`).",
+      "type": "object",
+      "properties": {
+        "view": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ViewBasis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ViewEal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TornadoRow"
+          }
+        },
+        "extrapolation_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unavailable_arms": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "excluded_arms": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "not_assessed_families": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "results_ranking": {
+          "$ref": "#/$defs/ResultsRanking"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "view",
+        "basis",
+        "eal",
+        "rows",
+        "extrapolation_note",
+        "unavailable_arms",
+        "excluded_arms",
+        "not_assessed_families",
+        "results_ranking",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "TornadoRow": {
+      "type": "object",
+      "properties": {
+        "arm": {
+          "type": "string"
+        },
+        "control_arm": {
+          "type": "string"
+        },
+        "control_eal": {
+          "type": "number"
+        },
+        "alternative_eal": {
+          "type": "number"
+        },
+        "absolute_difference": {
+          "type": "number"
+        },
+        "relative_change": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mean_changing": {
+          "type": "boolean"
+        },
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_standard_error": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_z": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sampling_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "arm",
+        "control_arm",
+        "control_eal",
+        "alternative_eal",
+        "absolute_difference",
+        "relative_change",
+        "mean_changing",
+        "half_width",
+        "sampling_standard_error",
+        "sampling_z",
+        "sampling_reason"
+      ],
+      "additionalProperties": false
+    },
+    "TrajectoryQuadrature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableTrajectoryQuadrature"
+        },
+        {
+          "$ref": "#/$defs/UnavailableTrajectoryQuadrature"
+        }
+      ]
+    },
+    "TvarCoefficientBasis": {
+      "enum": [
+        "regression",
+        "infinite_variance",
+        "no_exact_mean"
+      ]
+    },
+    "TvarEstimator": {
+      "description": "The control-variate TVaR's coefficient and why it has that value.\n\nThe TVaR is the sample tail mean plus `coefficient` times the analytic\nEAL less the simulated years' mean, over one minus the level, and at\nleast the VaR. `coefficient_basis` is `regression` (estimated), or by\nlaw `infinite_variance` (one) or `no_exact_mean` (zero: the view has\nno analytic EAL, closed-form or certified).",
+      "type": "object",
+      "properties": {
+        "method": {
+          "const": "control_variate"
+        },
+        "coefficient": {
+          "type": "number"
+        },
+        "coefficient_basis": {
+          "$ref": "#/$defs/TvarCoefficientBasis"
+        }
+      },
+      "required": [
+        "method",
+        "coefficient",
+        "coefficient_basis"
+      ],
+      "additionalProperties": false
+    },
+    "UnansweredLeaf": {
+      "description": "A leaf an excluded sample lacks: its direct question exhausted its\nvalidation attempts in this context.",
+      "type": "object",
+      "properties": {
+        "context_id": {
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "context_id",
+        "node_id"
+      ],
+      "additionalProperties": false
+    },
+    "UnansweredLeafPool": {
+      "type": "object",
+      "properties": {
+        "scenario_id": {
+          "type": "string"
+        },
+        "answering_models": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/AnsweringModelShare"
+          }
+        }
+      },
+      "required": [
+        "scenario_id",
+        "answering_models"
+      ],
+      "additionalProperties": false
+    },
+    "UnansweredMatchedControl": {
+      "description": "How a variant study's unanswered pairs and donors compare with its\nheadline's, whose captures its matched control reweights.",
+      "type": "object",
+      "properties": {
+        "pairs_not_in_headline": {
+          "type": "integer"
+        },
+        "donors": {
+          "type": "integer"
+        },
+        "donors_not_headline": {
+          "type": "integer"
+        },
+        "differs": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "pairs_not_in_headline",
+        "donors",
+        "donors_not_headline",
+        "differs"
+      ],
+      "additionalProperties": false
+    },
+    "UnansweredPair": {
+      "description": "A leaf that a model does not answer: what makes it one, the model's\nsamples over every node of the study, those lacking the leaf and the\nexhausted direct calls behind them.",
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "type": "string"
+        },
+        "scenario_id": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "basis": {
+          "enum": [
+            "own",
+            "own_and_headline",
+            "headline"
+          ]
+        },
+        "samples": {
+          "type": "integer"
+        },
+        "lacking_samples": {
+          "type": "integer"
+        },
+        "lacking_share": {
+          "type": "number"
+        },
+        "exhausted_direct_calls": {
+          "$ref": "#/$defs/ExhaustedSubjectCalls"
+        }
+      },
+      "required": [
+        "node_id",
+        "scenario_id",
+        "model_id",
+        "basis",
+        "samples",
+        "lacking_samples",
+        "lacking_share",
+        "exhausted_direct_calls"
+      ],
+      "additionalProperties": false
+    },
+    "UnansweredScenarios": {
+      "description": "Each leaf that a model does not answer, the models that answer it with\ntheir shares of its pool, the leaves one model answers and, for a variant\nstudy, the comparison with its matched control\n(`POOL-UNANSWERED-SCENARIOS`).",
+      "type": "object",
+      "properties": {
+        "register_id": {
+          "const": "POOL-UNANSWERED-SCENARIOS"
+        },
+        "pairs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UnansweredPair"
+          }
+        },
+        "by_leaf": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/UnansweredLeafPool"
+          }
+        },
+        "leaves_on_one_model": {
+          "type": "integer"
+        },
+        "matched_control": {
+          "$ref": "#/$defs/UnansweredMatchedControl"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "register_id",
+        "pairs",
+        "by_leaf",
+        "leaves_on_one_model",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "Unavailable": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableBracketReference": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "coupling": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "coupling"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableLargeLossScenario": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "case_statuses": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "very_large_law_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "reasons",
+        "case_statuses",
+        "law_roles",
+        "very_large_law_roles"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableLargeLossTotal": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableParameterBand": {
+      "type": "object",
+      "properties": {
+        "interpretation": {
+          "type": "string"
+        },
+        "method": {
+          "$ref": "#/$defs/BandMethod"
+        },
+        "incomplete_epistemic_groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "incomplete_epistemic_groups_note": {
+          "type": "string"
+        },
+        "epistemic_groups": {
+          "type": "integer"
+        },
+        "states": {
+          "type": "integer"
+        },
+        "rank_groups": {
+          "type": "integer"
+        },
+        "ranked_laws": {
+          "type": "integer"
+        },
+        "views": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ViewBand"
+          }
+        },
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "interpretation",
+        "method",
+        "views",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailablePlausibility": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/WorldOutputRecord"
+        },
+        "flags": {
+          "$ref": "#/$defs/PlausibilityFlagsRecord"
+        },
+        "view": {
+          "const": "welfare"
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "reference",
+        "flags",
+        "view",
+        "interpretation",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableRespondentSampling": {
+      "type": "object",
+      "properties": {
+        "register_id": {
+          "const": "NUM-RESPONDENT-SAMPLING"
+        },
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "register_id",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableSamplingComparison": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "control_arm": {
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "control_arm",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableScenarioGroups": {
+      "description": "No groups: the scenario contributions are unavailable, or, when\n`inapplicable`, the setup has no scenario of the library.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "unavailable",
+            "inapplicable"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "UnavailableTrajectoryQuadrature": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "type": "string"
+        },
+        "interior_nodes": {
+          "type": "integer"
+        },
+        "embedded_interior_nodes": {
+          "type": "integer"
+        },
+        "view": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interpretation": {
+          "type": "string"
+        },
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "rule",
+        "interior_nodes",
+        "embedded_interior_nodes",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ViewBand": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AvailableViewBand"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "ViewBasis": {
+      "description": "A view's currency, monetary and accounting basis, with the severity\nunit of a per-scenario view and the source status of a source-status\nview.",
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "monetary_basis": {
+          "type": "string"
+        },
+        "accounting_standing": {
+          "type": "string"
+        },
+        "severity_unit": {
+          "type": "string"
+        },
+        "source_public_status": {
+          "$ref": "#/$defs/SourceStatus"
+        }
+      },
+      "required": [
+        "currency",
+        "monetary_basis",
+        "accounting_standing"
+      ],
+      "additionalProperties": false
+    },
+    "ViewDiagnostics": {
+      "description": "One available view's precision and support diagnostics, kept out of\nits headline record (`catmodel.results.reduction.tail_diagnostics` and\n`mean_diagnostics` give their fields).",
+      "type": "object",
+      "properties": {
+        "eal_estimator_by_stratum": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "eal_precision_by_stratum": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StratumEalPrecision"
+          }
+        },
+        "mean_diagnostics": {
+          "$ref": "#/$defs/MeanDiagnostics"
+        },
+        "tail_diagnostics": {
+          "$ref": "#/$defs/TailDiagnostics"
+        },
+        "stratum_diagnostics": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/StratumDiagnostics"
+          }
+        },
+        "unsimulated_zero_mass_strata": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "eal_estimator_by_stratum",
+        "eal_precision_by_stratum",
+        "mean_diagnostics",
+        "tail_diagnostics",
+        "stratum_diagnostics",
+        "unsimulated_zero_mass_strata"
+      ],
+      "additionalProperties": false
+    },
+    "ViewEal": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Availability"
+        },
+        "expected_annual_loss": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ViewBasis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReasonCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "expected_annual_loss",
+        "basis",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "WithheldExhibit": {
+      "description": "An exhibit computed from the setup's own weights, not reported for a\nreweighted result.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "WithheldParameterBand": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "interpretation"
+      ],
+      "additionalProperties": false
+    },
+    "Workload": {
+      "description": "Requested and simulated conditional years by arm\n(`catmodel.simulation.execution_budget.execution_budget`).",
+      "type": "object",
+      "properties": {
+        "arms": {
+          "type": "integer"
+        },
+        "by_arm": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ArmWorkload"
+          }
+        },
+        "simulated_conditional_years": {
+          "type": "integer"
+        },
+        "reused_conditional_years": {
+          "type": "integer"
+        },
+        "reference_conditional_years": {
+          "type": "integer"
+        },
+        "reference_work_multiple": {
+          "type": "number"
+        },
+        "cost_basis": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "arms",
+        "by_arm",
+        "simulated_conditional_years",
+        "reused_conditional_years",
+        "reference_conditional_years",
+        "reference_work_multiple",
+        "cost_basis"
+      ],
+      "additionalProperties": false
+    },
+    "WorldOutputRecord": {
+      "type": "object",
+      "properties": {
+        "measure": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "OK",
+            "INITIAL_ESTIMATE",
+            "PLACEHOLDER"
+          ]
+        },
+        "citation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "measure",
+        "year",
+        "currency",
+        "value",
+        "basis",
+        "status",
+        "citation"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

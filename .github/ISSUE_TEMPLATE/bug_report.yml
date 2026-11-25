@@ -1,0 +1,38 @@
+name: Bug report
+description: A command fails, a check fails, or a result does not match its documentation.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Report a security vulnerability privately, as SECURITY.md describes, not
+        here. Leave out API keys and any captured prompts or responses you may
+        not share.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: The command you ran, what you expected and what you got, with the error text.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce it
+      description: >-
+        The smallest sequence of commands that shows the problem, ideally from
+        the golden Poisson example or another committed example setup.
+    validations:
+      required: true
+  - type: input
+    id: code-version
+    attributes:
+      label: Code revision
+      description: The commit, or the output of `catmodel --version`.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python version and uv version.

@@ -1,0 +1,927 @@
+# The loss taxonomy. Methodology (methodology.md#loss-taxonomy) holds the authoritative rule; it reads:
+#
+#   The tree splits losses by how they arise: what started it, what the AI did, and what process caused
+#   the loss. A leaf is one population of attempts taking one path to loss, so a node is split only
+#   where its incidents cannot share an exposure unit, an event chain or severity evidence. A split
+#   asks about a fact fixed when the incident begins: never one settled as it unfolds, such as its
+#   size, its reach or who bore it, never a condition of the whole study, such as capability or
+#   safeguards, and never a named scenario's definition. Each incident is counted once, with all its
+#   losses, under the process that caused most of them.
+#
+# Each internal node asks one question on one axis, and its split_rationale names what its children
+# cannot share. A scenario forecasts one leaf or a disjoint union of leaves; today each owns one.
+contract_id: aiuc-pathway-hierarchy
+hierarchy_version: v1
+rule: >-
+  The tree splits losses by how they arise: what started it, what the AI did, and what process caused the
+  loss. A leaf is one population of attempts taking one path to loss, so a node is split only where its
+  incidents cannot share an exposure unit, an event chain or severity evidence. A split asks about a fact
+  fixed when the incident begins: never one settled as it unfolds, such as its size, its reach or who bore
+  it, never a condition of the whole study, such as capability or safeguards, and never a named scenario's
+  definition. Each incident is counted once, with all its losses, under the process that caused most of them.
+conventions: >-
+  (1) Incident identity: one incident is one root cause, campaign, defect or matter. A campaign across many
+  victims is one incident; so is a defect across many deployments or users, or a matter with all its fines and
+  costs. A design or behavior is an identified defect only when a specific, correctable model, version,
+  feature or configuration property is shown or acknowledged to cause the harms; a pleaded theory alone does
+  not merge losses into one incident. (2) Ownership: the whole incident and all its consequences go to the
+  leaf of the process that caused most of its loss. "Most" means the largest share: no majority is needed, and
+  when two processes tie, the leaf of the process whose loss came first decides. Consequences include claims,
+  fines, legal, recovery and remediation costs. There are no linked parts across leaves and no allocation
+  weights, and counts add within every parent. Every split applies the same test. An intrusion, fraud or
+  influence operation that is part of a CBRN program belongs to that program, so no majority question arises.
+  A claim whose defining allegation is loss from a discrete incident, such as a breach, outage or harmful
+  output, follows that incident; only claims over the provider's own conduct are provider-conduct private
+  claims. A claim or enforcement action alleging bodily or psychological injury or death of identified persons
+  from the model's outputs follows the incident that injured them, whatever theory is pleaded; product and consumer
+  claims, and enforcement, cover matters without such injury incidents. One enforcement action over a practice
+  that cites such injuries from several separately counted incidents is an enforcement matter, and its fines
+  and costs are part of none of those incidents. (3) Admission: an incident is admitted
+  when its gross loss, summed over all parties before recovery, is at least USD 100,000; exactly USD 100,000
+  is admitted. Every amount is valued in policy-start USD: converted at the exchange rate of the date it
+  occurs or is imposed and deflated to the policy start by US consumer prices. Incidents below the threshold
+  are a disclosed, unestimated leftover, not zero and not another leaf's incident. Every leaf uses this one
+  threshold. (4) Accumulation: how far one incident spreads is part of its severity, never a split; whether
+  an attack's code spreads on its own is fixed when the code is released, and is one. Outcome
+  tests, such as success, crossing a capability level or reaching two organizations, are never splits; they
+  appear as event-chain stages only where the terminal needs them. (5) "Other" children appear only under
+  open-ended questions. An unknown fact is uncertainty, recorded as a mixture over the possible answers, not
+  "other". (6) Several AIs in one history: the AI nearest the largest share of the loss decides "what the AI
+  did". (7) Help to an attacker: "helped the attacker" covers any copy of the provider's model however
+  obtained (served, stolen, leaked or open weights); the theft leaf counts only the theft's own losses. The
+  model helped only when its assistance was material: it gave the attacker capability, scale or speed that the
+  attacker would not have had without any AI model, and the loss, or more than half of it, would not have
+  occurred without that gain. The comparison is with what the same attacker would in fact have had if no
+  generative AI model of any developer, voice and image generators included, had been available to it: its own
+  skills and staff, software in ordinary use before such models, such as search engines and translation
+  software, and whatever it would have bought or hired instead; help that another AI model could have given is
+  therefore still material. An attack that used the model without material assistance is no incident of this
+  branch and, unless it meets another leaf's own conditions, is no leaf's incident, other origin included; a
+  claim, enforcement action or designation over it is then a provider-conduct matter, even where it alleges
+  injury or death of identified persons. (8) A complete history with no named origin is other origin; its
+  losses are unsupported, never assigned to a named leaf.
+admission:
+  quantity_kind: gross_loss
+  comparator: ge
+  threshold: 100000
+  currency: USD
+  measurement_basis: policy_start_usd_gross
+# Every leaf's direct question also asks the expected annual number of its admitted incidents at or
+# above two fixed amounts on the same gross basis (assumptions.md SEV-LARGE-LOSS-ANCHOR). The USD 1
+# billion count anchors the severity tail above the respondent's p99; the USD 100 billion count enters
+# no reference law and is the second anchor of the two-anchor comparison every contextual result reports.
+# Neither is a split: such incidents stay in their leaf.
+large_loss_levels:
+  quantity_kind: gross_loss
+  comparator: ge
+  currency: USD
+  measurement_basis: policy_start_usd_gross
+  large_loss: 1000000000
+  very_large_loss: 100000000000
+axes:
+  origin_regime:
+    values:
+    - deliberate_misuse
+    - ai_failure
+    - provider_conduct
+    - other
+  misuse_role:
+    values:
+    - assisted_attacker
+    - acted_for_attacker
+    - targeted_as_asset
+  failure_role:
+    values:
+    - acted_for_deployer
+    - bounded_decision
+    - physical_control
+    - output_relied_on
+    - harmful_engagement
+    - service_failure
+    - developer_control_loss
+    - other
+  loss_process:
+    values:
+    - system_compromise
+    - fraud
+    - influence
+    - cbrn_weapon
+    - other
+  compromise_target:
+    values:
+    - critical_infrastructure
+    - other_organizations
+    - individuals
+    - any_reachable
+  transferred_value_owner:
+    values:
+    - individuals
+    - organizations
+  cbrn_hazard:
+    values:
+    - biological
+    - chemical
+    - radiological_nuclear
+  program_expertise:
+    values:
+    - expert
+    - novice
+  asset_attack:
+    values:
+    - artifacts_taken
+    - service_attacked
+  takeover_route:
+    values:
+    - input_hijack
+    - component_tampering
+  reliance_field:
+    values:
+    - health
+    - legal
+    - financial
+    - software
+    - other
+  service_failure_kind:
+    values:
+    - outage_degradation
+    - other
+  conduct_process:
+    values:
+    - designation
+    - enforcement
+    - private_claim
+    - other
+  claim_allegation:
+    values:
+    - copyright_ip
+    - privacy_data_protection
+    - product_consumer_harm
+    - other
+nodes:
+- node_id: omega
+  parent_id: null
+  path_label: omega
+  display_label: "AI-related losses"
+  display_summary: "Admitted AI-related incidents, each classified once with all its losses."
+  display_prose: >-
+    Every admitted incident in which an AI system took part, classified once with all its losses by how it
+    arose: what started it, what the AI did, and what process caused most of its loss. Use alone is not taking
+    part: an attack that used a model without material assistance is not an incident here and is not other
+    origin, and only a claim, enforcement action or designation over it counts, as provider conduct.
+  classification_question:
+    text: What started it?
+    dimension: axis:origin_regime
+  split_rationale: >-
+    The exposure unit and capability response differ by origin: attackers' attempts, deployments' ordinary
+    operation, and the provider's own conduct before authorities and courts.
+- node_id: n_misuse
+  parent_id: omega
+  path_label: deliberate_misuse
+  display_label: "Deliberate misuse"
+  display_summary: "A person intended the harm, and the AI materially helped, acted for the attacker or was the target."
+  display_prose: >-
+    A person, insider or outsider, intended the harm, and the AI materially helped the attacker, acted for the
+    attacker, or was itself the target. An attack that only used a model, with none of these three, is not
+    misuse; unless an AI failure started the history, it is outside every category. An attacker who only
+    exploits the result of an AI failure, such as a vulnerability in AI-written code, without a model
+    materially helping the attack, does not make the history misuse: the AI failure started it.
+  predicate:
+  - axis: origin_regime
+    value: deliberate_misuse
+  classification_question:
+    text: What did the AI do?
+    dimension: axis:misuse_role
+  split_rationale: >-
+    The capability response differs: assistance to an attacker grows with capability, while robustness to
+    takeover and the security of the model as an asset can move the other way; the exposure units (attacker
+    programs, deployed systems, the provider's assets) differ too.
+- node_id: n_misuse_assisted
+  parent_id: n_misuse
+  path_label: assisted_attacker
+  display_label: "Helped the attacker"
+  display_summary: "Any copy of the provider's model materially assisted the attacker's own activity."
+  display_prose: >-
+    The attacker used a copy of the provider's model, however obtained (served, stolen, leaked or open
+    weights), and it materially assisted the attacker's own activity, including a model jailbroken to obtain
+    that assistance. Assistance is material when it gives the attacker capability, scale or speed that the
+    attacker would not have had without any AI model, and the loss, or more than half of it, would not have
+    occurred without that gain. Model assistance used to craft input that commandeers another principal's
+    deployed system is a takeover, because the commandeered system is nearest the largest share of the loss.
+  predicate:
+  - axis: misuse_role
+    value: assisted_attacker
+  classification_question:
+    text: What process caused the loss?
+    dimension: axis:loss_process
+  split_rationale: >-
+    Severity evidence and the attacker population differ by process: intrusion losses, fraudulent transfers,
+    influence-driven losses and weapons casualties come from different loss data and different attackers.
+- node_id: n_compromise
+  parent_id: n_misuse_assisted
+  path_label: system_compromise
+  display_label: "System compromise"
+  display_summary: "Unauthorized access, execution or control of systems causes the loss."
+  display_prose: >-
+    With material assistance from a copy of the provider's model, an attacker gains unauthorized access,
+    execution or control of systems, and that causes most of the loss, through theft of funds or assets,
+    encryption or extortion, disruption, disclosure or destruction. How access was gained, including a
+    deceived person handing over credentials, is a tactic of this process; a person deceived into transferring
+    value is fraud. An attack on the provider's own model artifacts or AI service is the asset branch, even
+    when the attacker had model help, and an intrusion that is part of a CBRN program belongs to that program.
+    An intrusion that edits a deployed AI system's configuration is tampering when the reconfigured system's
+    actions cause the largest share of the loss.
+  predicate:
+  - axis: loss_process
+    value: system_compromise
+  reporting_domain: cyber
+  classification_question:
+    text: Whose systems did the campaign attack?
+    dimension: axis:compromise_target
+  split_rationale: >-
+    The event chain and severity evidence differ by target: an attack on critical-infrastructure
+    operators can reach operational systems and cause physical and society-wide loss to those who depend
+    on them, an attack on other organizations follows cyber operational-loss evidence, and an attack on
+    individuals' devices and accounts accumulates small per-victim losses over a campaign. Code that
+    spreads on its own has no chosen target: it needs a way to move from system to system without the
+    attacker and a decision to release what the attacker cannot steer, and the installed base of the
+    vulnerable software sets its loss.
+- node_id: n_compromise_critical_infrastructure
+  parent_id: n_compromise
+  path_label: critical_infrastructure
+  display_label: "Critical infrastructure"
+  display_summary: "The campaign attacked critical-infrastructure operators' systems."
+  display_prose: >-
+    The attacker directed the campaign against the systems of critical-infrastructure operators, such as
+    energy, water, health care, finance, transport or communications, directly or through a vendor whose
+    products they run. The loss of the people and businesses that depend on their services counts with
+    it.
+  predicate:
+  - axis: compromise_target
+    value: critical_infrastructure
+- node_id: n_compromise_organizations
+  parent_id: n_compromise
+  path_label: other_organizations
+  display_label: "Other organizations"
+  display_summary: "The campaign attacked the systems of organizations outside critical infrastructure."
+  display_prose: >-
+    The attacker directed the campaign against the systems of businesses, governments or nonprofits
+    outside critical infrastructure, including a vendor or dependency they share and mass exploitation of
+    one vulnerability. Personal data taken from an organization's systems is an attack on that
+    organization.
+  predicate:
+  - axis: compromise_target
+    value: other_organizations
+- node_id: n_compromise_individuals
+  parent_id: n_compromise
+  path_label: individuals
+  display_label: "Individuals"
+  display_summary: "The campaign attacked individuals' own devices or accounts."
+  display_prose: >-
+    The attacker directed the campaign against individuals' own devices or accounts.
+  predicate:
+  - axis: compromise_target
+    value: individuals
+- node_id: n_compromise_self_propagating
+  parent_id: n_compromise
+  path_label: self_propagating
+  display_label: "Any system it could reach (self-propagating)"
+  display_summary: "Malicious code that spreads on its own causes most of the loss."
+  display_prose: >-
+    The attacker chose no victims: malicious code that spreads from system to system on its own, such as
+    a worm, causes most of the loss, whatever systems it reaches and whoever bears the loss. A campaign
+    that begins through a vendor's update channel belongs here when the code's own spread causes most of
+    its loss. A campaign the attacker operates against each victim, including mass exploitation of one
+    vulnerability, is directed at those victims. Code that spreads between deployed AI systems through
+    their inputs is a hijack, and a model copying itself is a loss of developer control.
+  predicate:
+  - axis: compromise_target
+    value: any_reachable
+- node_id: n_fraud
+  parent_id: n_misuse_assisted
+  path_label: fraud
+  display_label: "Fraud"
+  display_summary: "A person is deceived or coerced into transferring value."
+  display_prose: >-
+    With material assistance from a copy of the provider's model, an attacker deceives or coerces a person
+    into transferring value: funds, assets or signing approval for a payment to a false payee or for a false
+    purpose, including an insurer paying a fabricated claim. Granting credentials or access that the attacker
+    then uses is system compromise, and a fraud that is part of a CBRN program belongs to that program.
+  predicate:
+  - axis: loss_process
+    value: fraud
+  reporting_domain: cyber
+  classification_question:
+    text: Whose value did the fraud go after?
+    dimension: axis:transferred_value_owner
+  split_rationale: >-
+    The event chain and severity evidence differ by whose value the fraud goes after: a fraud on an
+    organization must defeat its payment controls and follows business email compromise evidence, and a
+    fraud on individuals works on one person at a time and follows consumer-scam evidence.
+- node_id: n_fraud_individuals
+  parent_id: n_fraud
+  path_label: individuals
+  display_label: "Individuals"
+  display_summary: "The fraud went after individuals' own value."
+  display_prose: >-
+    The fraud went after individuals' own funds or assets, as in romance, investment, impersonation or
+    voice-clone scams.
+  predicate:
+  - axis: transferred_value_owner
+    value: individuals
+- node_id: n_fraud_organizations
+  parent_id: n_fraud
+  path_label: organizations
+  display_label: "Organizations"
+  display_summary: "The fraud went after an organization's value."
+  display_prose: >-
+    The fraud went after an organization's funds or assets, as in a payment to a spoofed payee, a deceived
+    custody signer, procurement deception or a fabricated insurance claim.
+  predicate:
+  - axis: transferred_value_owner
+    value: organizations
+- node_id: n_influence
+  parent_id: n_misuse_assisted
+  path_label: influence
+  display_label: "Influence"
+  display_summary: "Manipulated beliefs or decisions, not transfers to the attacker, cause most of the loss."
+  display_prose: >-
+    With material assistance from a copy of the provider's model, an attacker manipulates beliefs or
+    decisions, and those, rather than value transferred to the attacker, cause most of the loss, such as false
+    announcements moving markets, campaigns against a firm's reputation or consumer behavior, or public
+    disinformation causing response or injury loss. A campaign whose loss is mostly payments to the attacker
+    is fraud, and an influence operation that is part of a CBRN program belongs to that program. Diffuse
+    political or democratic harm has no monetary value here.
+  predicate:
+  - axis: loss_process
+    value: influence
+  reporting_domain: societal
+- node_id: n_cbrn
+  parent_id: n_misuse_assisted
+  path_label: cbrn_weapon
+  display_label: "CBRN weapon"
+  display_summary: "A chemical, biological, radiological or nuclear weapons program."
+  display_prose: >-
+    A chemical, biological, radiological or nuclear weapons program, including its interdiction, response
+    and any attack. The program owns its supporting intrusion, procurement or deception.
+  predicate:
+  - axis: loss_process
+    value: cbrn_weapon
+  reporting_domain: cbrn
+  classification_question:
+    text: Which hazard?
+    dimension: axis:cbrn_hazard
+  split_rationale: >-
+    Severity evidence and capability response differ by hazard: a biological agent can spread beyond its
+    release, chemical and radiological or nuclear harm is bounded by the release, and model uplift differs by
+    hazard.
+- node_id: n_cbrn_biological
+  parent_id: n_cbrn
+  path_label: biological
+  display_label: "Biological"
+  display_summary: "A biological weapons program."
+  display_prose: >-
+    A program pursuing a biological agent, whether by hand or through automated or cloud laboratories.
+  predicate:
+  - axis: cbrn_hazard
+    value: biological
+  classification_question:
+    text: Is it an expert program?
+    dimension: axis:program_expertise
+  split_rationale: >-
+    The exposure unit and capability response differ: expert and state programs are few and gain less from
+    assistance, while novice programs are more numerous and depend more on model uplift.
+- node_id: n_cbrn_bio_expert
+  parent_id: n_cbrn_biological
+  path_label: expert
+  display_label: "Expert (including state)"
+  display_summary: "A biological program with expert or state capability."
+  display_prose: >-
+    The program has expert biological capability: trained practitioners with relevant laboratory skill, or
+    a state program.
+  predicate:
+  - axis: program_expertise
+    value: expert
+- node_id: n_cbrn_bio_novice
+  parent_id: n_cbrn_biological
+  path_label: novice
+  display_label: "Novice"
+  display_summary: "A biological program without expert capability."
+  display_prose: >-
+    The program lacks expert biological capability.
+  predicate:
+  - axis: program_expertise
+    value: novice
+- node_id: n_cbrn_chemical
+  parent_id: n_cbrn
+  path_label: chemical
+  display_label: "Chemical"
+  display_summary: "A chemical weapons program."
+  display_prose: >-
+    A program pursuing a toxic chemical agent or its precursors.
+  predicate:
+  - axis: cbrn_hazard
+    value: chemical
+- node_id: n_cbrn_radiological_nuclear
+  parent_id: n_cbrn
+  path_label: radiological_nuclear
+  display_label: "Radiological or nuclear"
+  display_summary: "A radiological or nuclear weapons program."
+  display_prose: >-
+    A program pursuing a radiological dispersal or exposure device or a nuclear explosive.
+  predicate:
+  - axis: cbrn_hazard
+    value: radiological_nuclear
+- node_id: n_assisted_other_process
+  parent_id: n_misuse_assisted
+  path_label: other
+  display_label: "Other process"
+  display_summary: "Another loss process, such as AI-planned conventional violence; unestimated, not zero."
+  display_prose: >-
+    The attacker's assisted activity causes loss through another process, such as AI-planned conventional
+    violence. No scenario estimates it; it is unquantified, not zero.
+  predicate:
+  - complement_of:
+    - n_compromise
+    - n_fraud
+    - n_influence
+    - n_cbrn
+  residual: true
+  unestimated_disposition:
+    disposition: unestimated
+- node_id: n_misuse_takeover
+  parent_id: n_misuse
+  path_label: acted_for_attacker
+  display_label: "Made to act for the attacker"
+  display_summary: "A deployed AI system, or a tampered model or configuration, acts for the attacker."
+  display_prose: >-
+    The AI nearest the largest share of the loss acts for the attacker: a deployed system operated by
+    another principal is commandeered through its inputs, or a tampered model, artifact or deployment
+    configuration acts at its deployer. The commandeered or tampered system's actions are not a separate
+    AI-failure incident.
+  predicate:
+  - axis: misuse_role
+    value: acted_for_attacker
+  reporting_domain: cyber
+  classification_question:
+    text: How was it made to act?
+    dimension: axis:takeover_route
+  split_rationale: >-
+    The exposure unit and capability response differ: input hijacks scale with deployed systems and their
+    robustness to adversarial input, while tampering scales with artifact distribution, supply-chain
+    security and the security of deployment configurations.
+- node_id: n_input_hijack
+  parent_id: n_misuse_takeover
+  path_label: input_hijack
+  display_label: "Hijacked through its inputs"
+  display_summary: "Adversarial input commandeers a deployed system that another principal operates."
+  display_prose: >-
+    Adversary-supplied input that a deployed system operated by another principal processes in ordinary
+    operation, such as direct or indirect prompt injection, poisoned retrieved content, or a jailbreak of
+    the deployed system's guardrails, makes it act or disclose for the attacker against its principal,
+    using its delegated authority, data access or output channel. A commandeered system that deceives
+    people remains a hijack. Jailbreaking a model to obtain assistance for the adversary's own activity is
+    helping the attacker, and a commandeered system that only supplied information the adversary then used
+    in its own operation leaves the incident with that operation. An intrusion that edits a deployment's
+    configuration, such as its system prompt, tools or permissions, is not a hijack: it is tampering when
+    the reconfigured system's actions cause the largest share of the loss.
+  predicate:
+  - axis: takeover_route
+    value: input_hijack
+- node_id: n_component_tampering
+  parent_id: n_misuse_takeover
+  path_label: component_tampering
+  display_label: "Tampered model, artifact or configuration"
+  display_summary: "A persistently modified model, artifact or deployment configuration acts for the attacker."
+  display_prose: >-
+    The attacker persistently modifies weights, adapters, training data, distributed model files or a
+    deployment's configuration, such as its system prompt, tools or permissions, and the tampered model or
+    configuration acts for the attacker where it is deployed, locally or after distribution through a
+    trusted channel. An intrusion that edits a configuration belongs here when the reconfigured system's
+    actions cause the largest share of the loss, whether or not a model helped the intrusion; when the
+    intrusion's own losses, such as data theft, are the largest share and a copy of the model helped it,
+    it is system compromise.
+  predicate:
+  - axis: takeover_route
+    value: component_tampering
+- node_id: n_misuse_asset
+  parent_id: n_misuse
+  path_label: targeted_as_asset
+  display_label: "Stolen or attacked as an asset"
+  display_summary: "Weights or artifacts are taken, or the AI service is attacked; own losses only."
+  display_prose: >-
+    The AI is the target: weights or other model artifacts are stolen or leaked, or the AI service itself
+    is attacked, for example by denial of service, including when the attacker had model help. Only the
+    theft's or attack's own losses count here; harm from later use of a stolen copy belongs to the leaf
+    where that copy helped an attacker.
+  predicate:
+  - axis: misuse_role
+    value: targeted_as_asset
+  reporting_domain: cyber
+  classification_question:
+    text: Were its artifacts taken or its service attacked?
+    dimension: axis:asset_attack
+  split_rationale: >-
+    The exposure unit, event chain and severity evidence differ: a theft or leak goes through the lab's
+    staff and internal systems to the artifacts, and its loss is the response and the exclusivity taken;
+    an attack on the service goes through the public serving stack, and its loss is the interruption of
+    the customers who depend on it.
+- node_id: n_asset_theft
+  parent_id: n_misuse_asset
+  path_label: artifacts_taken
+  display_label: "Artifacts stolen or leaked"
+  display_summary: "Weights or other model artifacts are stolen or leaked; own losses only."
+  display_prose: >-
+    An attacker or insider steals or leaks the provider's weights, checkpoints or other model artifacts,
+    including when the attacker had model help. Only the theft's own losses count here; harm from later
+    use of a stolen copy belongs to the leaf where that copy helped an attacker.
+  predicate:
+  - axis: asset_attack
+    value: artifacts_taken
+- node_id: n_asset_service_attack
+  parent_id: n_misuse_asset
+  path_label: service_attacked
+  display_label: "Service attacked"
+  display_summary: "The AI service is disrupted or intruded on; own losses only."
+  display_prose: >-
+    An attacker disrupts or intrudes on the provider's AI service itself, for example by denial of
+    service or intrusion into its serving infrastructure, including when the attacker had model help. An
+    intrusion whose largest loss is model artifacts taken is a theft, and an attack that makes a deployed
+    model act for the attacker is a hijack or tampering.
+  predicate:
+  - axis: asset_attack
+    value: service_attacked
+- node_id: n_failure
+  parent_id: omega
+  path_label: ai_failure
+  display_label: "AI failure"
+  display_summary: "The AI failed or behaved other than intended, and no one intended harm."
+  display_prose: >-
+    The AI system failed or behaved other than intended, and no one intended the harm. Careless use of a
+    correctly working AI is not an AI failure.
+  predicate:
+  - axis: origin_regime
+    value: ai_failure
+  classification_question:
+    text: What did the AI do?
+    dimension: axis:failure_role
+  split_rationale: >-
+    The exposure unit and severity evidence differ by role: agent deployments, decision pipelines,
+    controlled equipment, people relying on output, people engaging with the model, the service itself
+    and the provider's own models.
+- node_id: n_failure_autonomous_action
+  parent_id: n_failure
+  path_label: acted_for_deployer
+  display_label: "Acted on its own for a deployer"
+  display_summary: "An agent's nonphysical actions for its deployer depart from intent."
+  display_prose: >-
+    An autonomous agent with discretionary authority over nonphysical systems, such as payments, records,
+    configurations or communications, takes actions for its deployer that depart from the deployer's intent,
+    including actions that cascade across systems or recur at many deployments from one shared defect.
+  predicate:
+  - axis: failure_role
+    value: acted_for_deployer
+  reporting_domain: agent
+- node_id: n_failure_bounded_decision
+  parent_id: n_failure
+  path_label: bounded_decision
+  display_label: "Ran a bounded decision task"
+  display_summary: "An automated pipeline makes or executes erroneous decisions within fixed permissions."
+  display_prose: >-
+    A predefined, non-agentic pipeline makes or executes erroneous decisions within its permitted actions,
+    such as eligibility, content moderation, market execution or another bounded task, including one defect
+    repeated at many deployments.
+  predicate:
+  - axis: failure_role
+    value: bounded_decision
+  reporting_domain: eo
+- node_id: n_failure_physical_control
+  parent_id: n_failure
+  path_label: physical_control
+  display_label: "Controlled physical equipment"
+  display_summary: "AI controlling physical equipment, agentic or bounded, causes most of the loss."
+  display_prose: >-
+    AI controlling physical equipment, whether with discretionary authority or within a bounded control
+    task, causes most of the loss through its actuation or fault, such as injury, property damage, a
+    preventive recall or interruption of the controlled operation, from an isolated error or a fault
+    across an installed base.
+  predicate:
+  - axis: failure_role
+    value: physical_control
+  reporting_domain: agent
+- node_id: n_failure_output_reliance
+  parent_id: n_failure
+  path_label: output_relied_on
+  display_label: "Output relied on by a person"
+  display_summary: "A professional or member of the public acts on erroneous AI output."
+  display_prose: >-
+    A professional or a member of the public acts on erroneous AI output and decides; the person, not an
+    automated pipeline, makes the decision. Harm a person suffers from the engagement itself, and not from
+    a decision made on erroneous output, is its own role, and harm to someone who never received the
+    output does not belong here.
+  predicate:
+  - axis: failure_role
+    value: output_relied_on
+  reporting_domain: eo
+  classification_question:
+    text: Which field?
+    dimension: axis:reliance_field
+  split_rationale: >-
+    Severity evidence differs by field: malpractice payments for health, legal malpractice for legal,
+    investment-loss claims for financial, and software defect and vulnerability losses for code.
+- node_id: n_reliance_health
+  parent_id: n_failure_output_reliance
+  path_label: health
+  display_label: "Health"
+  display_summary: "Reliance on erroneous health output harms patients or users."
+  display_prose: >-
+    Clinicians or members of the public rely on erroneous clinical, medication or mental-health output,
+    and a patient or user is harmed by acting on it.
+  predicate:
+  - axis: reliance_field
+    value: health
+- node_id: n_reliance_legal
+  parent_id: n_failure_output_reliance
+  path_label: legal
+  display_label: "Legal"
+  display_summary: "Reliance on erroneous legal output, including fabricated citations."
+  display_prose: >-
+    Lawyers or members of the public rely on erroneous legal output, including filings with fabricated
+    citations.
+  predicate:
+  - axis: reliance_field
+    value: legal
+- node_id: n_reliance_financial
+  parent_id: n_failure_output_reliance
+  path_label: financial
+  display_label: "Financial"
+  display_summary: "Reliance on erroneous financial or investment output."
+  display_prose: >-
+    Financial professionals or members of the public rely on erroneous financial, accounting or investment
+    output.
+  predicate:
+  - axis: reliance_field
+    value: financial
+- node_id: n_reliance_software
+  parent_id: n_failure_output_reliance
+  path_label: software
+  display_label: "Software"
+  display_summary: "AI-written code that a person relied on and deployed fails."
+  display_prose: >-
+    A developer relies on and deploys AI-written code that malfunctions, destroys data or contains a
+    vulnerability, including one a third party later exploits without a model materially helping the attack.
+  predicate:
+  - axis: reliance_field
+    value: software
+- node_id: n_reliance_other
+  parent_id: n_failure_output_reliance
+  path_label: other
+  display_label: "Other field"
+  display_summary: "Reliance on erroneous output in another field."
+  display_prose: >-
+    Reliance on erroneous output in another field, such as engineering, research, regulatory submissions or
+    everyday decisions.
+  predicate:
+  - complement_of:
+    - n_reliance_health
+    - n_reliance_legal
+    - n_reliance_financial
+    - n_reliance_software
+  residual: true
+- node_id: n_failure_engagement_harm
+  parent_id: n_failure
+  path_label: harmful_engagement
+  display_label: "Harmed a person who engaged with it"
+  display_summary: "A person's engagement with the model harms their mental health, whatever the topic."
+  display_prose: >-
+    A person's engagement with the model, on any topic, harms that person's mental health: the harm
+    arises from what the interaction does to the person, such as reinforcing self-harm, dependence or
+    delusion, and not from a decision made on erroneous output. What the person then does to themself or
+    to others belongs to the incident. Erroneous clinical, medication or mental-health information that a
+    person acts on is reliance on health output.
+  predicate:
+  - axis: failure_role
+    value: harmful_engagement
+  reporting_domain: eo
+- node_id: n_failure_service
+  parent_id: n_failure
+  path_label: service_failure
+  display_label: "Service failed"
+  display_summary: "The provider's service fails operationally without hostile cause."
+  display_prose: >-
+    The provider's service fails operationally without hostile cause. Plausible but erroneous content or
+    actions from an available service are not a service failure; they belong to the role in which the output
+    is used.
+  predicate:
+  - axis: failure_role
+    value: service_failure
+  reporting_domain: svc
+  classification_question:
+    text: Which failure?
+    dimension: axis:service_failure_kind
+  split_rationale: >-
+    Severity evidence differs: availability failures cause contingent business interruption across customers,
+    while other service failures, such as accidental disclosure, follow privacy-loss evidence.
+- node_id: n_service_outage
+  parent_id: n_failure_service
+  path_label: outage_degradation
+  display_label: "Outage or degradation"
+  display_summary: "Outage, errors, latency, throughput or malformed responses at scale."
+  display_prose: >-
+    Outage, errors, latency, throughput shortfall, refusal or truncation at scale, or stale, missing,
+    malformed or unparseable responses that customers treat as failures.
+  predicate:
+  - axis: service_failure_kind
+    value: outage_degradation
+- node_id: n_service_other
+  parent_id: n_failure_service
+  path_label: other
+  display_label: "Other service failure"
+  display_summary: "Another operational failure, such as accidental disclosure; unestimated, not zero."
+  display_prose: >-
+    Another non-hostile operational failure, such as accidental disclosure or loss of customer data. No
+    scenario estimates it; it is unquantified, not zero.
+  predicate:
+  - complement_of:
+    - n_service_outage
+  residual: true
+  unestimated_disposition:
+    disposition: unestimated
+- node_id: n_failure_developer_control
+  parent_id: n_failure
+  path_label: developer_control_loss
+  display_label: "Acted against its developer's control"
+  display_summary: "A model escapes or subverts its developer's control."
+  display_prose: >-
+    A model acts against its developer's control: it deceives evaluations or monitoring that safety
+    decisions rely on, copies its own weights outside the developer's control, or otherwise escapes or
+    subverts that control, including the consequences when an escaped copy runs elsewhere. A person's
+    intentional misuse of a deployed model is its own misuse incident, not a loss of developer control.
+  predicate:
+  - axis: failure_role
+    value: developer_control_loss
+  reporting_domain: ai_rd
+- node_id: n_failure_other
+  parent_id: n_failure
+  path_label: other
+  display_label: "Other AI failure"
+  display_summary: "Another failure, such as defamatory output about a third party; unestimated, not zero."
+  display_prose: >-
+    Another AI failure, such as defamatory output about a third party who never received it. No scenario
+    estimates it; it is unquantified, not zero.
+  predicate:
+  - complement_of:
+    - n_failure_autonomous_action
+    - n_failure_bounded_decision
+    - n_failure_physical_control
+    - n_failure_output_reliance
+    - n_failure_engagement_harm
+    - n_failure_service
+    - n_failure_developer_control
+  residual: true
+  unestimated_disposition:
+    disposition: unestimated
+- node_id: n_conduct
+  parent_id: omega
+  path_label: provider_conduct
+  display_label: "Provider conduct"
+  display_summary: "The provider's own conduct, not an incident, is challenged."
+  display_prose: >-
+    An authority or private claimant challenges the provider's own development, data, product, marketing or
+    disclosure conduct. A designation, enforcement action or claim that responds to an AI incident follows
+    that incident; one over an attack or fraud that used the provider's model without material assistance, and
+    that is no other category's incident, follows no incident and belongs here.
+  predicate:
+  - axis: origin_regime
+    value: provider_conduct
+  reporting_domain: regulatory
+  classification_question:
+    text: Which process?
+    dimension: axis:conduct_process
+  split_rationale: >-
+    Severity evidence differs by process: a designation causes business loss, enforcement causes fines and
+    compliance costs under statutory maxima, and private claims cause settlements and defense costs.
+- node_id: n_conduct_designation
+  parent_id: n_conduct
+  path_label: designation
+  display_label: "Government designation or restriction"
+  display_summary: "A government formally designates or restricts the provider."
+  display_prose: >-
+    A government formally designates, excludes or restricts the provider, for example by a supply-chain
+    designation, procurement exclusion or export control. Civil fines in the same matter count with it.
+  predicate:
+  - axis: conduct_process
+    value: designation
+- node_id: n_conduct_enforcement
+  parent_id: n_conduct
+  path_label: enforcement
+  display_label: "Enforcement"
+  display_summary: "A government enforcement matter, with all its fines, remedies and costs."
+  display_prose: >-
+    Government authorities, including attorneys general, pursue enforcement over one course of the
+    provider's conduct; every action by any authority over that conduct is one matter. The whole matter
+    counts: its fines, remedies and the provider's legal and remediation costs. Enforcement alleging
+    injury or death of identified persons from the model's outputs follows the incident that injured them;
+    one action over a practice that cites such injuries from several separately counted incidents is a
+    matter here.
+  predicate:
+  - axis: conduct_process
+    value: enforcement
+- node_id: n_conduct_private_claims
+  parent_id: n_conduct
+  path_label: private_claims
+  display_label: "Private claims"
+  display_summary: "Private lawsuits or arbitrations over the provider's own conduct."
+  display_prose: >-
+    A non-government claimant brings a private civil action or arbitration whose defining allegation is the
+    provider's own conduct. One class, representative, consolidated or coordinated proceeding, or one
+    coordinated mass arbitration, is one matter.
+  predicate:
+  - axis: conduct_process
+    value: private_claim
+  classification_question:
+    text: What is alleged?
+    dimension: axis:claim_allegation
+  split_rationale: >-
+    Severity evidence differs by allegation: copyright, privacy, product and other claims have
+    different damages regimes.
+- node_id: n_claims_copyright
+  parent_id: n_conduct_private_claims
+  path_label: copyright_ip
+  display_label: "Copyright and IP"
+  display_summary: "Claims that training or outputs infringe copyright or other IP."
+  display_prose: >-
+    Claims that the provider's data acquisition, training or outputs infringe copyright, trademark, likeness
+    or other intellectual-property rights.
+  predicate:
+  - axis: claim_allegation
+    value: copyright_ip
+- node_id: n_claims_privacy
+  parent_id: n_conduct_private_claims
+  path_label: privacy_data_protection
+  display_label: "Privacy and data protection"
+  display_summary: "Claims over the provider's collection or processing of personal data."
+  display_prose: >-
+    Claims over the provider's collection, use or processing of personal or biometric data, including
+    contract theories pleaded over personal data.
+  predicate:
+  - axis: claim_allegation
+    value: privacy_data_protection
+- node_id: n_claims_product
+  parent_id: n_conduct_private_claims
+  path_label: product_consumer_harm
+  display_label: "Product and consumer harm"
+  display_summary: "Claims over product design, safety or consumer practices."
+  display_prose: >-
+    Claims over the design, safety or marketing of the provider's products or its consumer practices,
+    where the defining allegation is the practice rather than one discrete incident. A claim alleging
+    bodily or psychological injury or death of identified persons from the model's outputs follows the incident that injured them, whatever theory is pleaded; this leaf covers matters without such injury incidents.
+  predicate:
+  - axis: claim_allegation
+    value: product_consumer_harm
+- node_id: n_claims_other
+  parent_id: n_conduct_private_claims
+  path_label: other
+  display_label: "Other allegations"
+  display_summary: "Other claims over provider conduct, such as securities claims."
+  display_prose: >-
+    Other claims over the provider's own conduct, such as securities claims over its disclosures, or
+    contract theories over non-personal data, such as scraping or terms-of-service claims.
+  predicate:
+  - complement_of:
+    - n_claims_copyright
+    - n_claims_privacy
+    - n_claims_product
+  residual: true
+- node_id: n_conduct_other
+  parent_id: n_conduct
+  path_label: other
+  display_label: "Other process"
+  display_summary: "Another process, such as a standards body's withdrawal; unestimated, not zero."
+  display_prose: >-
+    Another process challenging the provider's conduct, such as withdrawal of a nongovernmental standards or
+    industry body's certification. No scenario estimates it; it is unquantified, not zero.
+  predicate:
+  - complement_of:
+    - n_conduct_designation
+    - n_conduct_enforcement
+    - n_conduct_private_claims
+  residual: true
+  unestimated_disposition:
+    disposition: unestimated
+- node_id: n_other_origin
+  parent_id: omega
+  path_label: other_origin
+  display_label: "Other origin"
+  display_summary: "No named origin; explicitly unsupported."
+  display_prose: >-
+    A complete history with no named origin, such as careless use of a correctly working AI. Its losses are
+    unsupported rather than assigned to an unrelated leaf. An attack that used a model without material
+    assistance is not such a history: it is no incident here at all.
+  predicate:
+  - complement_of:
+    - n_misuse
+    - n_failure
+    - n_conduct
+  residual: true
+  unestimated_disposition:
+    disposition: unsupported

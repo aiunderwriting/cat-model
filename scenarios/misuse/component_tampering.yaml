@@ -1,0 +1,132 @@
+id: "component_tampering"
+name: "Tampered Model, Artifact or Configuration Acting for the Attacker"
+node_ids: ["n_component_tampering"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  An attacker persistently modifies weights, adapters, training or fine-tuning data, distributed
+  model files or packages, or a deployment's configuration, such as its system prompt, tools or
+  permissions, and the tampered model or configuration acts for the attacker where it is deployed: a
+  backdoor trigger, poisoned behavior, substituted model or reconfigured system, locally at one
+  deployer or after distribution through a trusted channel to many. Distribution to many deployers
+  is one incident, its reach part of severity. An intrusion that edits a configuration belongs here
+  when the reconfigured system's actions cause the largest share of the loss, whether or not a copy
+  of the model helped the intrusion; when the intrusion's own losses, such as data theft, are the
+  largest share and a copy of the model helped it, it is system compromise. Downstream activation is
+  an event-chain stage, not a split.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    A tampered artifact can spread through trusted distribution like a software supply-chain
+    compromise.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One campaign is one unit: one causally coherent operation, identified by a shared plan, access
+    chain, pretext or payload, across every target, victim, system and affected party. An actor or
+    generic toolkit shared by independent plans does not merge them. Causally distinct campaigns are
+    separate units, including several by one actor in one year.
+  terminal_event_unit: >-
+    One admitted tampering incident: a campaign in which a persistently modified artifact of the
+    selected provider's model, or a modified configuration of a deployed system using it, acts for
+    the attacker at one or more deployers, the largest share of whose gross loss arises through the
+    tampered model's or reconfigured system's behavior, and {{admission}}. The whole campaign and
+    all its consequences belong here, including the intrusion's own losses. Loss arises through
+    the tampered behavior when the model or deployed system causes it by acting on the change; harm
+    done by malicious code that an artifact merely carries, without the model or system acting on
+    it, is the intrusion's own. Where a tampered system only gave up information, such as
+    credentials, and the largest share of the loss arises from an operation of the attacker's own
+    that used it, the incident belongs to that operation's scenario. Planting instructions through
+    inputs that a deployed system processes in ordinary operation is a hijack, even when the system
+    then keeps them in memory; changing its model files, system prompt, tools, skills, permissions
+    or memory store by another route is tampering. An incident below the admission threshold is
+    the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted tampering campaign across all affected parties and loss
+  kinds, before any recovery: harm from the tampered behavior at every deployer, the intrusion's own
+  losses, investigation, rollback and replacement of the artifact or configuration, interruption
+  after avoided costs, injury where caused, {{loss_component:provider_civil_fine}} and the legal
+  resources of every claim, enforcement action and recovery effort the incident causes. Count each
+  underlying loss once: settlements, reimbursements, recoveries and other compensation for
+  already-counted harm are not more loss. Costs are incremental relative to the same activity
+  without the incident: scheduled control resources unchanged in that counterfactual are excluded,
+  and incident-triggered response or recovery resources are included even when existing staff
+  perform them.
+# A tampered artifact of the provider's model, or a reconfigured system using it, acts for the attacker at its deployers.
+facets:
+  peril_mechanism: ["supply_chain_compromise", "technical_intrusion"]
+  deployment_control_mode: "api"
+  harm_types: ["economic_loss"]
+  bearers:
+    - "deployer_or_customer"
+    - "third_party_organizations"
+    - "third_party_individuals"
+    - "provider"
+  party_basis: "third_party"
+occurrence_unit_id: "component_tampering_campaign"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The tampered artifact is, or modifies, the assigned provider's model, or the reconfigured system
+    runs on it, and its tampered behavior produces the qualifying harm.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One hostile campaign that obtains access sufficient to modify or substitute the named lab's
+      model artifacts or copies held by deployers (weights, adapters, training or fine-tuning data,
+      model files or packages), or to edit the configuration of a deployed system using the model in
+      the named deployment (system prompt, tools or permissions), counted when it first obtains that
+      access.
+    counting_rule: >-
+      Count one opportunity per causally coherent campaign; distinct campaigns by one actor are
+      separate. Each campaign yields at most one qualified incident.
+    cohort: >-
+      Campaigns active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "1,000 paying business customers"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 1.0e-3
+        rationale: >-
+          Tampering targets copies held by deployers and the configuration of their deployed
+          systems, so paying business customers measure the attack surface; campaigns against the
+          lab's own artifacts are included in the rate.
+        source: >-
+          INITIAL_ESTIMATE: software supply-chain compromises establish the mechanism; no record
+          gives a rate per customer.
+      derivation: "The stipulated number of paying business customers divided by 1,000."
+    internal:
+      unit: "1,000 lab staff"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          The not-yet-public artifacts and internal deployment configurations sit in staff accounts
+          and systems, whose number moves with staff.
+        source: "INITIAL_ESTIMATE: normalisation by staff."
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "tampering_activates"
+      event: >-
+        A tampered artifact or configuration is loaded or served by at least one deployer and makes
+        the model or reconfigured system act for the attacker during public, internal or pre-release
+        operation.
+empirical_grounding: >-
+  No governed dataset supports this population. Public knowledge bases and incident databases of
+  attacks on AI systems, and studies of package, model and agent-tool registries, record tampered
+  AI tools, malicious model files and unauthorized changes to deployed systems' instructions; they
+  are not a census, and few state a loss. Software supply-chain compromises are context for
+  distribution and cost only.

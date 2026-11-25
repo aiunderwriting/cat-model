@@ -1,0 +1,16 @@
+cat-model
+Copyright 2026 The Artificial Intelligence Underwriting Company (AIUC)
+
+Third-party data and documents in this repository keep their own licenses and attribution requirements, as recorded in each source's provenance file, and are not covered by the Apache License. The third-party data committed here, with the attributions their terms require, are:
+
+data/capability/epoch_eci_scores.csv: Epoch AI, "Capabilities & benchmarking", published online at epoch.ai, retrieved from https://epoch.ai/benchmarks. The Epoch Capabilities Index model-score table, downloaded unmodified from https://epoch.ai/data/eci_scores.csv on 2026-10-29 (labelled "Updated Oct. 29, 2026"). Licensed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/).
+
+data/calibration/respondent_spread/seeds.yaml and resolutions.yaml: record counts and maxima computed from the public sources that data/calibration/respondent_spread/sources.yaml lists with their terms; no source record is reproduced. The sources whose terms require attribution or a notice are:
+
+- GitHub Advisory Database (https://github.com/advisories), GitHub, Inc. Licensed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). The counts of GitHub-reviewed advisories were computed from the github/advisory-database repository (https://github.com/github/advisory-database) at commit ff57fa7d00fbf0e05118ef439f5924144dc343c8, retrieved on 2026-11-02, and from its history.
+- Go vulnerability database (https://vuln.go.dev), The Go Authors. Licensed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). The counts of Go vulnerability reports were computed from OSV.dev's Go ecosystem export (https://google.github.io/osv.dev/data/), retrieved on 2026-11-02.
+- National Vulnerability Database (https://nvd.nist.gov/): This product uses data from the NVD API but is not endorsed or certified by the NVD.
+
+CODE_OF_CONDUCT.md: the Contributor Covenant, version 2.1 (https://www.contributor-covenant.org/version/2/1/code_of_conduct.html), reproduced with this project's contact address inserted; its Attribution section is kept as published.
+
+AIUC-authored files, such as the elicitation source cards, scenario definitions, test fixtures and documentation, quote short factual figures from the public sources they cite. Those sources keep their own terms.

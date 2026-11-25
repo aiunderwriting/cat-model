@@ -1,0 +1,18 @@
+# Source-input recipe for the hypothetical-frontier-lab study (runbook section 2).
+# Paths resolve beside this recipe and must stay inside its directory, so
+# scripts/run_hypothetical_lab_study.py stages it with assumption_register.yaml
+# and copies of the committed data/capability/epoch_eci_scores.csv, its
+# provenance file, data/elicitation_source_cards.yaml and
+# data/threat_models.yaml in one authored-source directory before building the
+# bundle.
+bundle_id: hypothetical-frontier-lab
+bundle_version: "2026-11-25"
+created_at: "2026-11-25T00:00:00Z"
+files:
+  evidence/epoch_eci_scores.csv: epoch_eci_scores.csv
+  evidence/source_cards.yaml: elicitation_source_cards.yaml
+  evidence/threat_models.yaml: threat_models.yaml
+  assumptions/assumption_register.yaml: assumption_register.yaml
+sources:
+  - snapshot_path: evidence/epoch_eci_scores.csv
+    metadata_file: epoch_eci_scores.provenance.yaml

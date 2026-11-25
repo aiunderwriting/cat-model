@@ -1,0 +1,29 @@
+name: Methodology or assumption
+description: A question about, or a challenge to, a calculation, an assumption or a scenario definition.
+labels: ["methodology"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        The assumption register (assumptions.md) gives each assumption an ID,
+        its evidence status and its sensitivity. Naming the ID, or the section
+        of methodology.md, makes a challenge much easier to act on.
+  - type: input
+    id: subject
+    attributes:
+      label: Assumption ID, scenario or methodology section
+      placeholder: "SEV-GPD-SHAPE, scenarios/failure/service_outage_degradation.yaml, or a methodology.md heading"
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: The question or challenge
+      description: What you think is wrong, unclear or unsupported, and why.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Sources, data or a calculation that bear on it, with links or citations.

@@ -1,0 +1,12 @@
+# The study's source-bundle assumption register. It is empty: every assumption
+# the study relies on is in the repository's assumptions.md, whose digest the
+# bundle's provenance.yaml records. The stipulated lab, deployments and exposure
+# (POP-HYPOTHETICAL-LAB) are authored in
+# config/studies/hypothetical-frontier-lab/context.json and the assembly
+# rationales in public-assembly-assumptions.json; the instruments and study plan
+# bind those files, not this bundle, which captures the committed Epoch ECI
+# table and elicitation source cards unchanged.
+source_bundle_id: hypothetical-frontier-lab
+source_bundle_version: "2026-11-25"
+generated_at: "2026-11-25T00:00:00Z"
+assumptions: []

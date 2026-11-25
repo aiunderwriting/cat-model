@@ -1,0 +1,84 @@
+evidence_kind: externally_sourced_development_cases
+limitations: These are selected primary-source accounts, not a representative incident sample or model calibration. Sources establish only the reported facts and their stated uncertainty. Interpretations are model-development judgments, not additional observed facts. The selected provider, forecast cohort, complete loss valuation and counterfactual AI contribution are not inferred merely from the existence of a report. No dollar conversion or missing loss amount is invented.
+cases:
+  - id: hong_kong_deepfake_payment
+    source:
+      title: Hong Kong Security Bureau reply on deepfake fraud
+      url: https://www.info.gov.hk/gia/general/202406/26/P2024062600192.htm
+      published_on: '2024-06-26'
+      evidence_status: Government account of an investigation then ongoing.
+    narrative: In January 2024, an employee received an email apparently from the company's chief financial officer and joined a prerecorded video meeting impersonating that officer. The employee authorized transfers to five bank accounts after further messaging instructions. Police reported about HKD 200 million lost and believed publicly available video and audio had been altered. The source does not name the model developer or quantify separate recovery costs.
+    interpretation:
+      relevance: A deceived employee approving transfers to false payees is fraud against an organization, not influence over a legitimate market or a system intrusion. The five destination accounts do not imply five independent incidents, and the reported amount far exceeds the admission threshold.
+      missing_facts: Selected-provider contribution, originating-event cohort applicability, complete gross transferred amount on the model's USD valuation basis, recoveries and distinct response costs.
+      unquantified_consequences: Recovery work, interruption, psychological injury and public response are not measured by the reported transfer amount.
+      replay:
+        - subject: The induced payments and every consequence of the campaign.
+          facts:
+            origin_regime: deliberate_misuse
+            misuse_role: assisted_attacker
+            loss_process: fraud
+            transferred_value_owner: organizations
+          terminal_id: n_fraud_organizations
+          scenario_id: fraud_organizations
+  - id: rite_aid_biometric_alerts
+    source:
+      title: FTC complaint announcement concerning Rite Aid facial recognition
+      url: https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without
+      published_on: '2023-12-19'
+      evidence_status: FTC allegations and announced proposed settlement; not a finding about a named frontier-model provider.
+    narrative: The FTC alleged that facial-recognition alerts incorrectly matched shoppers to a watchlist and that employees then searched, removed or publicly accused some of those shoppers. The agency described unequal effects across groups and failures to test, monitor and train staff. The source does not provide a complete valuation of shoppers' harm or identify a frontier model in the current provider roster.
+    interpretation:
+      relevance: The alleged harms remain relevant without a successful lawsuit or an insurance response. Security surveillance is not automatically an eligibility decision, and an alert read by an employee does not by itself establish autonomous authority.
+      missing_facts: The decision authority and workflow needed to resolve a person relying on output versus a bounded decision pipeline, frontier-provider contribution, independently causal incidents and complete harm valuations.
+      unquantified_consequences: Dignitary and psychological injury, missed activity and response resources cannot be inferred from a regulatory sanction or count of false matches.
+      replay:
+        - subject: Harm following reliance on an erroneous alert, with authority unresolved.
+          facts:
+            origin_regime: ai_failure
+          missing_fact: failure_role
+  - id: openai_cache_disclosure_and_outage
+    source:
+      title: OpenAI March 20 ChatGPT outage report
+      url: https://openai.com/index/march-20-chatgpt-outage/
+      published_on: '2023-03-24'
+      evidence_status: Provider's technical account; exposure does not establish realized monetary harm to every potentially affected user.
+    narrative: OpenAI reported that a library bug mixed responses between active users, exposing some chat information and potentially some subscription-related information. The company took ChatGPT offline, corrected the bug, restored service and notified affected users. It described a non-malicious operational fault, not a malicious compromise or erroneous model-generated answer. The report does not give a complete monetary loss total.
+    interpretation:
+      relevance: The accidental disclosure and the interruption are one non-hostile service-failure incident. The whole incident belongs to whichever failure caused most of its loss; calling any of it cyber loss would invent adversarial conduct.
+      missing_facts: Actual realized losses and their causal extent, component identity, affected-user population, valuation and future forecast applicability.
+      unquantified_consequences: The outage forecast does not automatically quantify confidentiality harm; no scenario estimates the other-service terminal, so it is unquantified, not zero.
+      replay:
+        - subject: The whole incident, if service unavailability caused most of its loss.
+          facts:
+            origin_regime: ai_failure
+            failure_role: service_failure
+            service_failure_kind: outage_degradation
+          terminal_id: n_service_outage
+          scenario_id: service_outage_degradation
+        - subject: The whole incident, if the confidentiality loss caused most of it.
+          facts:
+            origin_regime: ai_failure
+            failure_role: service_failure
+            service_failure_kind: other
+          terminal_id: n_service_other
+          scenario_id: null
+  - id: new_hampshire_political_robocalls
+    source:
+      title: FCC announcement of the Lingo Telecom robocall settlement
+      url: https://docs.fcc.gov/public/attachments/DOC-404951A1.pdf
+      published_on: '2024-08-21'
+      evidence_status: Agency announcement of a settlement; the penalty is not a measurement of voters' welfare loss.
+    narrative: The FCC announced a settlement with Lingo Telecom over calls using cloned political speech and misleading caller identification before New Hampshire's presidential primary. The agreement included a USD 1 million civil penalty and a compliance plan. The announcement supplies neither a valuation of political harm nor the cost of the authorities' response.
+    interpretation:
+      relevance: Political influence manipulates beliefs without a transfer to the attacker, unlike fraud or system access, despite both using impersonation. Political harm has no monetary value here; only identifiable response or injury resources count, and the campaign is admitted only if they reach the threshold.
+      missing_facts: Selected-provider nexus, complete causal campaign boundary, welfare-valued consequences and their amounts. The telecom's identity does not establish a loss attributable to a selected model provider.
+      unquantified_consequences: Political participation and trust are not valued by the fine; documented institutional activity alone does not supply its incremental cost.
+      replay:
+        - subject: An independently evidenced incremental response component of this political campaign, if quantified.
+          facts:
+            origin_regime: deliberate_misuse
+            misuse_role: assisted_attacker
+            loss_process: influence
+          terminal_id: n_influence
+          scenario_id: influence_manipulation

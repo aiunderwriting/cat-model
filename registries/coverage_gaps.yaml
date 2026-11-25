@@ -1,0 +1,184 @@
+schema_version: 1
+# Scenario gap register.
+#
+# Each row records a known gap in what a scenario estimates and names the
+# scenarios it qualifies; a result that includes one of them lists the row's
+# rationale and sensitivity treatment among its limitations, and
+# remediation_trigger says what would close the gap. docs/taxonomy-coverage.md
+# records research coverage and unquantified harm. Scenario-library validation
+# requires every row to name live scenarios and every scenario with a
+# normalisation exposure base (basis: normalisation) to have an
+# ungoverned_exposure_denominator row.
+gaps:
+  - gap_id: component_tampering_denominator
+    scenario_ids: [component_tampering]
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Tampering with the lab's not-yet-public artifacts and internal deployments is stated per 1,000 lab staff, a normalisation: the stipulated context counts neither the artifacts nor the deployments."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: physical_equipment_control_denominator
+    scenario_ids: [physical_equipment_control]
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Control of physical equipment by not-yet-public models is stated per 1,000 lab staff, a normalisation: the stipulated context does not count the lab's own robotics and hardware work."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: provider_conduct_exposure_normalisation
+    scenario_ids:
+      - enforcement_matter
+      - government_designation
+      - private_claims_copyright_ip
+      - private_claims_other
+      - private_claims_privacy
+      - private_claims_product_consumer
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Provider-conduct matters arise from the lab's own conduct, which no stipulated scale measures. Each internal rate is stated per 1,000 lab staff, and enforcement, designation, copyright and other-claims rates per user or customer, as normalisations rather than counts of the conduct at risk."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: internal_reliance_exposure_normalisation
+    scenario_ids:
+      - bounded_decision_errors
+      - engagement_harm
+      - output_reliance_financial
+      - output_reliance_health
+      - output_reliance_legal
+      - output_reliance_other
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Use of not-yet-public models is stated per 1,000 lab staff, a normalisation: the stipulated context counts no internal decision pipelines, reliance on internal output or engagement with internal models."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: model_asset_compromise_exposure_normalisation
+    scenario_ids: [model_asset_compromise]
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Attempts to take the lab's released artifacts are stated per 1 million weekly users, a normalisation of the model's prominence; no record gives a rate per user."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: ai_service_attack_exposure_normalisation
+    scenario_ids: [ai_service_attack]
+    gap_type: ungoverned_exposure_denominator
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Attacks on the lab's service are stated per 1 million weekly users and per 1,000 lab staff, normalisations of the service's prominence and of the lab's size; no record gives a rate on either base."
+    sensitivity_treatment: "No quantitative sensitivity range is established; the exposure_scale family moves the stipulated scales, not the choice of base."
+    remediation_trigger: "The gap closes when a stipulated scale or a cited source counts the population at risk."
+  - gap_id: engagement_harm_evidence_population
+    scenario_ids: [engagement_harm]
+    gap_type: evidence_population_quality
+    materiality: high
+    bias_direction: uncertain
+    rationale: "The engagement-harm population has no incident census or loss dataset. Its source cards give the share of one developer's conversations that its own classifiers flagged and one country's whole-population suicide statistics, neither a count of incidents; public lawsuits allege the mechanism and resolve no amounts."
+    sensitivity_treatment: "No quantitative sensitivity range is established by the available population evidence."
+    remediation_trigger: "The gap closes when published records count this population's incidents and state their losses."
+  - gap_id: input_hijack_evidence_population
+    scenario_ids: [input_hijack]
+    gap_type: evidence_population_quality
+    materiality: high
+    bias_direction: uncertain
+    rationale: "The hijack population has no matched campaign census or loss dataset. Public prompt-injection evidence reports vulnerabilities and test outcomes, not realized campaign losses."
+    sensitivity_treatment: "This register does not establish a quantitative sensitivity range for evidence or population quality."
+    remediation_trigger: "The gap closes when published records count this population's incidents and state their losses."
+  - gap_id: output_reliance_software_evidence_population
+    scenario_ids: [output_reliance_software]
+    gap_type: evidence_population_quality
+    materiality: high
+    bias_direction: uncertain
+    rationale: "The AI-written-code population is new: a few public records tie a production failure to a change a model co-authored, none gives an incident rate, and loss amounts are rarely stated."
+    sensitivity_treatment: "This register does not establish a quantitative sensitivity range for evidence or population quality."
+    remediation_trigger: "The gap closes when published records count this population's incidents and state their losses."
+  - gap_id: enforcement_matter_evidence_population
+    scenario_ids: [enforcement_matter]
+    gap_type: evidence_population_quality
+    materiality: high
+    bias_direction: uncertain
+    rationale: "Public records of regulators' decisions and government suits against AI providers are not a census of matters, and fines and settlements imposed on large technology companies are a severity analog for fines alone; defense, remediation and other non-fine costs have no comparable dataset."
+    sensitivity_treatment: "This register does not establish a quantitative sensitivity range for evidence or population quality."
+    remediation_trigger: "The gap closes when published records count this population's incidents and state their losses."
+  - gap_id: agent_actions_for_deployer_evidence_population
+    scenario_ids: [agent_actions_for_deployer]
+    gap_type: evidence_population_quality
+    materiality: high
+    bias_direction: uncertain
+    rationale: "The agent population holds cascades and defects repeated across deployments as single incidents; no record measures frontier-agent incidents of either kind."
+    sensitivity_treatment: "This register does not establish a quantitative sensitivity range for evidence or population quality."
+    remediation_trigger: "The gap closes when published records count this population's incidents and state their losses."
+  - gap_id: fraud_individuals_below_admission
+    scenario_ids: [fraud_individuals]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Scam campaigns whose total loss stays below USD 100,000, which we judge to be most campaigns by count, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: fraud_organizations_below_admission
+    scenario_ids: [fraud_organizations]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Business email compromise and similar frauds below USD 100,000 per campaign, which we judge to be most frauds by count, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: compromise_individuals_below_admission
+    scenario_ids: [compromise_individuals]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Compromises of individuals whose campaign total stays below USD 100,000, including most single-victim account takeovers, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: input_hijack_below_admission
+    scenario_ids: [input_hijack]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Hijack campaigns below USD 100,000, which we judge to include many currently reported prompt-injection incidents, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: service_outage_degradation_below_admission
+    scenario_ids: [service_outage_degradation]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Outages and degradations below USD 100,000 across all parties, which we judge to include most short or localized failures, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: output_reliance_legal_below_admission
+    scenario_ids: [output_reliance_legal]
+    gap_type: unestimated_loss_layer
+    materiality: medium
+    bias_direction: understatement
+    rationale: "Legal-reliance errors below USD 100,000, which we judge to include most individual sanctions over fabricated citations, are the unestimated leftover rather than zero. Each excluded incident is below the admission threshold, but their count is unknown and could be large; materiality is a judgment without incident data."
+    sensitivity_treatment: "No sensitivity band from current answers: the USD 10,000 and USD 1,000,000 admission alternatives each define a different population and need complete new responses (POP-ADMISSION)."
+    remediation_trigger: "The gap closes when a study with attritional loss in its scope estimates this leaf's incidents below the admission threshold."
+  - gap_id: cbrn_chemical_radiological_pooled_expertise
+    scenario_ids: [cbrn_chemical, cbrn_radiological_nuclear]
+    gap_type: evidence_population_quality
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "Each leaf pools expert and state programs with programs that lack expertise, which the biological branch separates. The chemical exposure base counts consumer users and the radiological or nuclear base counts business customers, so each base fits one of the two populations it counts."
+    sensitivity_treatment: "No quantitative sensitivity range is established by the available population evidence."
+    remediation_trigger: "The gap closes if the leaf is split by program expertise, which the taxonomy's split rule supports where the two populations need different exposure units."
+  - gap_id: bounded_decision_errors_pooled_functions
+    scenario_ids: [bounded_decision_errors]
+    gap_type: evidence_population_quality
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "The bounded-decision population pools eligibility, content-moderation and market-execution pipelines under one severity law, although their loss evidence differs: discrimination and consumer claims, platform harm and trading losses."
+    sensitivity_treatment: "No quantitative sensitivity range is established by the available population evidence."
+    remediation_trigger: "The gap closes if the leaf is split by decision function, which the taxonomy's split rule supports where one function's losses cannot share the others' severity evidence."
+  - gap_id: influence_manipulation_pooled_targets
+    scenario_ids: [influence_manipulation]
+    gap_type: evidence_population_quality
+    materiality: medium
+    bias_direction: uncertain
+    rationale: "The influence population pools market manipulation, campaigns against a firm's reputation and public disinformation under one severity law, although a market move, a boycott and a public-safety response are measured by different loss evidence."
+    sensitivity_treatment: "No quantitative sensitivity range is established by the available population evidence."
+    remediation_trigger: "The gap closes if the leaf is split by what the campaign manipulates, which the taxonomy's split rule supports where one kind's losses cannot share the others' severity evidence."

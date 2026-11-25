@@ -1,0 +1,894 @@
+{
+  "alternatives": [
+    {
+      "alternative_id": "contained",
+      "description": "Stipulated prevention and once-per-campaign response cost",
+      "overrides": [
+        {
+          "law": {
+            "count_family": "poisson",
+            "entity_id": "illustrative_model",
+            "evidence_ids": [
+              "authored_assumptions"
+            ],
+            "input_stage": "attempted_initiator",
+            "origin_id": "campaign",
+            "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+            "reference_annual_rate": 1,
+            "response": {
+              "extrapolation": "flat",
+              "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+              "interpolation": "log",
+              "points": [
+                {
+                  "multiplier": 1,
+                  "value": 0
+                },
+                {
+                  "multiplier": 4,
+                  "value": 1
+                }
+              ]
+            },
+            "scenario_id": "campaign_harm",
+            "segments": [
+              {
+                "end": 1,
+                "initiation_probability": 1,
+                "kernel": {
+                  "campaign_components": [
+                    {
+                      "amount": 12,
+                      "attribution_weights": {
+                        "illustrative_model": 1
+                      },
+                      "bearer_id": "operator",
+                      "component_id": "response_cost",
+                      "contributor_ids": [
+                        "illustrative_model"
+                      ],
+                      "nature": "resource_cost",
+                      "scenario_ids": [
+                        "campaign_harm"
+                      ]
+                    }
+                  ],
+                  "cluster": {
+                    "family": "finite",
+                    "support": [
+                      {
+                        "count": 0,
+                        "probability": 0.2
+                      },
+                      {
+                        "count": 2,
+                        "probability": 0.8
+                      }
+                    ]
+                  },
+                  "displacement_assumption": "Zero displacement in containment arm; explicit displacement arm tests that assumption.",
+                  "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                  "member_outcomes": [
+                    {
+                      "components": [
+                        {
+                          "amount": 100,
+                          "attribution_weights": {
+                            "illustrative_model": 1
+                          },
+                          "bearer_id": "victim",
+                          "component_id": "victim_harm",
+                          "contributor_ids": [
+                            "illustrative_model"
+                          ],
+                          "nature": "resource_cost",
+                          "scenario_ids": [
+                            "campaign_harm"
+                          ]
+                        }
+                      ],
+                      "probability": 1
+                    }
+                  ],
+                  "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                  "shared_probability": 0.2,
+                  "unit_probability": 0.5
+                },
+                "reference_exposure_share": 1,
+                "start": 0
+              }
+            ]
+          },
+          "state_id": "slow_fixed"
+        },
+        {
+          "law": {
+            "count_family": "poisson",
+            "entity_id": "illustrative_model",
+            "evidence_ids": [
+              "authored_assumptions"
+            ],
+            "input_stage": "attempted_initiator",
+            "origin_id": "campaign",
+            "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+            "reference_annual_rate": 1,
+            "response": {
+              "extrapolation": "flat",
+              "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+              "interpolation": "log",
+              "points": [
+                {
+                  "multiplier": 1,
+                  "value": 0
+                },
+                {
+                  "multiplier": 4,
+                  "value": 1
+                }
+              ]
+            },
+            "scenario_id": "campaign_harm",
+            "segments": [
+              {
+                "end": 1,
+                "initiation_probability": 1,
+                "kernel": {
+                  "campaign_components": [
+                    {
+                      "amount": 12,
+                      "attribution_weights": {
+                        "illustrative_model": 1
+                      },
+                      "bearer_id": "operator",
+                      "component_id": "response_cost",
+                      "contributor_ids": [
+                        "illustrative_model"
+                      ],
+                      "nature": "resource_cost",
+                      "scenario_ids": [
+                        "campaign_harm"
+                      ]
+                    }
+                  ],
+                  "cluster": {
+                    "family": "finite",
+                    "support": [
+                      {
+                        "count": 0,
+                        "probability": 0.2
+                      },
+                      {
+                        "count": 2,
+                        "probability": 0.8
+                      }
+                    ]
+                  },
+                  "displacement_assumption": "Zero displacement in containment arm; explicit displacement arm tests that assumption.",
+                  "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                  "member_outcomes": [
+                    {
+                      "components": [
+                        {
+                          "amount": 100,
+                          "attribution_weights": {
+                            "illustrative_model": 1
+                          },
+                          "bearer_id": "victim",
+                          "component_id": "victim_harm",
+                          "contributor_ids": [
+                            "illustrative_model"
+                          ],
+                          "nature": "resource_cost",
+                          "scenario_ids": [
+                            "campaign_harm"
+                          ]
+                        }
+                      ],
+                      "probability": 1
+                    }
+                  ],
+                  "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                  "shared_probability": 0.2,
+                  "unit_probability": 0.5
+                },
+                "reference_exposure_share": 1,
+                "start": 0
+              }
+            ]
+          },
+          "state_id": "fast_rising"
+        }
+      ],
+      "purpose": "scientific_alternative"
+    },
+    {
+      "alternative_id": "displacement",
+      "description": "Stipulated initiation and survivor-severity displacement stress",
+      "overrides": [
+        {
+          "law": {
+            "count_family": "poisson",
+            "entity_id": "illustrative_model",
+            "evidence_ids": [
+              "authored_assumptions"
+            ],
+            "input_stage": "attempted_initiator",
+            "origin_id": "campaign",
+            "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+            "reference_annual_rate": 1.5,
+            "response": {
+              "extrapolation": "flat",
+              "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+              "interpolation": "log",
+              "points": [
+                {
+                  "multiplier": 1,
+                  "value": 0
+                },
+                {
+                  "multiplier": 4,
+                  "value": 1
+                }
+              ]
+            },
+            "scenario_id": "campaign_harm",
+            "segments": [
+              {
+                "end": 1,
+                "initiation_probability": 1,
+                "kernel": {
+                  "campaign_components": [
+                    {
+                      "amount": 12,
+                      "attribution_weights": {
+                        "illustrative_model": 1
+                      },
+                      "bearer_id": "operator",
+                      "component_id": "response_cost",
+                      "contributor_ids": [
+                        "illustrative_model"
+                      ],
+                      "nature": "resource_cost",
+                      "scenario_ids": [
+                        "campaign_harm"
+                      ]
+                    }
+                  ],
+                  "cluster": {
+                    "family": "finite",
+                    "support": [
+                      {
+                        "count": 0,
+                        "probability": 0.2
+                      },
+                      {
+                        "count": 2,
+                        "probability": 0.8
+                      }
+                    ]
+                  },
+                  "displacement_assumption": "Campaign initiation increases 50 percent and survivor harm becomes 150 USD under the authored stress.",
+                  "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                  "member_outcomes": [
+                    {
+                      "components": [
+                        {
+                          "amount": 150,
+                          "attribution_weights": {
+                            "illustrative_model": 1
+                          },
+                          "bearer_id": "victim",
+                          "component_id": "victim_harm",
+                          "contributor_ids": [
+                            "illustrative_model"
+                          ],
+                          "nature": "resource_cost",
+                          "scenario_ids": [
+                            "campaign_harm"
+                          ]
+                        }
+                      ],
+                      "probability": 1
+                    }
+                  ],
+                  "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                  "shared_probability": 0.2,
+                  "unit_probability": 0.5
+                },
+                "reference_exposure_share": 1,
+                "start": 0
+              }
+            ]
+          },
+          "state_id": "slow_fixed"
+        },
+        {
+          "law": {
+            "count_family": "poisson",
+            "entity_id": "illustrative_model",
+            "evidence_ids": [
+              "authored_assumptions"
+            ],
+            "input_stage": "attempted_initiator",
+            "origin_id": "campaign",
+            "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+            "reference_annual_rate": 1.5,
+            "response": {
+              "extrapolation": "flat",
+              "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+              "interpolation": "log",
+              "points": [
+                {
+                  "multiplier": 1,
+                  "value": 0
+                },
+                {
+                  "multiplier": 4,
+                  "value": 1
+                }
+              ]
+            },
+            "scenario_id": "campaign_harm",
+            "segments": [
+              {
+                "end": 1,
+                "initiation_probability": 1,
+                "kernel": {
+                  "campaign_components": [
+                    {
+                      "amount": 12,
+                      "attribution_weights": {
+                        "illustrative_model": 1
+                      },
+                      "bearer_id": "operator",
+                      "component_id": "response_cost",
+                      "contributor_ids": [
+                        "illustrative_model"
+                      ],
+                      "nature": "resource_cost",
+                      "scenario_ids": [
+                        "campaign_harm"
+                      ]
+                    }
+                  ],
+                  "cluster": {
+                    "family": "finite",
+                    "support": [
+                      {
+                        "count": 0,
+                        "probability": 0.2
+                      },
+                      {
+                        "count": 2,
+                        "probability": 0.8
+                      }
+                    ]
+                  },
+                  "displacement_assumption": "Campaign initiation increases 50 percent and survivor harm becomes 150 USD under the authored stress.",
+                  "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                  "member_outcomes": [
+                    {
+                      "components": [
+                        {
+                          "amount": 150,
+                          "attribution_weights": {
+                            "illustrative_model": 1
+                          },
+                          "bearer_id": "victim",
+                          "component_id": "victim_harm",
+                          "contributor_ids": [
+                            "illustrative_model"
+                          ],
+                          "nature": "resource_cost",
+                          "scenario_ids": [
+                            "campaign_harm"
+                          ]
+                        }
+                      ],
+                      "probability": 1
+                    }
+                  ],
+                  "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                  "shared_probability": 0.2,
+                  "unit_probability": 0.5
+                },
+                "reference_exposure_share": 1,
+                "start": 0
+              }
+            ]
+          },
+          "state_id": "fast_rising"
+        }
+      ],
+      "purpose": "scientific_alternative"
+    }
+  ],
+  "availability_cutoff": "2027-01-01T00:00:00Z",
+  "capability_scales": [
+    {
+      "measurement_protocol": "No measurement; complete trajectories are stipulated",
+      "quantity_definition": "An illustrative own-model capability coordinate",
+      "reference_definition": "Zero corresponds to the reference campaign rate",
+      "scale_id": "own_score",
+      "unit": "stipulated index points"
+    }
+  ],
+  "data_cutoff": "2027-01-01T00:00:00Z",
+  "deployments": [
+    {
+      "deployment_id": "deployment",
+      "human_oversight": "Held fixed except explicit harm transition overrides",
+      "model_id": "illustrative_model",
+      "tools_and_permissions": "Hypothetical messaging and action permissions",
+      "use_population": "Fixed illustrative population exposed for the full study year"
+    }
+  ],
+  "entities": [
+    {
+      "definition": "Fixed hypothetical revision under the stated deployment; no claim about any real lab.",
+      "display_name": "Illustrative model",
+      "entity_id": "illustrative_model",
+      "kind": "model",
+      "related_entity_ids": [
+        "operator"
+      ],
+      "revision": "illustrative-r1",
+      "status": "hypothetical"
+    },
+    {
+      "definition": "Illustrative deploying organization",
+      "display_name": "Illustrative operator",
+      "entity_id": "operator",
+      "kind": "operator",
+      "status": "hypothetical"
+    },
+    {
+      "definition": "Fixed reference exposure deployment",
+      "display_name": "Illustrative deployment",
+      "entity_id": "deployment",
+      "kind": "deployment",
+      "related_entity_ids": [
+        "illustrative_model",
+        "operator"
+      ],
+      "status": "hypothetical"
+    }
+  ],
+  "evidence": [
+    {
+      "conditioning": "Fixed exposure and own model revision; origin-year ultimate; authored sparse joint states",
+      "evidence_id": "authored_assumptions",
+      "origin": "stipulation",
+      "original_sha256": "155d0e7eb0143cb971c24261d9c43c4dd810483b7a722eb9e5eece86cccb2295",
+      "reliance": "Internal illustrative analysis only",
+      "review": "Software numerical checks only",
+      "rights": "Authored example assumptions; no factual source dataset included",
+      "selected_sha256": "155d0e7eb0143cb971c24261d9c43c4dd810483b7a722eb9e5eece86cccb2295",
+      "target": "Reference attempted initiation, local response, full joint cluster/component kernel and explicit intervention alternatives",
+      "transport": "No empirical evidence transfer; all numeric assumptions authored for illustration",
+      "units": "USD at 2027 study start; eventual gross before recovery"
+    }
+  ],
+  "forecast_as_of": "2027-01-01T00:00:00Z",
+  "independence_assumptions": [
+    "Distinct origins are conditionally independent within each complete sparse joint state.",
+    "Cluster counts, declared shared/member gates and conditional severity are independent except the complete authored joint mark kernel."
+  ],
+  "information_date": "2027-01-01T00:00:00Z",
+  "joint_states": [
+    {
+      "entity_paths": [
+        {
+          "entity_id": "illustrative_model",
+          "history_rationale": "Entire future trajectory is openly stipulated at study origin.",
+          "history_status": "stipulated",
+          "interpolation": "step",
+          "knots": [
+            {
+              "model_revision": "illustrative-r1",
+              "time": 0,
+              "value": 0
+            },
+            {
+              "model_revision": "illustrative-r1",
+              "time": 1,
+              "value": 0
+            }
+          ],
+          "scale_id": "own_score"
+        }
+      ],
+      "epistemic_group_id": "lower_response_state",
+      "laws": [
+        {
+          "count_family": "poisson",
+          "entity_id": "illustrative_model",
+          "evidence_ids": [
+            "authored_assumptions"
+          ],
+          "input_stage": "attempted_initiator",
+          "origin_id": "campaign",
+          "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+          "reference_annual_rate": 1,
+          "response": {
+            "extrapolation": "flat",
+            "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+            "interpolation": "log",
+            "points": [
+              {
+                "multiplier": 1,
+                "value": 0
+              },
+              {
+                "multiplier": 4,
+                "value": 1
+              }
+            ]
+          },
+          "scenario_id": "campaign_harm",
+          "segments": [
+            {
+              "end": 1,
+              "initiation_probability": 1,
+              "kernel": {
+                "campaign_components": [
+                  {
+                    "amount": 5,
+                    "attribution_weights": {
+                      "illustrative_model": 1
+                    },
+                    "bearer_id": "operator",
+                    "component_id": "response_cost",
+                    "contributor_ids": [
+                      "illustrative_model"
+                    ],
+                    "nature": "resource_cost",
+                    "scenario_ids": [
+                      "campaign_harm"
+                    ]
+                  }
+                ],
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 0,
+                      "probability": 0.2
+                    },
+                    {
+                      "count": 2,
+                      "probability": 0.8
+                    }
+                  ]
+                },
+                "displacement_assumption": "Zero displacement in containment arm; explicit displacement arm tests that assumption.",
+                "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                "member_outcomes": [
+                  {
+                    "components": [
+                      {
+                        "amount": 100,
+                        "attribution_weights": {
+                          "illustrative_model": 1
+                        },
+                        "bearer_id": "victim",
+                        "component_id": "victim_harm",
+                        "contributor_ids": [
+                          "illustrative_model"
+                        ],
+                        "nature": "resource_cost",
+                        "scenario_ids": [
+                          "campaign_harm"
+                        ]
+                      }
+                    ],
+                    "probability": 1
+                  }
+                ],
+                "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                "shared_probability": 0.8,
+                "unit_probability": 0.75
+              },
+              "reference_exposure_share": 1,
+              "start": 0
+            }
+          ]
+        },
+        {
+          "count_family": "poisson",
+          "entity_id": "illustrative_model",
+          "evidence_ids": [
+            "authored_assumptions"
+          ],
+          "input_stage": "qualified_initiator",
+          "origin_id": "other_origin",
+          "qualification_assumption": "Explicitly stipulated unique gross-producing origin; no attempted incidence inferred.",
+          "reference_annual_rate": 0.25,
+          "response": {
+            "extrapolation": "flat",
+            "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+            "interpolation": "log",
+            "points": [
+              {
+                "multiplier": 1,
+                "value": 0
+              }
+            ]
+          },
+          "scenario_id": "uncomposed_other",
+          "segments": [
+            {
+              "end": 1,
+              "initiation_probability": 1,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1
+                    }
+                  ]
+                },
+                "displacement_assumption": "Held fixed under the campaign intervention.",
+                "gate_meaning": "Fully qualified source population; no second harm gate.",
+                "member_outcomes": [
+                  {
+                    "components": [],
+                    "composition_complete": false,
+                    "identified_gross_total": 40,
+                    "overlap_resolved": true,
+                    "probability": 1,
+                    "scenario_ids": [
+                      "campaign_harm",
+                      "uncomposed_other"
+                    ]
+                  }
+                ],
+                "selection_assumption": "Gross is identified, component natures and exact scenario attribution are unavailable.",
+                "shared_probability": 1,
+                "unit_probability": 1
+              },
+              "reference_exposure_share": 1,
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "state_id": "slow_fixed",
+      "weight": 0.6
+    },
+    {
+      "entity_paths": [
+        {
+          "entity_id": "illustrative_model",
+          "history_rationale": "Entire future trajectory is openly stipulated at study origin.",
+          "history_status": "stipulated",
+          "interpolation": "step",
+          "knots": [
+            {
+              "model_revision": "illustrative-r1",
+              "time": 0,
+              "value": 0
+            },
+            {
+              "model_revision": "illustrative-r1",
+              "time": 0.5,
+              "value": 1
+            },
+            {
+              "model_revision": "illustrative-r1",
+              "time": 1,
+              "value": 1
+            }
+          ],
+          "scale_id": "own_score"
+        }
+      ],
+      "epistemic_group_id": "higher_response_state",
+      "laws": [
+        {
+          "count_family": "poisson",
+          "entity_id": "illustrative_model",
+          "evidence_ids": [
+            "authored_assumptions"
+          ],
+          "input_stage": "attempted_initiator",
+          "origin_id": "campaign",
+          "qualification_assumption": "Distinct attempted ecosystem campaigns under the declared deployment, before harm prevention. No observed qualified victim total is reinterpreted as attempted incidence.",
+          "reference_annual_rate": 1,
+          "response": {
+            "extrapolation": "flat",
+            "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+            "interpolation": "log",
+            "points": [
+              {
+                "multiplier": 1,
+                "value": 0
+              },
+              {
+                "multiplier": 4,
+                "value": 1
+              }
+            ]
+          },
+          "scenario_id": "campaign_harm",
+          "segments": [
+            {
+              "end": 1,
+              "initiation_probability": 1,
+              "kernel": {
+                "campaign_components": [
+                  {
+                    "amount": 5,
+                    "attribution_weights": {
+                      "illustrative_model": 1
+                    },
+                    "bearer_id": "operator",
+                    "component_id": "response_cost",
+                    "contributor_ids": [
+                      "illustrative_model"
+                    ],
+                    "nature": "resource_cost",
+                    "scenario_ids": [
+                      "campaign_harm"
+                    ]
+                  }
+                ],
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 0,
+                      "probability": 0.2
+                    },
+                    {
+                      "count": 2,
+                      "probability": 0.8
+                    }
+                  ]
+                },
+                "displacement_assumption": "Zero displacement in containment arm; explicit displacement arm tests that assumption.",
+                "gate_meaning": "Shared campaign harm transition followed by member harm transition. Both occur after counted initiation; response cost is incurred before either harm gate.",
+                "member_outcomes": [
+                  {
+                    "components": [
+                      {
+                        "amount": 100,
+                        "attribution_weights": {
+                          "illustrative_model": 1
+                        },
+                        "bearer_id": "victim",
+                        "component_id": "victim_harm",
+                        "contributor_ids": [
+                          "illustrative_model"
+                        ],
+                        "nature": "resource_cost",
+                        "scenario_ids": [
+                          "campaign_harm"
+                        ]
+                      }
+                    ],
+                    "probability": 1
+                  }
+                ],
+                "selection_assumption": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+                "shared_probability": 0.8,
+                "unit_probability": 0.75
+              },
+              "reference_exposure_share": 1,
+              "start": 0
+            }
+          ]
+        },
+        {
+          "count_family": "poisson",
+          "entity_id": "illustrative_model",
+          "evidence_ids": [
+            "authored_assumptions"
+          ],
+          "input_stage": "qualified_initiator",
+          "origin_id": "other_origin",
+          "qualification_assumption": "Explicitly stipulated unique gross-producing origin; no attempted incidence inferred.",
+          "reference_annual_rate": 0.25,
+          "response": {
+            "extrapolation": "flat",
+            "held_fixed": "Reference exposure, model revision, population and complete conditional kernel except explicitly overridden quantities.",
+            "interpolation": "log",
+            "points": [
+              {
+                "multiplier": 1,
+                "value": 0
+              }
+            ]
+          },
+          "scenario_id": "uncomposed_other",
+          "segments": [
+            {
+              "end": 1,
+              "initiation_probability": 1,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1
+                    }
+                  ]
+                },
+                "displacement_assumption": "Held fixed under the campaign intervention.",
+                "gate_meaning": "Fully qualified source population; no second harm gate.",
+                "member_outcomes": [
+                  {
+                    "components": [],
+                    "composition_complete": false,
+                    "identified_gross_total": 40,
+                    "overlap_resolved": true,
+                    "probability": 1,
+                    "scenario_ids": [
+                      "campaign_harm",
+                      "uncomposed_other"
+                    ]
+                  }
+                ],
+                "selection_assumption": "Gross is identified, component natures and exact scenario attribution are unavailable.",
+                "shared_probability": 1,
+                "unit_probability": 1
+              },
+              "reference_exposure_share": 1,
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "state_id": "fast_rising",
+      "weight": 0.4
+    }
+  ],
+  "limitations": [
+    "software illustration of origin-year ultimate scoped harm, not an empirical forecast",
+    "Calendar carry-in/accrual, below-scope harm, empirical efficacy, rights/reliance and the rest of the world are not estimated.",
+    "Probability weights and intervention transitions are stipulations; numerical precision is not empirical validity."
+  ],
+  "period_end": "2028-01-01T00:00:00Z",
+  "period_start": "2027-01-01T00:00:00Z",
+  "populations": [
+    {
+      "accounting_standing": "Scoped gross harm without perpetrator-benefit offset.",
+      "causal_qualification": "Complete unique harm from origins in the study year to the declared deployment population.",
+      "currency": "USD",
+      "definition": "Complete campaign victim harm and once-per-initiation response cost.",
+      "deployment_ids": [
+        "deployment"
+      ],
+      "exclusions": [
+        "Calendar-year accrual and pre-study origins; unrelated harms and unsupplied component decomposition."
+      ],
+      "initiating_unit": "campaign",
+      "monetary_basis": "USD at 2027 study start; eventual gross before recovery",
+      "scenario_id": "campaign_harm",
+      "severity_unit": "eventual ultimate USD per affected victim",
+      "terminal_unit": "affected victim"
+    },
+    {
+      "accounting_standing": "Scoped gross harm without perpetrator-benefit offset.",
+      "causal_qualification": "Complete unique harm from origins in the study year to the declared deployment population.",
+      "currency": "USD",
+      "definition": "Identified unique gross from other origins; dependent composition views unavailable.",
+      "deployment_ids": [
+        "deployment"
+      ],
+      "exclusions": [
+        "Calendar-year accrual and pre-study origins; unrelated harms and unsupplied component decomposition."
+      ],
+      "initiating_unit": "qualified origin",
+      "monetary_basis": "USD at 2027 study start; eventual gross before recovery",
+      "scenario_id": "uncomposed_other",
+      "severity_unit": "eventual ultimate USD per qualified origin",
+      "terminal_unit": "origin unique gross"
+    }
+  ],
+  "scope_id": "stipulated_campaign",
+  "title": "Openly stipulated clustered safeguard illustration"
+}

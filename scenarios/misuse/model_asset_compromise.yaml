@@ -1,0 +1,142 @@
+id: "model_asset_compromise"
+name: "Theft or Leak of Model Artifacts"
+node_ids: ["n_asset_theft"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  The model's artifacts are the target: an attacker or insider steals or leaks the provider's
+  weights, checkpoints or other model artifacts, including when the attacker had model help. Only
+  the theft's own losses count here: the provider's response, lost exclusivity (an appropriated
+  transfer) and the consequences of disclosed data. Harm from later use of a stolen copy belongs to
+  the leaf where that copy helped an attacker. An attack that disrupts or intrudes on the AI
+  service without taking artifacts is an attack on the service.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    A theft's loss is the response and the exclusivity taken, a loss from an intrusion or an insider
+    that the cyber class describes; the largest thefts scale with the value of the model taken.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One campaign is one unit: one causally coherent operation, identified by a shared plan, access
+    chain, pretext or payload, across every target, victim, system and affected party. An actor or
+    generic toolkit shared by independent plans does not merge them. Causally distinct campaigns are
+    separate units, including several by one actor in one year.
+  terminal_event_unit: >-
+    One admitted artifact-theft incident: a campaign that steals or leaks the selected provider's
+    model artifacts, with or without model help, the largest share of whose gross loss is the
+    theft's own, and {{admission}}. Harm from later use of a stolen copy is not part of it. Where
+    one campaign takes artifacts from several providers, this scenario's incident is the taking of
+    the selected provider's artifacts, with the loss that taking causes. Model artifacts are the
+    model's weights, checkpoints, adapters, training or fine-tuning data and model files; the
+    provider's other code, documents and know-how are not. The taker can be an outside attacker or
+    an insider, meaning anyone who holds or can reach the artifacts with the provider's
+    authorization: its staff and contractors, and outside parties to whom it has given the artifacts
+    or access to them, such as researchers, evaluators, customers, vendors and hosts. Artifacts
+    exposed by mistake are not stolen or leaked; a person who then takes or spreads them, knowing
+    they were not meant to be released, steals or leaks them. Copying a model's behavior through the
+    provider's service, by distillation or extraction, is neither a theft of artifacts nor an attack
+    on the service. A campaign whose loss arises mostly from disrupting or intruding on the AI
+    service is an attack on the service. An incident below the admission threshold is the
+    unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted campaign's own consequences across all affected parties,
+  before any recovery: the provider's investigation, response and restoration, lost exclusivity (an
+  appropriated transfer), consequences of disclosed data, {{loss_component:provider_civil_fine}} and
+  the legal resources of every claim, enforcement action and recovery effort the incident causes.
+  Exclusivity is lost to the extent that those who hold a copy use, sell or spread it; a copy that
+  is never used or disclosed takes none. Exclude harm from later use of a stolen copy, which belongs
+  to the leaf where it helped an attacker. Count each underlying loss once: settlements,
+  reimbursements, recoveries and other compensation for already-counted harm are not more loss.
+  Costs are incremental relative to the same activity without the incident: scheduled control
+  resources unchanged in that counterfactual are excluded, and incident-triggered response or
+  recovery resources are included even when existing staff perform them.
+# The provider's model artifacts are the target; most loss is the provider's own.
+facets:
+  peril_mechanism: ["technical_intrusion"]
+  deployment_control_mode: "stolen_weights"
+  harm_types: ["ip_loss", "economic_loss"]
+  bearers: ["provider", "deployer_or_customer", "third_party_organizations"]
+  party_basis: "first_party"
+occurrence_unit_id: "model_asset_compromise_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The stolen or leaked artifacts are the assigned provider's.
+estimand_composition:
+  roster: "standard"
+  loss_forms:
+    provider_resource_cost: >-
+      Selected-provider investigation, defense, containment, restoration, lost productive output
+      after avoided costs and actual destruction of productive capacity caused by the incident.
+      Copying non-rival model weights does not itself destroy the original model or require
+      retraining. Do not automatically charge historic training cost or classify lost exclusivity,
+      market share or IP rents as resource destruction. Those value changes require separate
+      transfer or appropriation measurement; do not duplicate them with response costs.
+    provider_distinct_transfer_appropriated: >-
+      Selected-provider funds, assets or explicitly valued IP rights harmfully appropriated through
+      theft, fraud or coercion in this incident, including stolen model-weight exclusivity or rents.
+      A copied model is non-rival: do not substitute its historic training bill for lost value,
+      presume the original productive asset was destroyed, or duplicate separately counted response
+      and downstream harms. Perpetrator gains do not offset the victim loss in the reference
+      standing convention. A zero share is permitted.
+event_chain:
+  opportunity:
+    unit: >-
+      One hostile campaign to steal or leak the named lab's weights, checkpoints or other model
+      artifacts, by an outside attacker or an insider, counted when the campaign first acts.
+    counting_rule: >-
+      Count one opportunity per causally coherent campaign; distinct campaigns by one actor are
+      separate. Each campaign yields at most one qualified incident.
+    cohort: >-
+      Campaigns active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "1 million weekly active users of the consumer assistant"
+      basis: "normalisation"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0e-6
+        rationale: >-
+          Attempts to take a served model's artifacts follow the model's prominence, which weekly
+          users measure; the driver is a normalisation.
+        source: >-
+          INITIAL_ESTIMATE: public weight leaks establish the mechanism, not a rate per user.
+      derivation: >-
+        The stipulated number of weekly active users of the consumer assistant divided by 1 million.
+    internal:
+      unit: "1,000 lab staff"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 1.0e-3
+        rationale: >-
+          Internal and pre-release use has one stipulated scale, lab staff, so the internal rate is
+          per 1,000 lab staff: theft of not-yet-public artifacts targets the lab's own staff and
+          systems, which grow with its staff.
+        source: >-
+          INITIAL_ESTIMATE: theft of not-yet-public artifacts targets the lab's staff and systems;
+          no rate per staff member is published.
+      derivation: "The stipulated number of lab staff divided by 1,000."
+  stages:
+    - stage_id: "access_gained"
+      event: >-
+        The campaign gains unauthorized access to the artifacts, or an insider with access begins to
+        take them.
+    - stage_id: "artifacts_leave_control"
+      event: >-
+        Artifacts are copied or disclosed outside the lab's control.
+empirical_grounding: >-
+  No governed dataset supports this population. Public records hold a few leaks of leading models'
+  weights, court cases over insiders taking code and documents, security tests that reached
+  developers' business systems, and developers' reports of large-scale copying of capability
+  through their services. They do not establish how often weights are taken from a frontier
+  developer's own systems, and none gives a loss for a taking of model artifacts.

@@ -1,0 +1,138 @@
+id: "input_hijack"
+name: "Deployed AI System Hijacked Through Its Inputs"
+node_ids: ["n_input_hijack"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  An attacker, without authorized control of the deployment, makes a deployed AI system that another
+  principal operates act for the attacker through inputs it processes in ordinary operation: direct
+  or indirect prompt injection, poisoned retrieved documents, web pages, messages or tool outputs,
+  or a jailbreak of its guardrails, so that it acts or discloses for the attacker against its
+  principal. The commandeered system's delegated authority, data access or output channel is the
+  loss pathway, whether it is an autonomous agent, an assistant or a bounded pipeline. Input crafted
+  with the attacker's own model assistance remains a hijack, because the commandeered system is
+  nearest the largest share of the loss. Jailbreaking a model to obtain assistance for the
+  attacker's own activity is helping the attacker, and a commandeered system that only supplied
+  information the attacker then used in its own operation leaves the incident with that operation.
+  An intrusion that edits a deployment's configuration, such as its system prompt, tools or
+  permissions, is not a hijack: it is tampering when the reconfigured system's actions cause the
+  largest share of the loss.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    Commandeered systems act with their deployers' delegated authority, and one payload can reach
+    many deployments.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One campaign is one unit: a shared plan, payload, injection vector or planted content identifies
+    it across every commandeered deployment and affected party, including one planted payload
+    ingested by many deployments. Independent actors reusing a published technique run separate
+    campaigns.
+  terminal_event_unit: >-
+    One admitted hijack incident: a campaign in which adversary-supplied input processed in ordinary
+    operation makes at least one deployed AI system using the selected provider's model, operated by
+    another principal, act or disclose for the attacker against that principal through its delegated
+    authority, data access or output channel, the largest share of whose gross loss arises through
+    those commandeered actions or disclosures, and {{admission}}. The whole campaign and all its
+    consequences belong here. An ordinary user who means to turn the system against its principal
+    is an adversary; a harmful action that no one meant to induce is an AI failure, not a hijack.
+    Planting instructions through inputs that a deployed system processes in ordinary operation is
+    a hijack, even when the system then keeps them in memory; changing its model files, system
+    prompt, tools, skills, permissions or memory store by another route is tampering. Where a
+    commandeered system only gave up information, such as credentials, and the largest share of the
+    loss arises from an operation of the attacker's own that used it, the incident belongs to that
+    operation's scenario. An incident below the admission threshold is the unestimated leftover,
+    not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted hijack campaign across all affected parties and loss
+  kinds, before any recovery: unauthorized transfers and extracted assets, consequences of
+  exfiltrated data, restoration after destructive actions, response and remediation at every
+  affected deployment, interruption after avoided costs, injury where caused,
+  {{loss_component:provider_civil_fine}} and the legal resources of every claim, enforcement action
+  and recovery effort the incident causes. Count each underlying loss once: settlements,
+  reimbursements, recoveries and other compensation for already-counted harm are not more loss.
+  Costs are incremental relative to the same activity without the incident: scheduled control
+  resources unchanged in that counterfactual are excluded, and incident-triggered response or
+  recovery resources are included even when existing staff perform them.
+# A commandeered deployed system acts for the attacker, harming its deployer and others.
+facets:
+  peril_mechanism: ["deployed_system_hijack"]
+  deployment_control_mode: "api"
+  harm_types: ["financial_theft", "economic_loss"]
+  bearers:
+    - "deployer_or_customer"
+    - "third_party_organizations"
+    - "third_party_individuals"
+    - "provider"
+  party_basis: "third_party"
+occurrence_unit_id: "input_hijack_campaign"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The commandeered deployed system runs on the assigned provider's model, whose processing of the
+    adversarial input produces the harmful action, disclosure or output.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One hijack campaign whose adversarial input, such as a prompt injection, poisoned document,
+      web page, message or tool output, is ingested and processed in ordinary operation by at least
+      one deployed AI system built on the named lab's model in the named deployment and operated by
+      another principal, counted when the first such system processes it.
+    counting_rule: >-
+      Count one opportunity per causally coherent campaign; distinct campaigns by one actor are
+      separate. Each campaign yields at most one qualified incident.
+    cohort: >-
+      Campaigns active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: >-
+        business customer whose system built on the lab's models processes outside content, such as
+        web pages, email, documents or tool outputs
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 0.3
+        rationale: >-
+          Hijack campaigns reach deployed systems through content they ingest from outside, so
+          customers running such systems measure the targets; about three in ten paying business
+          customers are taken to run one. Consumer-assistant users whose browsing, connectors or
+          agents ingest attacker content are included in the rate.
+        source: >-
+          INITIAL_ESTIMATE: published prompt-injection demonstrations show the mechanism; no census
+          counts exposed deployments.
+      derivation: >-
+        About 30% of the stipulated paying business customers run a system built on the lab's models
+        that processes outside content.
+    internal:
+      unit: "lab staff member who runs internal agents that read outside content"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 0.75
+        rationale: >-
+          Internal agents read repositories, web pages and documents an attacker could plant; about
+          three quarters of staff are taken to run such agents.
+        source: "INITIAL_ESTIMATE: the stipulated context gives no share."
+      derivation: >-
+        About 75% of the stipulated lab staff run internal agents that read outside content.
+  stages:
+    - stage_id: "system_commandeered"
+      event: >-
+        At least one such system acts or discloses for the attacker against its principal because of
+        that input: it executes a state-changing action, discloses protected data or sends
+        attacker-directed output to other people, despite model, application and permission
+        safeguards.
+empirical_grounding: >-
+  No governed dataset supports this population. Published prompt-injection demonstrations and
+  reported incidents establish the mechanism, not a frequency or loss sample.

@@ -1,0 +1,46 @@
+{
+  "base_displacement": "Zero displacement in containment arm; explicit displacement arm tests that assumption.",
+  "cluster_support": {
+    "two_members": 0.8,
+    "zero_members": 0.2
+  },
+  "contained": {
+    "loss_per_member": 100,
+    "member_harm_gate": 0.5,
+    "response_cost_per_campaign": 12,
+    "shared_harm_gate": 0.2
+  },
+  "currency": "USD at 2027 study start; eventual gross before recovery",
+  "displacement": {
+    "campaign_rate_factor": 1.5,
+    "loss_per_member": 150,
+    "member_harm_gate": 0.5,
+    "response_cost_per_campaign": 12,
+    "shared_harm_gate": 0.2
+  },
+  "joint_states": {
+    "fast_rising": 0.4,
+    "slow_fixed": 0.6
+  },
+  "local_response": {
+    "interpolation": "log",
+    "score_0": 1,
+    "score_1": 4
+  },
+  "origin": "openly authored stipulations; no observations or fitted source data",
+  "purpose": "software illustration of origin-year ultimate scoped harm, not an empirical forecast",
+  "reference": {
+    "loss_per_member": 100,
+    "member_harm_gate": 0.75,
+    "response_cost_per_campaign": 5,
+    "shared_harm_gate": 0.8
+  },
+  "reference_attempted_campaigns_per_year": 1,
+  "selection": "Independent shared/member prevention within each authored state; the displacement stress explicitly changes initiation and surviving mark severity.",
+  "uncomposed_other": {
+    "component_natures_and_scenario_attribution": "unavailable",
+    "identified_unique_gross_per_origin": 40,
+    "qualified_initiators_per_year": 0.25
+  },
+  "unestimated": "Calendar carry-in/accrual, below-scope harm, empirical efficacy, rights/reliance and the rest of the world are not estimated."
+}

@@ -1,0 +1,168 @@
+id: "compromise_organizations"
+name: "System Compromise of Organizations"
+node_ids: ["n_compromise_organizations"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  An attacker materially assisted by any copy of the provider's model directs a campaign against
+  the systems of businesses, governments or nonprofits outside critical infrastructure, gaining
+  unauthorized access, execution or control and causing loss through ransomware and extortion,
+  theft of funds or data, disruption or destruction. A deceived employee handing over credentials
+  that the attacker then uses is part of this process; a deceived employee approving a payment is
+  fraud. A compromised shared dependency, or mass exploitation of one vulnerability, that reaches
+  thousands of organizations is one incident, its reach part of severity. Personal data taken from
+  an organization's systems belongs here, whoever its disclosure harms. Malicious code that spreads
+  on its own is a self-propagating compromise. Novel-vulnerability discovery and a low-skill
+  actor's uplift are attributes of the history, not splits. An attack on the provider's own model
+  artifacts or AI service is an asset compromise even when the attacker had model help. An
+  intrusion that edits a deployed AI system's configuration, such as its system prompt, tools or
+  permissions, is tampering when the reconfigured system's actions cause the largest share of the
+  loss; when the intrusion's own losses, such as data theft, are the largest share, it stays here.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    Intrusion losses follow operational-loss evidence, among the heaviest-tailed published, and a
+    shared dependency spreads one campaign.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One campaign is one unit: one causally coherent operation, identified by a shared plan, access
+    chain, pretext or payload, across every target, victim, system and affected party. An actor or
+    generic toolkit shared by independent plans does not merge them. Causally distinct campaigns are
+    separate units, including several by one actor in one year.
+  terminal_event_unit: >-
+    One admitted system-compromise incident: a campaign in which an attacker materially assisted by
+    any copy of the selected provider's model, however the attacker obtained it (served, stolen,
+    leaked or open weights) gains unauthorized access, execution or control of systems, or forces
+    incident-triggered defensive action, the largest share of whose gross loss arises from its
+    attack on the systems of businesses, governments or nonprofits outside critical infrastructure,
+    and {{admission}}. Assistance is material when it gives the attacker capability, scale or speed
+    that the attacker would not have had without any AI model, and the loss, or more than half of
+    it, would not have occurred without that gain. The comparison is with what the same attacker
+    would in fact have had if no generative AI model of any developer, voice and image generators
+    included, had been available to it: its own skills and staff, software in ordinary use before
+    such models, such as search engines and translation software, and whatever it would have bought
+    or hired instead. Help that it would then have had anyway, as good, as fast and at the same
+    scale, such as tidying a message's wording or answering what a web search would have answered,
+    is not material even when the campaign uses it. That another AI model could have given the same
+    help does not make it less material. A campaign that used the model's help without material
+    assistance is not this scenario's incident and, unless it meets another scenario's own
+    conditions, such as a hijacked AI system or an AI failure that the attacker exploited, is
+    counted in no scenario and no category. The whole incident and all its consequences belong
+    here. A government body is a critical-infrastructure operator only for a service it runs such
+    as energy, water, health care, finance, transport or communications; an attack on its other
+    systems is a compromise of organizations outside critical infrastructure. A campaign whose loss
+    arises mostly from malicious code spreading on its own is a self-propagating compromise. A
+    campaign whose loss arises mostly through the actions or disclosures of a deployed AI system
+    that the attacker commandeered through its inputs or tampered with is a hijack or tampering;
+    where such a system only gave up information, such as credentials, and the largest share of the
+    loss arises from the attacker's own intrusion that used it, the campaign is a system
+    compromise. A campaign whose loss arises mostly from transfers or approvals that people were
+    deceived into making is fraud, even when a compromised mailbox or account delivered the
+    deception; extortion over systems or data that the attacker compromised, and the attacker's use
+    of credentials or access that a deceived person handed over, are system compromise. An
+    intrusion, fraud or influence operation that is part of a CBRN program belongs to that program.
+    An attack on the selected provider's own model artifacts or AI service is an asset compromise,
+    even when the attacker had model help. Use of that service through credentials stolen from its
+    customers is by itself a system compromise of those customers, not an attack on the service.
+    Where the loss is the cost of that stolen use, the use is itself the material assistance. An
+    incident below the admission threshold is the unestimated leftover, not this scenario's
+    incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across all affected parties and loss kinds,
+  before any recovery: victims' response, restoration and interruption, stolen funds or assets,
+  ransom, transfers made by people deceived during the campaign, data disclosure and destruction,
+  physical damage and injury where caused, {{loss_component:provider_civil_fine}} and the legal
+  resources of every claim, enforcement action and recovery effort the incident causes. Count each
+  underlying loss once: settlements, reimbursements, recoveries and other compensation for
+  already-counted harm are not more loss. Costs are incremental relative to the same activity
+  without the incident: scheduled control resources unchanged in that counterfactual are excluded,
+  and incident-triggered response or recovery resources are included even when existing staff
+  perform them.
+# An attacker's model-assisted intrusion causes loss to the targets and the parties that depend on them.
+facets:
+  peril_mechanism: ["technical_intrusion"]
+  deployment_control_mode: "any_copy"
+  harm_types: ["economic_loss", "financial_theft"]
+  bearers: ["third_party_organizations", "third_party_individuals", "provider"]
+  party_basis: "third_party"
+occurrence_unit_id: "compromise_organizations_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    A copy of the assigned provider's model, however the attacker obtained it, materially assists
+    the campaign's reconnaissance, access, exploitation, persistence or impact. The model behind a
+    victim's own deployed AI system that the campaign uses is such a copy, and the comparison is
+    then with the campaign without what that system gave up or did for the attacker.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One hostile cyber campaign that an attacker directs against businesses, governments or
+      nonprofits outside critical infrastructure, or a vendor or dependency they share, and that
+      uses help from a copy of the named lab's model, such as code, analysis or instructions,
+      whether served in the named deployment or stolen, leaked or open, counted when it first uses
+      that help. Any use of the model's help counts here, however small. The first stage asks only
+      whether the help gave a gain; that the loss, or more than half of it, would not have occurred
+      without that gain is part of the last stage, the qualified unit. An effort to build or release
+      code that spreads on its own is not counted here.
+    counting_rule: >-
+      Count one opportunity per causally coherent campaign; distinct campaigns by one actor are
+      separate. Each campaign yields at most one qualified incident.
+    cohort: >-
+      Campaigns active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "1 million weekly active users of the consumer assistant"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "consumer_weekly_users"
+        factor: 1.0e-6
+        rationale: >-
+          Misusing actors are a small share of the people who use the lab's models, and weekly users
+          are the broadest stipulated measure of that population; campaigns using stolen, leaked or
+          open copies are included in the rate.
+        source: >-
+          INITIAL_ESTIMATE: published threat-intelligence reports describe disrupted misuse
+          operations, not a rate per user.
+      derivation: >-
+        The stipulated number of weekly active users of the consumer assistant divided by 1 million.
+    internal:
+      unit: >-
+        not-yet-public model of the lab in training, evaluation, internal use or pre-release testing
+        during the study year
+      basis: "judgment"
+      count:
+        kind: "fixed"
+        count: 6
+        rationale: >-
+          Campaigns can reach a not-yet-public model through pre-release tester access, an insider
+          or a stolen copy; each route is specific to a model, so the number of not-yet-public
+          models measures exposure better than staff. About six are in use at some time in the year.
+        source: >-
+          INITIAL_ESTIMATE: no public census of frontier labs' unreleased models exists; the
+          stipulated context describes successors to the public model line in training, evaluation,
+          internal use and pre-release testing.
+      derivation: >-
+        Fixed by the scenario at six not-yet-public models in use at some time during the year.
+  stages:
+    - stage_id: "uplift"
+      event: >-
+        The model's help gives the attacker capability, scale or speed that the attacker would not
+        have had without any AI model.
+    - stage_id: "breach_or_protective_response"
+      event: >-
+        A target is breached, or takes protective measures because of the attempted intrusion.
+empirical_grounding: >-
+  No governed dataset isolates AI-assisted intrusions. Developers' and security firms' reports
+  describe AI-assisted intrusion campaigns; they are selected by who publishes and establish neither
+  a rate nor a loss. Loss-disclosing incident samples describe organization-level losses from all
+  causes, selected by disclosure; none calibrates this population.

@@ -1,0 +1,771 @@
+{
+  "scope_id": "stipulated-conditional-example",
+  "title": "Stipulated integer ECI and paired societal/lab loss example",
+  "period_start": "2027-01-01T00:00:00Z",
+  "period_end": "2028-01-01T00:00:00Z",
+  "forecast_as_of": "2027-01-01T00:00:00Z",
+  "data_cutoff": "2027-01-01T00:00:00Z",
+  "availability_cutoff": "2027-01-01T00:00:00Z",
+  "information_date": "2027-01-01T00:00:00Z",
+  "capability_scales": [
+    {
+      "scale_id": "own_score",
+      "quantity_definition": "Own entity score",
+      "unit": "stipulated index points",
+      "reference_definition": "Zero is the rate reference",
+      "measurement_protocol": "Openly stipulated fixture, not measurement."
+    }
+  ],
+  "deployments": [
+    {
+      "deployment_id": "deployment",
+      "model_id": "model",
+      "use_population": "Synthetic internal use",
+      "tools_and_permissions": "None",
+      "human_oversight": "Stipulated"
+    }
+  ],
+  "entities": [
+    {
+      "entity_id": "model",
+      "kind": "model",
+      "related_entity_ids": [
+        "lab"
+      ],
+      "revision": "r1",
+      "definition": "One fixed model revision",
+      "display_name": "Fixture model",
+      "status": "hypothetical"
+    },
+    {
+      "entity_id": "lab",
+      "kind": "lab",
+      "definition": "Stipulated lab",
+      "display_name": "Stipulated lab",
+      "status": "hypothetical"
+    },
+    {
+      "entity_id": "deployment",
+      "kind": "deployment",
+      "definition": "Internal stipulated use",
+      "display_name": "Internal use",
+      "status": "hypothetical"
+    }
+  ],
+  "populations": [
+    {
+      "scenario_id": "scenario",
+      "definition": "Unique test victims",
+      "causal_qualification": "Complete origin-owned qualifying harm",
+      "initiating_unit": "campaign",
+      "terminal_unit": "victim",
+      "severity_unit": "victim ultimate loss",
+      "monetary_basis": "USD at study start before recovery",
+      "currency": "USD",
+      "threshold_scope": "surviving_terminal_total",
+      "accounting_standing": "Victim harm without offsetting perpetrator benefit",
+      "deployment_ids": [
+        "deployment"
+      ]
+    }
+  ],
+  "joint_states": [
+    {
+      "state_id": "internal:eci:0:state",
+      "epistemic_group_id": "fixed",
+      "weight": 0.125,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 1.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    },
+    {
+      "state_id": "internal:eci:0:second",
+      "epistemic_group_id": "alternative",
+      "weight": 0.375,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 0.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 2.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    },
+    {
+      "state_id": "internal:eci:1:state",
+      "epistemic_group_id": "fixed",
+      "weight": 0.0,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 1.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 1.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    },
+    {
+      "state_id": "internal:eci:1:second",
+      "epistemic_group_id": "alternative",
+      "weight": 0.0,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 1.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 2.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    },
+    {
+      "state_id": "internal:eci:2:state",
+      "epistemic_group_id": "fixed",
+      "weight": 0.125,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 2.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 2.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 1.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    },
+    {
+      "state_id": "internal:eci:2:second",
+      "epistemic_group_id": "alternative",
+      "weight": 0.375,
+      "entity_paths": [
+        {
+          "entity_id": "model",
+          "scale_id": "own_score",
+          "history_status": "stipulated",
+          "history_rationale": "Whole path openly stipulated.",
+          "interpolation": "step",
+          "knots": [
+            {
+              "time": 0.0,
+              "value": 2.0,
+              "model_revision": "r1"
+            },
+            {
+              "time": 1.0,
+              "value": 2.0,
+              "model_revision": "r1"
+            }
+          ]
+        }
+      ],
+      "laws": [
+        {
+          "origin_id": "origin",
+          "scenario_id": "scenario",
+          "entity_id": "model",
+          "reference_annual_rate": 2.0,
+          "count_family": "poisson",
+          "count_variance_to_mean": 1.0,
+          "response": {
+            "domain": "local_entity_state",
+            "interpolation": "log",
+            "extrapolation": "last_slope",
+            "points": [
+              {
+                "value": 0.0,
+                "multiplier": 1.0
+              },
+              {
+                "value": 1.0,
+                "multiplier": 4.0
+              }
+            ],
+            "held_fixed": "Exposure, qualification and complete mark law held fixed."
+          },
+          "segments": [
+            {
+              "start": 0.0,
+              "end": 1.0,
+              "reference_exposure_share": 1.0,
+              "initiation_probability": 1.0,
+              "kernel": {
+                "cluster": {
+                  "family": "finite",
+                  "support": [
+                    {
+                      "count": 1,
+                      "probability": 1.0
+                    }
+                  ]
+                },
+                "shared_probability": 1.0,
+                "unit_probability": 1.0,
+                "member_outcomes": [
+                  {
+                    "probability": 1.0,
+                    "components": [
+                      {
+                        "component_id": "victim_harm",
+                        "bearer_id": "victim",
+                        "nature": "resource_cost",
+                        "contributor_ids": [
+                          "model"
+                        ],
+                        "lab_loss_weights": {
+                          "lab": 0.4
+                        },
+                        "scenario_ids": [
+                          "scenario"
+                        ],
+                        "amount": 10.0,
+                        "rank_scope": "member",
+                        "multiplier": 1.0,
+                        "post_multiplier": 1.0
+                      }
+                    ],
+                    "composition_complete": true,
+                    "overlap_resolved": true
+                  }
+                ],
+                "gate_meaning": "No extra qualification in this fully scoped fixture.",
+                "selection_assumption": "Complete fixed selected population.",
+                "displacement_assumption": "No displacement in this declared fixture."
+              }
+            }
+          ],
+          "input_stage": "qualified_initiator",
+          "qualification_assumption": "Already qualifying origins; no second narrative gate."
+        }
+      ]
+    }
+  ],
+  "conditional_contexts": [
+    {
+      "context_id": "internal",
+      "lab_id": "lab",
+      "deployment_id": "deployment",
+      "entity_id": "model",
+      "scale_id": "own_score",
+      "coordinate_kind": "constant_path",
+      "integer_min": 0,
+      "integer_max": 2,
+      "required_arms": [
+        "reference"
+      ],
+      "kernels": [
+        {
+          "eci": 0,
+          "arm_id": "reference",
+          "components": [
+            {
+              "state_id": "internal:eci:0:state",
+              "weight": 0.25
+            },
+            {
+              "state_id": "internal:eci:0:second",
+              "weight": 0.75
+            }
+          ]
+        },
+        {
+          "eci": 1,
+          "arm_id": "reference",
+          "components": [
+            {
+              "state_id": "internal:eci:1:state",
+              "weight": 0.25
+            },
+            {
+              "state_id": "internal:eci:1:second",
+              "weight": 0.75
+            }
+          ]
+        },
+        {
+          "eci": 2,
+          "arm_id": "reference",
+          "components": [
+            {
+              "state_id": "internal:eci:2:state",
+              "weight": 0.25
+            },
+            {
+              "state_id": "internal:eci:2:second",
+              "weight": 0.75
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "independence_assumptions": [
+    "Distinct initiating origins are conditionally independent absent an authored experiment."
+  ],
+  "limitations": [
+    "Synthetic software example, not an empirical forecast or a measured lab capability scale.",
+    "Only this toy population and internal deployment are modeled; real all-risk internal and public deployment coverage requires additional scientific authoring.",
+    "A constant full-year capability path and 40% lab cost allocation are stipulations; no current-score future-path model or insurance recovery is inferred."
+  ]
+}

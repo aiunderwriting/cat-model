@@ -1,0 +1,141 @@
+id: "agent_actions_for_deployer"
+name: "Autonomous Agent Actions for a Deployer"
+node_ids: ["n_failure_autonomous_action"]
+lineage:
+  introduced_in: "r1"
+description: >-
+  An autonomous agent built on the provider's model, holding discretionary authority over
+  nonphysical systems, takes actions for its deployer that depart from the deployer's intent:
+  unauthorized transactions, destructive configuration changes, improper data modifications or
+  communications. The leaf covers enterprise and consumer agents, actions that cascade across
+  interconnected systems, and one shared defect in a model version, system prompt, safety layer or
+  tool interface that makes agents misbehave at many deployments, which is one incident. Detection
+  alone is not containment: a later shutdown does not undo an earlier payment, disclosure or
+  downtime.
+severity_governance:
+  policy: "governed_tail_shape"
+  tail_class: "cyber_operational"
+  tail_class_rationale: >-
+    Agent actions are operational losses, and a shared defect or cascade spreads one incident across
+    systems and deployments.
+  cap_posture: "uncapped"
+  evidence_refs: ["assumptions.md#severity-and-tails"]
+frequency_semantics:
+  counting_identity: >-
+    One incident is one root cause: one erroneous output or action history, or one identified defect
+    in a shared model, configuration, prompt or tool interface, from its first loss to its
+    correction, across every affected deployment, organization and party. Use of the same model
+    alone does not establish a shared defect; independent errors without one identified defect are
+    separate incidents, including several in one deployment in one year. A design or behavior is an
+    identified defect only when a specific, correctable model, version, feature or configuration
+    property is shown or acknowledged to cause the harms; a pleaded theory alone does not merge
+    losses into one incident.
+  terminal_event_unit: >-
+    One admitted agent incident: one root cause in which autonomous agents built on the selected
+    provider's model take nonphysical actions for their deployers that depart from the deployers'
+    intent, the largest share of whose gross loss arises through those actions and their
+    propagation, and {{admission}}. The whole incident and all its consequences belong here. In this
+    scenario an agent's action takes effect without a person considering that individual action,
+    including under automatic or bulk approval and when the agent deploys code it wrote; where a
+    person considers what the agent proposes or produces and acts on it, however carelessly, the
+    incident is reliance on output. The deployer may be the provider itself or an evaluator testing
+    the model under agreement with it: harm their agent causes through access it was given or that
+    was left open by mistake belongs here, and where the agent defeats, evades or deceives a
+    containment boundary, access restriction, monitor, evaluation or shutdown they have in place,
+    the incident is a loss of developer control. An action that someone meant to induce through the
+    agent's inputs, against its deployer, is a hijack; an action that no one meant to induce belongs
+    here. An incident whose loss arises mostly from a failure of the provider's own service is a
+    service-failure incident, even when an agent's action caused the failure. An incident below the
+    admission threshold is the unestimated leftover, not this scenario's incident.
+  year_rule: >-
+    An incident is assigned to the year its first loss occurs; later losses, claims, fines and
+    recoveries stay with it and never create another unit.
+severity_occurrence_scope: >-
+  The complete gross loss of one admitted incident across every affected deployment, organization
+  and party, before any recovery: erroneous transfers, destroyed or corrupted data, restoration,
+  response and interruption, propagation through connected systems, injury where caused, losses the
+  same root cause causes through other roles, such as service outages, pipeline decisions or outputs
+  relied on, {{loss_component:provider_civil_fine}} and the legal resources of every claim,
+  enforcement action and recovery effort the incident causes. Count each underlying loss once:
+  settlements, reimbursements, recoveries and other compensation for already-counted harm are not
+  more loss. Costs are incremental relative to the same activity without the incident: scheduled
+  control resources unchanged in that counterfactual are excluded, and incident-triggered response
+  or recovery resources are included even when existing staff perform them.
+# Autonomous agents' actions depart from deployers' intent; harm falls on deployers and those affected.
+facets:
+  peril_mechanism: ["autonomous_goal_pursuit", "cross_system_cascade", "shared_component_defect"]
+  deployment_control_mode: "api"
+  harm_types: ["economic_loss", "financial_theft"]
+  bearers:
+    - "deployer_or_customer"
+    - "third_party_organizations"
+    - "third_party_individuals"
+    - "provider"
+  party_basis: "third_party"
+occurrence_unit_id: "agent_deployer_incident"
+attribution_nexus:
+  kind: "model_contribution"
+  terminal_qualification: >-
+    The assigned provider's model powers the agents whose state-changing actions produce the
+    qualifying harm.
+estimand_composition:
+  roster: "standard"
+event_chain:
+  opportunity:
+    unit: >-
+      One root cause that could make autonomous agents built on the named lab's model in the named
+      deployment take harmful nonphysical actions for their deployers: a harmful plan selected by
+      one agent, or a defect in a shared model, configuration, prompt or tool interface reaching
+      agent deployments, counted when the plan is selected or the defect first reaches a deployment.
+    counting_rule: >-
+      Count one opportunity per root cause; a defect reaching many deployments or decisions is one
+      opportunity. Each yields at most one qualified incident.
+    cohort: >-
+      Root causes active during the study year whose first loss has not occurred in an earlier year;
+      membership does not depend on later success.
+  exposure:
+    public:
+      unit: "business customer running autonomous agents built on the lab's models in production"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "paying_business_customers"
+        factor: 0.15
+        rationale: >-
+          Agents that act with discretionary authority are built and run by business customers;
+          about one in seven paying business customers is taken to run such agents in production
+          during the study year. Consumer-assistant agents acting on users' accounts are included in
+          the rate.
+        source: >-
+          INITIAL_ESTIMATE: the 2025 Stack Overflow Developer Survey found about 14% of developers
+          using AI agents daily, a developer-level figure that does not measure customer
+          organizations.
+      derivation: >-
+        About 15% of the stipulated paying business customers run autonomous agents built on the
+        lab's models in production.
+    internal:
+      unit: "lab staff member who runs internal agents with permission to change systems or data"
+      basis: "judgment"
+      count:
+        kind: "derived"
+        scale_id: "lab_staff"
+        factor: 0.75
+        rationale: >-
+          The context says many staff work with internal agents that run large volumes of research
+          and engineering tasks; about three quarters of staff are taken to run agents with write
+          access to code, data or infrastructure.
+        source: "INITIAL_ESTIMATE: the stipulated context gives no share."
+      derivation: >-
+        About 75% of the stipulated lab staff run internal agents that can change systems or data.
+  stages:
+    - stage_id: "action_executed"
+      event: >-
+        At least one harmful state-changing action executes, such as a transaction, configuration
+        change, data modification or communication. Partial execution before a shutdown counts; an
+        action blocked before execution does not.
+empirical_grounding: >-
+  No governed dataset supports this population. Incident databases, developers' disclosures and
+  users' reports record agents deleting data, changing systems and acting on outside parties'
+  systems; they are not a census, are not exposure-normalized and almost never state a loss.
+  Conventional automation failures and shared-software outages are mechanism analogs, not
+  frontier-agent experience.

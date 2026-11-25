@@ -1,0 +1,63 @@
+--- direct.txt
++++ the same question about the lab's not-yet-public models
+@@ -41,21 +41,18 @@
+-Models: Hypothetical Frontier Lab public models. The hypothetical lab's publicly available
+-general-purpose frontier model line during the study year: its leading released model, which tracks
+-the public frontier, and earlier released versions still served. A model is public from its general
+-release.
+-Count only incidents whose originating model is publicly available when the incident originates. A
+-publicly available model used inside the lab remains public: availability is a property of the
+-model, not of where it is used. Incidents from the lab's models that are not yet publicly available
+-are counted separately, so each incident is counted once.
+-Deployment: Hypothetical Frontier Lab consumer assistant and enterprise API. Stipulated public
+-deployment of the hypothetical lab's public models: a consumer assistant (web, mobile and desktop
+-apps, with free and paid tiers) and an enterprise API (also behind business and enterprise plans),
+-offered worldwide outside sanctioned jurisdictions.
+-Tools and permissions: Consumer assistant: web search and browsing, code execution, file and image
+-analysis, image generation, memory, connectors to users' email, calendars and documents, and agentic
+-actions on websites and connected accounts, with user confirmation before purchases and other
+-consequential actions. Enterprise API: tool and function calling, computer use, code execution,
+-retrieval and file search; customers build the model into their own products and agents with the
+-permissions they grant.
+-Human oversight: Consumer users review outputs and confirm consequential agent actions. Enterprise
+-customers set their own oversight, from human review of every output to autonomous pipelines. The
+-lab applies usage policies, automated misuse classifiers and account enforcement on both channels.
++Models: Hypothetical Frontier Lab not-yet-public models. The hypothetical lab's not-yet-public
++models during the study year: frontier models in training, evaluation, internal use or limited
++pre-release testing before general release, including successors to the public model line. A model
++leaves this population at general release.
++Count only incidents whose originating model is not yet publicly available when the incident
++originates. A publicly available model used inside the lab remains public: availability is a
++property of the model, not of where it is used. Incidents from the lab's models that are publicly
++available are counted separately, so each incident is counted once.
++Deployment: Hypothetical Frontier Lab internal and pre-release use. Stipulated internal and
++pre-release use of the hypothetical lab's not-yet-public models: the lab's own research,
++engineering, safety evaluation and operations, including internal agents, plus access for a limited
++set of external pre-release testers, evaluators and government testing bodies under agreement.
++Tools and permissions: Internal agents read and write the lab's code repositories, run experiments
++on its compute and access internal data under staff accounts. External testers get API access
++without production tool integrations unless an agreement grants them.
++Human oversight: Staff review agent work at the granularity each team sets; security teams monitor
++internal agent activity and model-weight access; models pass pre-deployment dangerous-capability
++evaluations before general release.
+@@ -67,3 +64,4 @@
+-Adoption: Adoption is fixed at the stipulated scale of this deployment. Products that customers
+-build on the API belong to it. No model weights are released openly; stolen or leaked weights of a
+-released model remain public models of the lab.
++Adoption: Use is fixed at the stipulated internal and pre-release scale; no not-yet-public model is
++offered in a product before its general release. No model weights are released openly; stolen or
++leaked weights of a not-yet-public model remain not-yet-public models of the lab, classified by
++their release status when an incident originates.
+@@ -79,6 +77,3 @@
+-Use: Stipulated scale on this trajectory, averaged over the study year: about 610 million weekly
+-active users of the consumer assistant worldwide; about 1.6 million paying business customers, from
+-individual developers to large enterprises and government agencies, using the API or business and
+-enterprise plans; about 100 trillion tokens per day processed through the API, a growing share of it
+-by customers' autonomous agents. The lab's own staff also use the released models; incidents from
+-that use belong to this public population.
++Use: Stipulated scale on this trajectory, averaged over the study year: about 8,200 lab staff, many
++working with internal agents that run large volumes of research and engineering tasks, and a few
++hundred external pre-release testers and evaluation organizations.
+@@ -108,0 +104,2 @@
++No path is given for the lab's not-yet-public models: judge their capability from this public path
++and the lab description, and include your uncertainty about that relationship in your answers.

@@ -1,0 +1,27 @@
+{
+  "capture_grain": "annual_joint",
+  "method": "physical_marked_poisson",
+  "numerical_controls": {
+    "max_campaign_members_per_year": 50,
+    "max_members_per_campaign": 1000
+  },
+  "plan_id": "stipulated_campaign_frozen",
+  "reference_arm": "reference",
+  "requested_views": [
+    "gross",
+    "welfare",
+    "net_resource_cost",
+    "scenario::campaign_harm::gross",
+    "financial"
+  ],
+  "required_arms": [
+    "reference",
+    "contained",
+    "displacement"
+  ],
+  "seed": 20261026,
+  "simulations": 4000,
+  "staged_rules": {
+    "work_limit_exceedance": "abort_without_capture"
+  }
+}
